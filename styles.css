@@ -27,3 +27,53 @@ p {
     font-size: 17px;
     line-height: 1.6;
 }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+
+    background-color: #f4f4f4;
+    border-right: 1px solid #dddddd;
+
+    padding: 30px 20px;
+    box-sizing: border-box;
+
+    overflow-y: auto;
+}
+
+.menu-lateral h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    font-size: 20px;
+    color: #222222;
+}
+
+.menu-lateral a {
+    display: block;
+
+    color: #444444;
+    text-decoration: none;
+
+    font-size: 15px;
+    line-height: 1.4;
+
+    padding: 10px 8px;
+    margin-bottom: 4px;
+
+    border-radius: 5px;
+}
+
+.menu-lateral a:hover {
+    background-color: #e5e5e5;
+    color: #000000;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin-left: 300px;
+    padding: 40px;
+}
