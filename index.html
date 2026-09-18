@@ -15,7 +15,6 @@
         <h3>Laboratorio 4</h3>
 
         <a href="#introduccion">Introducción al ESP32</a>
-        <a href="#identificacion">Identificación de su ESP32</a>
         <a href="#caracteristicas">Características principales</a>
         <a href="#comparacion">ESP32 vs. ESP8266</a>
         <a href="#placa">Conociendo la placa</a>
@@ -33,10 +32,112 @@
         <h1>Programación de Artefactos</h1>
 
         <h2>Laboratorio 4 - Introducción al ESP32</h2>
+<section id="introduccion">
 
-        <p>
-            Bienvenidos a la guía de laboratorio de Programación de Artefactos.
-        </p>
+    <h2>Introducción al ESP32</h2>
+
+    <p>
+        El ESP32 es una serie de microcontroladores System on a Chip (SoC) de bajo costo y bajo
+        consumo, desarrollados por Espressif, con un procesador agil utilizado ampliamente en
+        programacion IoT, electronica y robotica.
+    </p>
+
+</section>
+
+<section id="caracteristicas">
+
+    <h2>Características principales</h2>
+
+    <ul>
+        <li>
+            El ESP32 utiliza un microprocesador Xtensa de 32 bits de uno o dos núcleos.
+        </li>
+
+        <li>
+            Wi-Fi compatible con el estándar 802.11 b/g/n (hasta 150 Mbps).
+        </li>
+
+        <li>
+            Dispone de hasta 36 pines GPIO programables para múltiples funciones.
+        </li>
+
+        <li>
+            Incluye canales de conversión analógica a digital (ADC) y digital a analógica
+            (DAC),soporta protocolos comunes como I2C, SPI, UART, PWM e I2S.
+        </li>
+
+        <li>
+            Integra versiones de Bluetooth v4.2 BR/EDR (clásico) y BLE (Bluetooth de bajo consumo).
+        </li>
+
+        <li>
+            Además, incluye pines sensibles al tacto -que pueden usarse para despertar al ESP32 del
+            modo deep sleep, y cuenta con un sensor de efecto Hall integrado.
+        </li>
+    </ul>
+
+</section>
+
+
+<section id="comparacion">
+
+    <h2>ESP32 vs. ESP8266</h2>
+
+    <img
+        src="imagenes/intro1.png"
+        alt="ESP32 y ESP8266"
+        class="imagen-instalacion"
+    >
+
+    <ul>
+        <li>
+            Es más rápido
+        </li>
+
+        <li>
+            Tiene más GPIOs con funciones múltiples
+        </li>
+
+        <li>
+            Soporta mediciones analógicas en 18 canales los pines habilitados para ADC, contra solo
+            1 pin ADC de 10 bits en el ESP8266
+        </li>
+
+        <li>
+            Soporta Bluetooth y el ESP8266 no
+        </li>
+
+        <li>
+            Es de doble núcleo en la mayoría de sus modelos, el ESP8266 es de un solo núcleo.
+        </li>
+
+        <li>
+            Es un poco más caro que el ESP8266
+        </li>
+    </ul>
+
+</section>
+
+
+<section id="placa">
+
+    <h2>Conociendo la placa</h2>
+
+    <p>
+        Las partes físicas principales de la placa son: la antena que va integrada al chip, el módulo
+        ESP-WROOM-32 el microcontrolador en sí, el chip CP2102 que convierte USB a serial para que la PC
+        se comunique con la placa, el regulador de voltaje, el botón RESET/EN que reinicia la placa, la
+        entrada USB para alimentación y programación y el botón BOOT para entrar en modo de carga de
+        firmware.
+    </p>
+
+    <img
+        src="imagenes/intro2.png"
+        alt="Partes principales de la placa ESP32"
+        class="imagen-instalacion"
+    >
+
+</section>
 
         <section id="pines">
 
