@@ -208,6 +208,236 @@ void loop() {
     </div>
 
 </section>
+<section id="actividad">
+
+    <h2>Actividad práctica: Sensor Touch + OLED</h2>
+
+    <p>
+        En esta actividad se utilizará uno de los sensores táctiles capacitivos
+        integrados en el ESP32. Primero se observarán los valores obtenidos por
+        el pin Touch para determinar cuándo existe contacto. Posteriormente,
+        esta lectura se utilizará para modificar el contenido mostrado en una
+        pantalla OLED.
+    </p>
+
+    <p>
+        Al finalizar, la pantalla deberá mostrar un estado de espera mientras
+        el sensor no sea tocado. Cuando se detecte contacto, el mensaje deberá
+        cambiar y un círculo deberá desplazarse hacia el lado opuesto de la
+        pantalla.
+    </p>
+
+
+    <h3>Conexiones</h3>
+
+    <p>
+        Realice las siguientes conexiones entre el ESP32, la pantalla OLED y
+        el punto de contacto táctil.
+    </p>
+
+    <table class="tabla-pines">
+
+        <tr>
+            <th>Componente</th>
+            <th>ESP32</th>
+        </tr>
+
+        <tr>
+            <td>OLED VCC</td>
+            <td>3.3V</td>
+        </tr>
+
+        <tr>
+            <td>OLED GND</td>
+            <td>GND</td>
+        </tr>
+
+        <tr>
+            <td>OLED SDA</td>
+            <td>GPIO21</td>
+        </tr>
+
+        <tr>
+            <td>OLED SCL</td>
+            <td>GPIO22</td>
+        </tr>
+
+        <tr>
+            <td>Touch</td>
+            <td>GPIO4 (T0)</td>
+        </tr>
+
+    </table>
+
+    <p>
+        Para el sensor Touch, conecte un cable al <strong>GPIO4</strong> y deje
+        accesible el extremo metálico del cable. Este extremo será la superficie
+        que deberá tocarse durante la prueba.
+    </p>
+
+
+    <h3>Parte 1. Prueba del sensor Touch</h3>
+
+    <p>
+        Antes de utilizar la pantalla OLED, observe el comportamiento del
+        sensor táctil. Complete las instrucciones faltantes del siguiente
+        programa y cárguelo al ESP32.
+    </p>
+
+    <pre><code>const int TOUCH_PIN = 4;
+
+void setup() {
+
+  Serial.begin(115200);
+
+  delay(1000);
+
+  Serial.println("PRUEBA SENSOR TOUCH");
+  Serial.println();
+}
+
+void loop() {
+
+  int valorTouch = _______________________;
+
+  Serial.print("Valor Touch: ");
+  _______________________;
+
+  delay(200);
+}</code></pre>
+
+    <p>
+        Abra el Monitor Serial a <strong>115200 baudios</strong> y observe los
+        valores mostrados primero sin tocar el cable y posteriormente mientras
+        lo toca.
+    </p>
+
+    <table class="tabla-pines">
+
+        <tr>
+            <th>Medición</th>
+            <th>Valor aproximado</th>
+        </tr>
+
+        <tr>
+            <td>Sin tocar</td>
+            <td>________________________</td>
+        </tr>
+
+        <tr>
+            <td>Al tocar</td>
+            <td>________________________</td>
+        </tr>
+
+        <tr>
+            <td>Umbral seleccionado</td>
+            <td>________________________</td>
+        </tr>
+
+    </table>
+
+    <div class="advertencia">
+        <strong>Importante:</strong>
+        los valores obtenidos pueden variar entre placas y según las
+        condiciones de la conexión. Seleccione un umbral que permita
+        diferenciar claramente entre el estado sin contacto y el estado
+        al tocar el sensor.
+    </div>
+
+
+    <h3>Parte 2. Integración del sensor Touch con la OLED</h3>
+
+    <p>
+        Utilice ahora el valor de umbral obtenido en la prueba anterior para
+        completar el siguiente programa. El sistema deberá distinguir entre
+        los estados de espera y contacto utilizando el valor leído en el
+        GPIO4.
+    </p>
+
+    <p>
+        Cuando no exista contacto, la OLED deberá mostrar
+        <strong>“Esperando...”</strong> y un círculo en el lado izquierdo.
+        Cuando se detecte un toque, deberá mostrar
+        <strong>“Toque detectado!”</strong> y mover el círculo hacia el lado
+        derecho.
+    </p>
+
+    <pre><code>#include &lt;Wire.h&gt;
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SH110X.h&gt;
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1
+#define OLED_ADDRESS 0x3C
+
+Adafruit_SH1106G display(
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  &Wire,
+  OLED_RESET
+);
+
+const int TOUCH_PIN = 4;
+
+const int UMBRAL_TOUCH = ______;
+
+void setup() {
+
+  Serial.begin(115200);
+
+  Wire.begin(21, 22);
+
+  if (!display.begin(OLED_ADDRESS, true)) {
+    Serial.println("Error al iniciar la pantalla OLED");
+    while (1);
+  }
+
+  display.clearDisplay();
+  display.setTextColor(SH110X_WHITE);
+}
+
+void loop() {
+
+  int valorTouch = _______________________;
+
+  display.clearDisplay();
+
+  display.setTextSize(1);
+  display.setCursor(26, 5);
+  display.println("ESP32 TOUCH");
+
+  if (_______________________) {
+
+    display.setCursor(15, 28);
+    display.println("_______________________");
+
+    display.fillCircle(105, 52, 5, SH110X_WHITE);
+  }
+
+  else {
+
+    display.setCursor(32, 28);
+    display.println("_______________________");
+
+    display.fillCircle(20, 52, 5, SH110X_WHITE);
+  }
+
+  display.display();
+
+  delay(100);
+}</code></pre>
+
+
+    <h3>Comprobación</h3>
+
+    <p>
+        Pruebe el funcionamiento varias veces tocando y soltando el extremo
+        conectado al GPIO4. El cambio mostrado en la OLED deberá producirse
+        únicamente cuando el sensor detecte contacto.
+    </p>
+
+</section>
 
     </div>
 
