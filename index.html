@@ -631,7 +631,7 @@ void loop() {
         programa y cárguelo al ESP32.
     </p>
 
-    <pre><code>const int TOUCH_PIN = 4;
+    <pre><code>const int TOUCH_PIN = ;
 
 void setup() {
 
@@ -725,7 +725,7 @@ Adafruit_SH1106G display(
   OLED_RESET
 );
 
-const int TOUCH_PIN = 4;
+const int TOUCH_PIN = ;
 
 const int UMBRAL_TOUCH = ______;
 
@@ -783,7 +783,35 @@ void loop() {
         conectado al GPIO4. El cambio mostrado en la OLED deberá producirse
         únicamente cuando el sensor detecte contacto.
     </p>
+<h3>Agregar:</h3>
 
+<p>
+    Modifique el programa anterior para incorporar un
+    <strong>segundo punto táctil</strong> que funcione como un segundo botón.
+    Para ello, conecte otro cable a un pin Touch disponible del ESP32.
+</p>
+
+<p>
+    El programa deberá identificar cuál de los dos sensores fue tocado y
+    mostrar en la pantalla OLED un mensaje diferente para cada uno.
+</p>
+
+<ul>
+    <li>
+        Si se toca el <strong>primer sensor</strong>, la OLED deberá mostrar
+        un mensaje que indique que se activó el botón 1.
+    </li>
+
+    <li>
+        Si se toca el <strong>segundo sensor</strong>, la OLED deberá mostrar
+        un mensaje diferente indicando que se activó el botón 2.
+    </li>
+
+    <li>
+        Si ninguno de los sensores está siendo tocado, la pantalla deberá
+        mantener el mensaje de espera.
+    </li>
+</ul>
 </section>
 <section id="adafruit">
 
