@@ -77,3 +77,37 @@ p {
     margin-left: 300px;
     padding: 40px;
 }
+
+.imagen-pinout {
+    display: block;
+    max-width: 750px;
+    width: 100%;
+    height: auto;
+    margin: 25px auto;
+}
+
+.tabla-pines {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.tabla-pines th,
+.tabla-pines td {
+    border: 1px solid #dddddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.tabla-pines th {
+    background-color: #f2f2f2;
+}
+
+.advertencia {
+    background-color: #f7f7f7;
+    border-left: 4px solid #555555;
+    padding: 15px 18px;
+    margin-top: 25px;
+    line-height: 1.5;
+}
