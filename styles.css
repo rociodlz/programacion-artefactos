@@ -118,3 +118,26 @@ p {
 .texto-justificado p {
     margin-bottom: 18px;
 }
+
+pre {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+pre code {
+    color: #f1f1f1;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.imagen-prueba {
+    display: block;
+    width: 100%;
+    max-width: 1100px;
+    height: auto;
+    margin: 25px auto;
+    border-radius: 6px;
+}
