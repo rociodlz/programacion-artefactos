@@ -153,6 +153,72 @@
     </div>
 
 </section>
+        <section id="prueba">
+
+    <h2>Primera prueba del ESP32</h2>
+
+    <p>
+        Antes de comenzar a trabajar con sensores y otros componentes,
+        se realizará una prueba básica para verificar que el ESP32 puede
+        ser programado correctamente y que existe comunicación entre la
+        placa y la computadora.
+    </p>
+
+    <h3>Procedimiento</h3>
+
+    <ol>
+        <li>Conecte el ESP32 a la computadora mediante el cable USB.</li>
+        <li>Abra Arduino IDE.</li>
+        <li>Verifique que la placa y el puerto correspondientes estén seleccionados.</li>
+        <li>Copie el siguiente código en un nuevo sketch.</li>
+        <li>Cargue el programa al ESP32.</li>
+        <li>Abra el Monitor Serial y configúrelo a <strong>115200 baudios</strong>.</li>
+    </ol>
+
+    <h3>Código de prueba</h3>
+
+    <pre><code>void setup() {
+
+  Serial.begin(115200);
+
+  delay(1000);
+
+  Serial.println("================================");
+  Serial.println("       PRUEBA DE ESP32");
+  Serial.println("================================");
+  Serial.println();
+}
+
+void loop() {
+
+  Serial.print("ESP32 funcionando correctamente - Tiempo activo: ");
+  Serial.print(millis() / 1000.0);
+  Serial.println(" segundos");
+
+  delay(2000);
+}</code></pre>
+
+<h3>Resultado esperado</h3>
+
+<p>
+    Si la configuración es correcta, el Monitor Serial mostrará
+    periódicamente un mensaje indicando que el ESP32 está funcionando,
+    junto con el tiempo transcurrido desde el inicio del programa.
+</p>
+
+<img
+    src="imagenes/prueba-monitor-serial.jpeg"
+    alt="Resultado de la prueba del ESP32 en el Monitor Serial de Arduino IDE"
+    class="imagen-prueba"
+>
+
+    <div class="advertencia">
+        <strong>Comprobación:</strong>
+        si los mensajes aparecen correctamente en el Monitor Serial,
+        la placa fue programada y la comunicación serial está funcionando.
+    </div>
+
+</section>
 
     </div>
 
