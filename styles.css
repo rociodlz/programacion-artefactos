@@ -136,7 +136,7 @@ pre code {
 .imagen-prueba {
     display: block;
     width: 75%;
-    max-width: 500px;
+    max-width: 200px;
     height: auto;
     margin: 25px auto;
     border-radius: 6px;
