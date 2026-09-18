@@ -38,6 +38,102 @@
             Bienvenidos a la guía de laboratorio de Programación de Artefactos.
         </p>
 
+        <section id="pines">
+
+    <h2>Pines del ESP32</h2>
+
+    <p>
+        Los pines del ESP32 permiten conectar la placa con sensores,
+        LEDs, pantallas y otros dispositivos. No todos los pines cumplen
+        la misma función, por lo que es importante identificar su propósito
+        antes de realizar una conexión.
+    </p>
+
+    <h3>Mapa de pines</h3>
+
+    <p>
+        El siguiente diagrama muestra la distribución de pines de una
+        placa ESP32-WROOM-32 de 38 pines.
+    </p>
+
+    <img
+        src="imagenes/pinout-esp32-38-pines.png"
+        alt="Mapa de pines de ESP32-WROOM-32 de 38 pines"
+        class="imagen-pinout"
+    >
+
+    <h3>Tipos principales de pines</h3>
+
+    <table class="tabla-pines">
+
+        <tr>
+            <th>Tipo de pin</th>
+            <th>Función principal</th>
+            <th>Ejemplos</th>
+        </tr>
+
+        <tr>
+            <td><strong>Alimentación</strong></td>
+            <td>Alimentar la placa o componentes externos</td>
+            <td>3.3V, VIN/5V, GND</td>
+        </tr>
+
+        <tr>
+            <td><strong>GPIO</strong></td>
+            <td>Entradas y salidas digitales de propósito general</td>
+            <td>GPIO2, GPIO4, GPIO18, GPIO23...</td>
+        </tr>
+
+        <tr>
+            <td><strong>ADC</strong></td>
+            <td>Lectura de señales analógicas</td>
+            <td>GPIO32, GPIO33, GPIO34...</td>
+        </tr>
+
+        <tr>
+            <td><strong>DAC</strong></td>
+            <td>Generación de señales analógicas</td>
+            <td>GPIO25, GPIO26</td>
+        </tr>
+
+        <tr>
+            <td><strong>Touch</strong></td>
+            <td>Detección táctil capacitiva</td>
+            <td>T0 - T9</td>
+        </tr>
+
+        <tr>
+            <td><strong>I²C</strong></td>
+            <td>Comunicación con sensores y otros periféricos</td>
+            <td>SDA, SCL</td>
+        </tr>
+
+        <tr>
+            <td><strong>SPI</strong></td>
+            <td>Comunicación de alta velocidad con periféricos</td>
+            <td>MOSI, MISO, SCK, SS</td>
+        </tr>
+
+        <tr>
+            <td><strong>UART</strong></td>
+            <td>Comunicación serial</td>
+            <td>TX, RX</td>
+        </tr>
+
+    </table>
+
+    <div class="advertencia">
+
+        <strong>Importante:</strong>
+
+        La distribución de los pines puede variar según la placa ESP32
+        utilizada. Verifique siempre el mapa de pines correspondiente
+        a su modelo antes de realizar conexiones.
+
+    </div>
+
+</section>
+
     </div>
 
 </body>
