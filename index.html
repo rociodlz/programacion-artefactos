@@ -153,6 +153,252 @@
     </div>
 
 </section>
+<section id="instalacion">
+
+    <h2>Instalación y configuración</h2>
+
+
+    <h3>Paso 1:</h3>
+
+    <p>
+        Primero abre Arduino IDE, luego dirígete al apartado File luego a Preferences
+    </p>
+
+    <p>
+        File → Preferences
+    </p>
+
+    <img
+        src="imagenes/imagen1.png"
+        alt="File Preferences"
+        class="imagen-instalacion"
+    >
+
+
+    <h3>Paso 2:</h3>
+
+    <p>
+        En el campo “Additional boards manager URLs” o “Gestor de URLs Adicionales de Tarjetas”,
+        ingresar la siguiente dirección para trabajar con la placa ESP32:
+    </p>
+
+    <p>
+        https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+    </p>
+
+    <p>
+        Pegar la URL y presionar OK
+    </p>
+
+    <img
+        src="imagenes/imagen2.png"
+        alt="Additional boards manager URLs"
+        class="imagen-instalacion"
+    >
+
+    <p>
+        Si en dado caso trabajamos con la placa ESP8266 podemos colocar ambas URLs en el mismo
+        campo, separadas por una coma:
+    </p>
+
+    <p>
+        https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json,
+        <br>
+        http://arduino.esp8266.com/stable/package_esp8266com_index.json
+    </p>
+
+    <p>
+        Y luego damos click en el botón de OK
+    </p>
+
+
+    <h3>Paso 3:</h3>
+
+    <p>
+        Ve a Tools luego a Board, en el apartado de Boards Manager, busca ESP32 en el cuadro de
+        búsqueda.
+    </p>
+
+    <img
+        src="imagenes/imagen3.png"
+        alt="Boards Manager ESP32"
+        class="imagen-instalacion"
+    >
+
+    <p>
+        Haz clic en INSTALL sobre el paquete "esp32 by Espressif Systems". La descarga puede tardar varios
+        minutos: no cierres el IDE mientras avanza. Para confirmar que quedó instalado, cambia el filtro "Type" a
+        "Installed": debe aparecer "esp32 by Espressif Systems" con la etiqueta installed.
+    </p>
+
+    <img
+        src="imagenes/imagen4.png"
+        alt="ESP32 instalado"
+        class="imagen-instalacion"
+    >
+
+
+    <h3>Paso 4:</h3>
+
+    <p>
+        Cada placa ESP32 se comunica con el computador a través de un pequeño chip USB-a-serial. El driver
+        que debes instalar depende de cuál chip trae tu placa. Antes de conectar nada, identifica el tuyo
+    </p>
+
+    <ul>
+        <li>CP2102 / CP210x</li>
+        <li>CH340 / CH341</li>
+        <li>FTDI</li>
+        <li>USB nativo del propio ESP32-S2/S3/C3, dependiendo de la placa</li>
+    </ul>
+
+    <p>
+        Para verificar el driver necesario para nuestra ESP32, la conectamos con el cable USB y abrimos
+        el Administrador de dispositivos de Windows
+    </p>
+
+    <p>
+        <strong>Windows + X</strong>
+    </p>
+
+    <img
+        src="imagenes/imagen5.png"
+        alt="Administrador de dispositivos de Windows"
+        class="imagen-instalacion"
+    >
+
+    <p>
+        Si la placa utiliza CP2102/CP210x, debemos instalar el controlador correspondiente de Silicon
+        Labs.
+    </p>
+
+    <p>
+        Ingresamos a:
+        https://www.silabs.com/software-and-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads
+    </p>
+
+    <ol>
+        <li>Seleccionamos CP210x Windows Drivers</li>
+    </ol>
+
+    <img
+        src="imagenes/imagen6.png"
+        alt="CP210x Windows Drivers"
+        class="imagen-instalacion"
+    >
+
+    <ol start="2">
+        <li>
+            Luego clic derecho en el archivo y descomprimir el archivo .zip
+        </li>
+    </ol>
+
+    <img
+        src="imagenes/imagen7.png"
+        alt="Archivo CP210x Windows Drivers zip"
+        class="imagen-instalacion"
+    >
+
+    <ol start="3">
+        <li>
+            Lo abrimos y le damos doble clic al CP210xVCPInstaller_x64.exe (usa la versión x86 si
+            tu Windows es de 32 bits).
+        </li>
+    </ol>
+
+    <img
+        src="imagenes/imagen8.png"
+        alt="CP210xVCPInstaller"
+        class="imagen-instalacion"
+    >
+
+    <ol start="4">
+        <li>
+            Continuamos con los pasos de instalación, damos clic en next y aceptamos los términos
+            de uso para completar el proceso
+        </li>
+    </ol>
+
+    <img
+        src="imagenes/imagen9.png"
+        alt="Instalación CP210x"
+        class="imagen-instalacion"
+    >
+
+    <ol start="5">
+        <li>
+            Cuando termine, verás el mensaje de instalación exitosa. Desconecta y vuelve a conectar
+            la placa para que el sistema la reconozca. Y ahora el CP210x USB driver ha sido
+            instalado correctamente.
+        </li>
+    </ol>
+
+    <img
+        src="imagenes/imagen10.png"
+        alt="Instalación exitosa CP210x"
+        class="imagen-instalacion"
+    >
+
+    <p>
+        Para el Chip CH340 / CH341 (WCH)
+    </p>
+
+    <p>
+        Descarga el driver oficial desde el sitio del fabricante:
+    </p>
+
+    <p>
+        https://www.wch-ic.com/downloads/CH341SER_EXE.html
+    </p>
+
+    <p>
+        Ejecuta el instalador descargado, haz clic en "Install" (si ya existe una versión anterior, primero
+        en "Uninstall" y luego "Install") y reconecta la placa al terminar.
+    </p>
+
+    <p>
+        Nota para usuarios de macOS y Linux: El proceso es muy similar: en la misma página del
+        fabricante encontrarás la versión para tu sistema operativo.
+    </p>
+
+
+    <h3>Paso 5:</h3>
+
+    <p>
+        Seleccionamos la placa y el puerto en el Arduino IDE. En tools seleccionamos board y
+        buscamos el modelo de la placa
+    </p>
+
+    <p>
+        Y luego siempre en tools ve a port y selecciona el puerto COM.
+    </p>
+
+    <img
+        src="imagenes/imagen11.png"
+        alt="Seleccionar placa y puerto"
+        class="imagen-instalacion"
+    >
+
+
+    <h3>Paso 6: Probar que todo funcione</h3>
+
+    <p>
+        Si el sketch se sube sin errores en la consola inferior, y el LED de la placa comienza a parpadear,
+        ¡la instalación quedó lista!
+    </p>
+
+    <p>
+        Así se ve una subida exitosa en la pestaña "Output" de Arduino IDE: la barra de progreso llega a
+        100%, los datos se verifican y termina con "Hash of data verified".
+    </p>
+
+    <img
+        src="imagenes/imagen12.png"
+        alt="Subida exitosa en Arduino IDE"
+        class="imagen-instalacion"
+    >
+
+</section>
         <section id="prueba">
 
     <h2>Primera prueba del ESP32</h2>
