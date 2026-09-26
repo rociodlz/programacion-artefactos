@@ -1,0 +1,171 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 26px;
+    margin-top: 35px;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 10px;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+
+    background-color: #f4f4f4;
+    border-right: 1px solid #dddddd;
+
+    padding: 30px 20px;
+    box-sizing: border-box;
+
+    overflow-y: auto;
+}
+
+.menu-lateral h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    font-size: 20px;
+    color: #222222;
+}
+
+.menu-lateral a {
+    display: block;
+
+    color: #444444;
+    text-decoration: none;
+
+    font-size: 15px;
+    line-height: 1.4;
+
+    padding: 10px 8px;
+    margin-bottom: 4px;
+
+    border-radius: 5px;
+}
+
+.menu-lateral a:hover {
+    background-color: #e5e5e5;
+    color: #000000;
+}
+
+.contenedor {
+    max-width: 1000px;
+    margin-left: 300px;
+    padding: 40px;
+}
+
+.imagen-pinout {
+    display: block;
+    max-width: 750px;
+    width: 100%;
+    height: auto;
+    margin: 25px auto;
+}
+
+.tabla-pines {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+.tabla-pines th,
+.tabla-pines td {
+    border: 1px solid #dddddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.tabla-pines th {
+    background-color: #f2f2f2;
+}
+
+.advertencia {
+    background-color: #f7f7f7;
+    border-left: 4px solid #555555;
+    padding: 15px 18px;
+    margin-top: 25px;
+    line-height: 1.5;
+}
+.texto-justificado {
+    text-align: justify;
+}
+
+.texto-justificado p {
+    margin-bottom: 18px;
+}
+
+pre {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+pre code {
+    color: #f1f1f1;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.imagen-prueba {
+    display: block;
+    width: 75%;
+    max-width: 800px;
+    height: auto;
+    margin: 25px auto;
+    border-radius: 6px;
+}
+
+.imagen-instalacion {
+    display: block;
+    width: auto;
+    max-width: 700px;
+    height: auto;
+
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+
+    border-radius: 6px;
+}
+
+.imagen-instalacion.pequena {
+    max-width: 350px;
+}
+
+.url-configuracion {
+    background-color: #f4f4f4;
+    border-left: 4px solid #555555;
+    padding: 15px;
+    margin: 20px 0;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
