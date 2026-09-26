@@ -12,108 +12,405 @@
 
     <nav class="menu-lateral">
         <h3>Laboratorio 5</h3>
-        <a href="#introduccion">Introducción</a>
-        <a href="#objetivos">Objetivos</a>
-        <a href="#materiales">Materiales</a>
-        <a href="#desarrollo">Desarrollo</a>
-        <a href="#codigo">Código</a>
-        <a href="#resultados">Resultados</a>
+        <a href="#introduccion">Introducción a Adafruit</a>
+        <a href="#sensor">Sensor ultrasónico HC-SR04</a>
+        <a href="#configuracion">Configuración de Adafruit</a>
+        <a href="#prueba">Primera Prueba</a>
         <a href="#actividad">Actividad práctica</a>
         <a href="#entregables">Entregables</a>
     </nav>
 
     <main class="contenedor">
         <h1>Programación de Artefactos</h1>
-        <h2>Laboratorio 5 - [Escribe el título del laboratorio]</h2>
+        <h2>Laboratorio 5 - ESP32 y conexion a Internet en Adafruit</h2>
 
         <section id="introduccion">
-            <h2>Introducción</h2>
-            <p>[Explica brevemente el tema y el problema que se trabajará.]</p>
-            <p>[Añade aquí el contexto necesario para realizar la práctica.]</p>
+            <h2>Introducción a Adafruit</h2>
+            <p>[Explica brevemente el tema]</p>
+            <p>[Añade aquí el contexto necesario]</p>
         </section>
 
-        <section id="objetivos">
-            <h2>Objetivos</h2>
-            <ul>
-                <li>[Objetivo principal]</li>
-                <li>[Objetivo específico 1]</li>
-                <li>[Objetivo específico 2]</li>
-            </ul>
+        <section id="sensor">
+            <h2>Sensor ultrasónico HC-SR04 </h2>
+            <p>[Explica brevemente el sensor ultrasónico HC-SR04]</p>
         </section>
 
-        <section id="materiales">
-            <h2>Materiales y herramientas</h2>
-            <ul>
-                <li>[Componente o material 1]</li>
-                <li>[Componente o material 2]</li>
-                <li>[Software, librería o herramienta]</li>
-            </ul>
+        <section id="configuracion">
+            <h2>Configuración de Adafruit</h2>
+            <h3>Paso 1:</h3>
+            <p>En el Arduino IDE, ve al menú Sketch -> Include Library, selecciona Manage Libraries. 
+            Tambien puedes utilizar el icono de libro en la barra lateral izquierda.</p>
+            <img
+            src="imagenes/adafruit1.png"
+            alt="Abrir Library Manager"
+            class="imagen-instalacion">
+            <h3>Paso 2:</h3>
+            <p>En el buscador del Library Manager escribe “Adafruit IO Arduino” y localiza la librería oficial publicada por Adafruit. 
+            Haz clic en Install, y acepta instalar todas las dependencias.</p>
+            <img
+            src="imagenes/adafruit2.png"
+            alt="Instalar librería"
+            class="imagen-instalacion">
+            <h3>Paso 3:</h3>
+            <p>Ahora verificamos que las librerías quedaron instaladas. Vuelve a abrir el Library Manager, escribe "Adafruit" en el buscador y cambia el filtro Type a Installed.
+            Debe aparecer Adafruit IO Arduino junto con sus dependencias, todas marcadas como "installed". </p>
+            <img
+            src="imagenes/adafruit3.png"
+            alt="Verificar instalación de librerías"
+            class="imagen-instalacion">
+            <div class="advertencia">
+            <strong>Lo importante es confirmar que Adafruit IO Arduino aparezca instalada. </strong>
+            </div>
+            <h3>Paso 4:</h3>
+            <p>Ahora debemos obtener el Usuario y la AIO Key de nuestra sesion de adafruit.com. 
+            En la esquina superior derecha, haz clic en el icono amarillo con forma de llave </p>
+            <img
+            src="imagenes/adafruit4.png"
+            alt="Obtener AIO Key"
+            class="imagen-instalacion">
+            <p>Se abrirá una ventana con tu Username y Active Key (AIO Key). Estas dos credenciales son las que se usaran en el codigo para conectar el ESP32 a Adafruit IO.</p>
+            <img
+            src="imagenes/adafruit5.png"
+            alt="Obtener AIO Key"
+            class="imagen-instalacion">
+            <div class="advertencia">
+            <strong>Tu Active Key funciona como una contraseña: cualquiera que la tenga puede leer, modificar tus feeds, y controlar tus widgets. </strong>
+            </div>
         </section>
 
-        <section id="desarrollo">
-            <h2>Desarrollo</h2>
+        <section id="prueba">
+            <h2>Primera Prueba</h2>
             <h3>Paso 1: [Nombre del paso]</h3>
             <p>[Describe lo que debe hacer la persona que realiza el laboratorio.]</p>
             <p>[Añade aquí una imagen propia en la carpeta imagenes, si es necesaria.]</p>
 
-            <h3>Paso 2: [Nombre del paso]</h3>
-            <p>[Añade las instrucciones del segundo paso.]</p>
-            <p>[Añade aquí otra imagen propia del laboratorio 5, si es necesaria.]</p>
-        </section>
-
-        <section id="codigo">
-            <h2>Código</h2>
-            <p>[Explica qué debe completar o ejecutar el estudiante.]</p>
             <pre><code>// Escribe o pega aquí el código de la práctica
 
 // TODO: completar
-</code></pre>
+            </code></pre>
         </section>
-
-        <section id="resultados">
-            <h2>Resultados esperados</h2>
-            <p>[Describe qué debe ocurrir cuando la práctica funciona correctamente.]</p>
-            <div class="advertencia">
-                <strong>Comprobación:</strong>
-                [Escribe cómo verificar el resultado.]
-            </div>
-        </section>
-
         <section id="actividad">
-            <h2>Actividad práctica</h2>
-            <p>[Describe la actividad que debe realizarse.]</p>
+            <h2>Actividad práctica: Ultrasónico + LED RGB + Adafruit IO</h2>
+<p>
+    En esta actividad se conecta el sensor ultrasónico HC-SR04 a Adafruit IO para publicar
+    la distancia medida en tiempo real, visible en un dashboard mediante un widget y un LED RGB que su color cambia según qué tan cerca esté un objeto del sensor.
+</p>
+            <h3>Creación de Feeds y Widgets en el Dashboard </h3>
+            <h3>Paso 1:</h3>
+            <p>Para crear un Feed debes ir a el menú superior de Adafruit IO, hacer clic en Feeds y luego en el botón New Feed.</p>
+            <img src="imagenes/adafruit6.png" alt="Crear un nuevo Feed" class="imagen-instalacion">
+            <p>Se abrirá un formulario donde debes escribir el nombre del feed (por ejemplo "distancia") y, opcionalmente, una descripción. Luego haz clic en Create. </p>
+            <img src="imagenes/adafruit7.png" alt="Formulario para crear un nuevo Feed" class="imagen-instalacion">
+            <p>El nuevo feed aparecerá listado bajo el grupo "Default", junto con su Feed Key (el nombre que se usará en el código para identificarlo). </p>
+            <img src="imagenes/adafruit8.png" alt="Feed creado" class="imagen-instalacion">
+            <h3>Paso 2</h3>
+            <p>Para crear un nuevo Dahboard, haz clic en Dashboards y luego en New Dashboard. </p>
+            <img src="imagenes/adafruit9.png" alt="Crear un nuevo Dashboard" class="imagen-instalacion">
+            <p>Escribe un nombre para el dashboard (por ejemplo "Sensor Ultrasónico") y, opcionalmente, una descripción. Haz clic en Create. </p>
+            <img src="imagenes/adafruit10.png" alt="Formulario para crear un nuevo Dashboard" class="imagen-instalacion">
+            <p>El dashboard quedará creado y listado, listo para agregarle widgets.</p>
+            <img src="imagenes/adafruit11.png" alt="Dashboard creado" class="imagen-instalacion">
 
-            <h3>Conexiones o procedimiento</h3>
+            <h3>Paso 3:</h3>
+            <p>Dentro del dashboard, haz clic en el botón New Block, ubicado en la esquina superior derecha. </p>
+            <img src="imagenes/adafruit12.png" alt="Agregar un nuevo bloque al dashboard" class="imagen-instalacion">
+            <p>Se abrirá una ventana con todos los tipos de bloques disponibles. Para mostrar la distancia del sensor ultrasónico, elige el bloque Gauge (medidor circular). Para el desafío del toggle que apaga el LED, elige el bloque Toggle (el primero de la lista, con el interruptor ON/OFF). </p>
+            <img src="imagenes/adafruit13.png" alt="Elegir tipo de bloque" class="imagen-instalacion">
+            <p>En la siguiente pantalla, te pedirá elegir a qué feed se conectará el bloque.  </p>
+            <p>Marca el checkbox del feed correspondiente (por ejemplo "distancia" para el Gauge) y haz clic en Next step. </p>
+            <img src="imagenes/adafruit14.png" alt="Elegir feed para el bloque" class="imagen-instalacion">
+            <p>Configura los datos del bloque, como título, rango, etiqueta de unidades, luego haz clic en Create Block. </p>
+            <img src="imagenes/adafruit15.png" alt="Configurar bloque" class="imagen-instalacion">
+            <p>Así se ve el widget ya funcionando en el dashboard, mostrando en vivo el valor que envía el sensor: </p>
+            <img src="imagenes/adafruit16.png" alt="Widget funcionando" class="imagen-instalacion">
+            <div class="advertencia">
+            <strong>Puedes reordenar los widgets arrastrándolos dentro del dashboard, y editarlos en cualquier momento haciendo clic sobre cada bloque. </strong>
+            </div>
+
+            <h3>Conexiones</h3>
             <table class="tabla-pines">
                 <tr>
-                    <th>Elemento</th>
-                    <th>Conexión o instrucción</th>
+                    <th>Componente</th>
+                    <th>ESP32</th>
                 </tr>
                 <tr>
-                    <td>[Componente 1]</td>
-                    <td>[Pin, valor o procedimiento]</td>
+                    <td>Ultrasonico VCC</td>
+                    <td>5V</td>
                 </tr>
                 <tr>
-                    <td>[Componente 2]</td>
-                    <td>[Pin, valor o procedimiento]</td>
+                    <td>Ultrasonico GND</td>
+                    <td>GND</td>
+                </tr>
+                <tr>
+                    <td>Ultrasonico Trig</td>
+                    <td>GIOP18</td>
+                </tr>
+                <tr>
+                    <td>Ultrasonico Echo</td>
+                    <td>GIOP19</td>
+                </tr>
+                 <tr>
+                    <td>RGB Red</td>
+                    <td>Resistencia 220Ω -> GIOP25</td>
+                </tr>
+                 <tr>
+                    <td>RGB Catodo</td>
+                    <td>GND</td>
+                </tr>
+                 <tr>
+                    <td>RGB Green</td>
+                    <td>Resistencia 220Ω -> GIOP26</td>
+                </tr>
+                <tr>
+                    <td>RGB Blue</td>
+                    <td>Resistencia 220Ω -> GIOP27</td>
                 </tr>
             </table>
+            <img src="imagenes/Circuito.png" alt="Circuito" class="imagen-instalacion">
 
-            <h3>Preguntas</h3>
-            <ol>
-                <li>[Pregunta de análisis 1]</li>
-                <li>[Pregunta de análisis 2]</li>
-            </ol>
+        <p>Sustituye los valores de la plantilla con tus propios valores.</p>
+        <p>Plantilla de código para el ESP32:</p>
+
+<pre><code> #include <WiFi.h>                      
+#include "Adafruit_MQTT.h"
+#include "Adafruit_MQTT_Client.h"
+
+// ---------------------- CONFIGURACIÓN WI-FI ----------------------
+#define WLAN_SSID   "ARTEFACTOS"
+#define WLAN_PASS   "ARTEFACTOS"
+
+// ---------------------- CONFIGURACIÓN ADAFRUIT IO ----------------------
+#define AIO_SERVER      "io.adafruit.com"
+#define AIO_SERVERPORT  1883
+#define AIO_USERNAME    "TU_USUARIO_ADAFRUIT"   // <- cambiar
+#define AIO_KEY         "TU_AIO_KEY"            // <- cambiar (no la subas a repositorio)
+
+// ---------------------- PINES ----------------------
+#define TRIG_PIN  18
+#define ECHO_PIN  19
+#define PIN_R     25
+#define PIN_G     26
+#define PIN_B     27
+
+// ---------------------- AJUSTES ----------------------
+#define RGB_ANODO_COMUN  false      
+#define PWM_FREQ         5000
+#define PWM_RES          8         
+#define INTERVALO_PUBLICAR_MS 5000  // Adafruit gratis limita los datos por minuto: no bajar de 4-5 s
+#define DIST_CERCA_CM     //Agregar distancia  
+#define DIST_MEDIA_CM    //Agregar distancia   
+
+// ---------------------- CLIENTE MQTT Y FEED ----------------------
+WiFiClient client;
+Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
+
+// Publicar
+Adafruit_MQTT_Publish feedDistancia = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/distancia");
+
+// ---------------------- ESTADO ----------------------
+float ultimaDistancia = -1;             // última lectura válida (cm)
+unsigned long ultimoPublicar = 0;
+unsigned long ultimoPing = 0;
+
+// ---------------------- FUNCIONES ----------------------
+void conectarWiFi();
+void conectarMQTT();
+float leerDistanciaCm();
+float distanciaPromedio(int muestras);
+void escribirRGB(uint8_t r, uint8_t g, uint8_t b);
+void actualizarLED();
+
+// =====================================================================
+void setup() {
+  Serial.begin(115200);
+  delay(10);
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  ledcAttach(PIN_R, PWM_FREQ, PWM_RES);
+  ledcAttach(PIN_G, PWM_FREQ, PWM_RES);
+  ledcAttach(PIN_B, PWM_FREQ, PWM_RES);
+
+  escribirRGB(255, 255, 255); 
+
+  conectarWiFi();
+}
+
+// =====================================================================
+void loop() {
+  conectarMQTT();   // mantiene la conexión con Adafruit (reconecta si se cae)
+
+  // Leer el ultrasónico y publicar cada cierto tiempo
+  if (millis() - ultimoPublicar >= INTERVALO_PUBLICAR_MS) {
+    ultimoPublicar = millis();
+
+    float d = distanciaPromedio(5);
+    if (d > 0) {
+      ultimaDistancia = d;
+      Serial.print("Distancia: "); Serial.print(d, 1); Serial.println(" cm");
+
+      if (!feedDistancia.publish(d)) {
+        Serial.println("Error al publicar la distancia");
+      }
+    } else {
+      Serial.println("Lectura fuera de rango o sin eco");
+    }
+
+    actualizarLED();   // el color depende de la última distancia leída
+  }
+
+  // Mantener viva la conexión MQTT
+  if (millis() - ultimoPing >= 30000) {
+    ultimoPing = millis();
+    mqtt.ping();
+  }
+}
+
+// =====================================================================
+//  ULTRASÓNICO HC-SR04
+// =====================================================================
+float leerDistanciaCm() {
+  // Pulso de 10 us en TRIG
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  // Tiempo que ECHO permanece en alto
+  long duracion = pulseIn(ECHO_PIN, HIGH, 30000);
+  if (duracion == 0) return -1;   // no hubo eco
+
+  float distancia = 0;   // <- reemplazar esta línea con formula
+
+  // Rango útil del sensor: 2 a 100 cm
+  if (distancia < 2 || distancia > 100) return -1;
+  return distancia;
+}
+
+// Promedia varias lecturas para reducir el ruido
+float distanciaPromedio(int muestras) {
+  float suma = 0;
+  int validas = 0;
+  for (int i = 0; i < muestras; i++) {
+    float d = leerDistanciaCm();
+    if (d > 0) { suma += d; validas++; }
+    delay(40);   // espera entre mediciones para que no se mezclen los ecos
+  }
+  return (validas > 0) ? suma / validas : -1;
+}
+
+// =====================================================================
+//  LED RGB
+// =====================================================================
+void escribirRGB(uint8_t r, uint8_t g, uint8_t b) {
+  if (RGB_ANODO_COMUN) {         
+    r = 255 - r;  g = 255 - g;  b = 255 - b;
+  }
+  ledcWrite(PIN_R, r);
+  ledcWrite(PIN_G, g);
+  ledcWrite(PIN_B, b);
+}
+
+// El color debe cambiar solo según la última distancia leída.
+void actualizarLED() {
+  if (ultimaDistancia <= 0) {
+    escribirRGB(255, 255, 255);   // aún no hay lectura válida -> blanco
+    return;
+  }
+
+  // Usando las variables declaradas anteriormente que color mostrar:
+  //   - Si ultimaDistancia es menor a DIST_CERCA_CM       -> rojo
+  //   - Si ultimaDistancia es menor a DIST_MEDIA_CM        -> amarillo
+  //   - Si ultimaDistancia es mayor o igual a DIST_MEDIA_CM -> verde
+}
+
+// =====================================================================
+//  CONEXIONES
+// =====================================================================
+void conectarWiFi() {
+  Serial.print("Conectando a "); Serial.println(WLAN_SSID);
+  WiFi.begin(WLAN_SSID, WLAN_PASS);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+  Serial.print("WiFi conectado. IP: "); Serial.println(WiFi.localIP());
+}
+
+void conectarMQTT() {
+  if (mqtt.connected()) return;
+
+  Serial.print("Conectando a Adafruit IO... ");
+  int8_t ret;
+  uint8_t intentos = 3;
+  while ((ret = mqtt.connect()) != 0) {     
+    Serial.println(mqtt.connectErrorString(ret));
+    Serial.println("Reintentando en 5 segundos...");
+    mqtt.disconnect();
+    delay(5000);
+    if (--intentos == 0) {
+      Serial.println("No se pudo conectar. Reiniciando la ESP32...");
+      ESP.restart();
+    }
+  }
+  Serial.println("¡Conectado a Adafruit IO!");
+}
+</code></pre>
+
+<h3>Desafío: apagar el LED desde Adafruit con un Toggle</h3>
+<p>
+    Se debera agregar un botón tipo Toggle en el dashboard que permita encender o apagar el LED RGB desde Adafruit IO.
+</p>
+<p>
+    Para esto es necesario crear un <strong>nuevo feed</strong>. A diferencia del feed
+    <code>distancia</code>, este feed no lo publica el ESP32, sino que el ESP32 se <strong>suscribe</strong>
+    a él para recibir los cambios que la persona haga desde el dashboard.
+</p>
+
+<ul>
+    <li>Declarar una nueva suscripción con <code>Adafruit_MQTT_Subscribe</code> apuntando al nuevo feed.</li>
+    <li>Suscribirse a ese feed dentro de <code>setup()</code> con <code>mqtt.subscribe(...)</code>.</li>
+    <li>Dentro de <code>loop()</code>, revisar con <code>mqtt.readSubscription()</code> si llegó un mensaje nuevo de ese feed.</li>
+</ul>
+<div class="advertencia">
+    <strong>Ambos feeds son independientes:</strong> uno se usa para publicar y el otro para recibir. No deben compartir el mismo nombre.
+</div>            
         </section>
 
         <section id="entregables">
-            <h2>Entregables</h2>
+
+    <h2>Entregables</h2>
+
+    <p>
+        Al finalizar el laboratorio, deberá entregar las siguientes evidencias:
+    </p>
+
+    <ol class="lista-entregables">
+
+        <li>
+            <strong>Captura de pantalla de la prueba de la conexion del ESP32 a Adafruit IO.</strong>
+            La captura deberá mostrar el código ejecutándose y el feed de prueba en Adafruit IO.
+        </li>
+
+        <li>
+            <strong>Enlace al repositorio de GitHub.</strong>
+            El repositorio deberá contener los dos programas desarrollados durante la actividad:
             <ul>
-                <li>[Archivo o código que se debe entregar]</li>
-                <li>[Captura o evidencia del resultado]</li>
-                <li>[Conclusiones]</li>
+                <li>Código de prueba del sensor Ultrasonico.</li>
+                <li>Código de integración del sensor Ultrasonico con Adafruit IO y el LED RGB.</li>
             </ul>
-        </section>
+        </li>
+
+        <li>
+            <strong>Foto del circuito armado.</strong>
+        </li>
+
+    </ol>
+
+</section>
     </main>
 
 </body>
