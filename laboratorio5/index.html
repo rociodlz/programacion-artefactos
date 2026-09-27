@@ -24,16 +24,153 @@
         <h1>Programación de Artefactos</h1>
         <h2>Laboratorio 5 - ESP32 y conexion a Internet en Adafruit</h2>
 
-        <section id="introduccion">
-            <h2>Introducción a Adafruit</h2>
-            <p>[Explica brevemente el tema]</p>
-            <p>[Añade aquí el contexto necesario]</p>
-        </section>
+<section id="introduccion">
 
-        <section id="sensor">
-            <h2>Sensor ultrasónico HC-SR04 </h2>
-            <p>[Explica brevemente el sensor ultrasónico HC-SR04]</p>
-        </section>
+    <h2>Introducción a Adafruit</h2>
+
+    <p>
+        Adafruit es una empresa y un ecosistema dedicado al desarrollo de hardware,
+        software y herramientas para electrónica, programación e Internet (IoT).
+    </p>
+
+    <p>
+        Fue fundada por Limor Fried y ofrece componentes electrónicos, placas de
+        desarrollo, sensores, pantallas, librerías y plataformas para facilitar la
+        creación de proyectos.
+    </p>
+
+    <img
+        src="imagenes/adafruit.png"
+        alt="Página de Adafruit"
+        class="imagen-instalacion"
+    >
+
+    <h3>¿Qué es Adafruit IO?</h3>
+
+    <p>
+        Adafruit IO es una plataforma en la nube orientada a proyectos de IoT.
+    </p>
+
+    <p>
+        Permite que un dispositivo conectado a Internet pueda enviar datos a la
+        nube y recibir instrucciones desde ella.
+    </p>
+
+    <p>
+        Por ejemplo: Desde la placa ESP32 y un sensor de temperatura, haciendo uso
+        de Adafruit IO, se puede mostrar el valor obtenido mediante una gráfica y
+        que el dato se esté actualizando constantemente.
+    </p>
+
+    <h3>¿Qué es un Feed?</h3>
+
+    <p>
+        Un Feed es un espacio dentro de Adafruit IO utilizado para manejar los
+        datos de una determinada variable.
+    </p>
+
+    <p>
+        Por ejemplo: Todas las variables que queramos utilizar como temperatura,
+        humedad, luz, nivel de agua, estado de sensores, etc.
+    </p>
+
+    <h3>¿Qué es un Dashboard?</h3>
+
+    <p>
+        Un Dashboard permite presentar visualmente la información de un proyecto.
+    </p>
+
+    <p>
+        Debemos utilizar los que más se adecúen a nuestros sensores, pueden ser
+        gráficas, valores numéricos, botones, controles, etc.
+    </p>
+
+    <h3>Ventajas</h3>
+
+    <p>
+        Entre las principales ventajas de utilizar el ecosistema Adafruit están:
+    </p>
+
+    <ul>
+        <li>Facilita el aprendizaje de electrónica.</li>
+        <li>Tiene una gran cantidad de librerías y documentación.</li>
+        <li>Permite trabajar con muchos sensores y dispositivos.</li>
+        <li>Facilita la creación de proyectos IoT.</li>
+        <li>Permite visualizar información mediante dashboards.</li>
+        <li>Permite realizar proyectos de monitoreo y automatización.</li>
+        <li>Se puede utilizar con plataformas como Arduino, ESP8266 y ESP32.</li>
+    </ul>
+
+    <h3>Mapa de pines de ESP32</h3>
+
+    <img
+        src="imagenes/teoria2-mapa-esp32.png"
+        alt="Mapa de pines del ESP32"
+        class="imagen-instalacion"
+    >
+
+<section id="sensor">
+
+    <h2>Sensor ultrasónico HC-SR04</h2>
+
+    <p>
+        El HC-SR04 es un sensor de distancias por ultrasonidos capaz de detectar
+        objetos y calcular la distancia a la que se encuentra en un rango de
+        2 a 450 cm. El sensor funciona por ultrasonidos y contiene toda la
+        electrónica encargada de hacer la medición.
+    </p>
+
+    <img
+        src="imagenes/teoria3-hcsr04-pines.jpg"
+        alt="Pines del sensor ultrasónico HC-SR04"
+        class="imagen-instalacion"
+    >
+
+    <h3>Pines de conexión</h3>
+
+    <ul>
+        <li>VCC</li>
+        <li>Trig (Disparo del ultrasonido)</li>
+        <li>Echo (Recepción del ultrasonido)</li>
+        <li>GND</li>
+    </ul>
+
+    <h3>Funcionamiento</h3>
+
+    <img
+        src="imagenes/teoria4-hcsr04-funcionamiento.png"
+        alt="Funcionamiento del sensor ultrasónico HC-SR04"
+        class="imagen-instalacion"
+    >
+
+    <p>
+        El sensor ultrasónico funciona enviando un pulso de sonido
+        (ultrasonido, fuera del rango audible) por el pin TRIG, y midiendo
+        cuánto tiempo tarda ese sonido en rebotar contra un objeto y regresar,
+        lo cual detecta en el pin ECHO. Cuanto más lejos esté el objeto,
+        más tiempo tarda el sonido en ir y volver.
+    </p>
+
+    <p>
+        El cálculo se basa en la fórmula física de velocidad, distancia y tiempo:
+    </p>
+
+    <p>
+        <strong>v = d / t &nbsp;&nbsp; → &nbsp;&nbsp; d = v × t</strong>
+    </p>
+
+    <p>
+        El tiempo que mide el sensor (la duración en que el pin ECHO se mantiene
+        en alto) corresponde al recorrido de ida y vuelta del sonido, no solo a
+        la ida. Por eso, la distancia real hasta el objeto es la mitad de lo que
+        el sonido recorrió en ese tiempo:
+    </p>
+
+    <p>
+        <strong>d(cm) = (0.0343 × t(µs)) / 2</strong>
+    </p>
+
+</section>
 
         <section id="configuracion">
             <h2>Configuración de Adafruit</h2>
