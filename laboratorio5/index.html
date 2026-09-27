@@ -94,8 +94,7 @@
     <h3>Parte 1. Prueba de conexión con Adafruit IO</h3>
 
     <p>
-        Descargue la siguiente plantilla de Arduino y ábrala utilizando
-        Arduino IDE:
+        Descargue la siguiente plantilla:
     </p>
 
     <p>
@@ -122,11 +121,7 @@
         En Adafruit IO, cree un Feed con el nombre
         <strong>test</strong>. Este Feed será utilizado por el programa
         para enviar valores de prueba.
-    </p>
-    <p>
-        Ingrese al Feed <strong>test</strong> en Adafruit IO y compruebe
-        que se reciben valores consecutivos enviados por el ESP32.
-    </p>
+    </p>2
     <h3>Parte 2. Prueba del sensor ultrasónico HC-SR04</h3>
 
     <p>
@@ -134,44 +129,44 @@
         el funcionamiento del sensor ultrasónico HC-SR04.
     </p>
     
-    <pre><code>#define TRIG_PIN 18
-#define ECHO_PIN 19
+<pre><code>#define TRIG_PIN ______
+#define ECHO_PIN ______
 
 void setup() {
 
   Serial.begin(115200);
 
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+  pinMode(____________________);
+  pinMode(____________________);
 }
 
 void loop() {
 
-  digitalWrite(TRIG_PIN, LOW);
-  delayMicroseconds(2);
+  digitalWrite(____________________);
+  delayMicroseconds(____);
 
-  digitalWrite(TRIG_PIN, HIGH);
-  delayMicroseconds(10);
+  digitalWrite(____________________);
+  delayMicroseconds(____);
 
-  digitalWrite(TRIG_PIN, LOW);
+  digitalWrite(____________________);
 
-  long duracion = pulseIn(ECHO_PIN, HIGH, 30000);
+  long duracion = pulseIn(____________________________);
 
-  if (duracion == 0) {
+  if (____________________) {
 
     Serial.println("No se detectó eco");
 
   } else {
 
-    float distancia = duracion * 0.0343 / 2;
+    float distancia = ______________________________;
 
-    Serial.print("Distancia: ");
-    Serial.print(distancia, 1);
-    Serial.println(" cm");
+    ________________________________________________;
+    ________________________________________________;
+    ________________________________________________;
   }
 
   delay(500);
-}</code></pre>
+}</code></pre>8
 </section>
         <section id="actividad">
             <h2>Actividad práctica: Ultrasónico + LED RGB + Adafruit IO</h2>
