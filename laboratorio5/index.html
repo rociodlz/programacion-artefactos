@@ -309,7 +309,7 @@ void loop() {
             <h2>Actividad práctica: Ultrasónico + LED RGB + Adafruit IO</h2>
 <p>
     En esta actividad se conecta el sensor ultrasónico HC-SR04 a Adafruit IO para publicar
-    la distancia medida en tiempo real, visible en un dashboard mediante un widget y un LED RGB que su color cambia según qué tan cerca esté un objeto del sensor.
+    la distancia medida en tiempo real, visible en un dashboard mediante un widget y un LED RGB que su color cambia según la distancia del objeto; verde para objetos lejanos, amarillo para objetos medios y rojo para objetos cercanos.
 </p>
             <h3>Creación de Feeds y Widgets en el Dashboard </h3>
             <h3>Paso 1:</h3>
@@ -319,7 +319,7 @@ void loop() {
             <img src="imagenes/adafruit7.png" alt="Formulario para crear un nuevo Feed" class="imagen-instalacion">
             <p>El nuevo feed aparecerá listado bajo el grupo "Default", junto con su Feed Key (el nombre que se usará en el código para identificarlo). </p>
             <img src="imagenes/adafruit8.png" alt="Feed creado" class="imagen-instalacion">
-            <h3>Paso 2</h3>
+            <h3>Paso 2:</h3>
             <p>Para crear un nuevo Dahboard, haz clic en Dashboards y luego en New Dashboard. </p>
             <img src="imagenes/adafruit9.png" alt="Crear un nuevo Dashboard" class="imagen-instalacion">
             <p>Escribe un nombre para el dashboard (por ejemplo "Sensor Ultrasónico") y, opcionalmente, una descripción. Haz clic en Create. </p>
@@ -330,7 +330,7 @@ void loop() {
             <h3>Paso 3:</h3>
             <p>Dentro del dashboard, haz clic en el botón New Block, ubicado en la esquina superior derecha. </p>
             <img src="imagenes/adafruit12.png" alt="Agregar un nuevo bloque al dashboard" class="imagen-instalacion">
-            <p>Se abrirá una ventana con todos los tipos de bloques disponibles. Para mostrar la distancia del sensor ultrasónico, elige el bloque Gauge (medidor circular). Para el desafío del toggle que apaga el LED, elige el bloque Toggle (el primero de la lista, con el interruptor ON/OFF). </p>
+            <p>Se abrirá una ventana con todos los tipos de bloques disponibles. Para mostrar la distancia del sensor ultrasónico, elige el bloque Gauge (medidor circular). </p>
             <img src="imagenes/adafruit13.png" alt="Elegir tipo de bloque" class="imagen-instalacion">
             <p>En la siguiente pantalla, te pedirá elegir a qué feed se conectará el bloque.  </p>
             <p>Marca el checkbox del feed correspondiente (por ejemplo "distancia" para el Gauge) y haz clic en Next step. </p>
@@ -384,10 +384,10 @@ void loop() {
             </table>
             <img src="imagenes/Circuito.png" alt="Circuito" class="imagen-instalacion">
 
-        <p>Sustituye los valores de la plantilla con tus propios valores.</p>
+        <p>Sustituye los espacios en blanco con tus propios valores.</p>
         <p>Plantilla de código para el ESP32:</p>
 
-<pre><code> #include <WiFi.h>                      
+<pre><code>#include <WiFi.h>                     
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
 
@@ -398,12 +398,12 @@ void loop() {
 // ---------------------- CONFIGURACIÓN ADAFRUIT IO ----------------------
 #define AIO_SERVER      "io.adafruit.com"
 #define AIO_SERVERPORT  1883
-#define AIO_USERNAME    "TU_USUARIO_ADAFRUIT"   // <- cambiar
-#define AIO_KEY         "TU_AIO_KEY"            // <- cambiar (no la subas a repositorio)
+#define AIO_USERNAME    "TU_USUARIO_ADAFRUIT"   
+#define AIO_KEY         "TU_AIO_KEY"           //(no la subas a repositorio)
 
 // ---------------------- PINES ----------------------
 #define TRIG_PIN  18
-#define ECHO_PIN  19
+#define ECHO_PIN  19  
 #define PIN_R     25
 #define PIN_G     26
 #define PIN_B     27
@@ -413,8 +413,8 @@ void loop() {
 #define PWM_FREQ         5000
 #define PWM_RES          8         
 #define INTERVALO_PUBLICAR_MS 5000  // Adafruit gratis limita los datos por minuto: no bajar de 4-5 s
-#define DIST_CERCA_CM     //Agregar distancia  
-#define DIST_MEDIA_CM    //Agregar distancia   
+#define DIST_CERCA_CM    __________      // menos de esto -> rojo
+#define DIST_MEDIA_CM    __________      // menos de esto -> amarillo, más -> verde
 
 // ---------------------- CLIENTE MQTT Y FEED ----------------------
 WiFiClient client;
@@ -428,7 +428,7 @@ float ultimaDistancia = -1;             // última lectura válida (cm)
 unsigned long ultimoPublicar = 0;
 unsigned long ultimoPing = 0;
 
-// ---------------------- FUNCIONES ----------------------
+// ---------------------- PROTOTIPOS ----------------------
 void conectarWiFi();
 void conectarMQTT();
 float leerDistanciaCm();
@@ -441,14 +441,14 @@ void setup() {
   Serial.begin(115200);
   delay(10);
 
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+  pinMode(TRIG_PIN,___________);
+  pinMode(ECHO_PIN,___________);
 
   ledcAttach(PIN_R, PWM_FREQ, PWM_RES);
   ledcAttach(PIN_G, PWM_FREQ, PWM_RES);
   ledcAttach(PIN_B, PWM_FREQ, PWM_RES);
 
-  escribirRGB(255, 255, 255); 
+  escribirRGB(255, 255, 255);   
 
   conectarWiFi();
 }
@@ -487,18 +487,16 @@ void loop() {
 //  ULTRASÓNICO HC-SR04
 // =====================================================================
 float leerDistanciaCm() {
-  // Pulso de 10 us en TRIG
   digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
 
-  // Tiempo que ECHO permanece en alto
-  long duracion = pulseIn(ECHO_PIN, HIGH, 30000);
+  long duracion = pulseIn(ECHO_PIN,_________, 30000);
   if (duracion == 0) return -1;   // no hubo eco
 
-  float distancia = 0;   // <- reemplazar esta línea con formula
+  float distancia = ______________________________;
 
   // Rango útil del sensor: 2 a 100 cm
   if (distancia < 2 || distancia > 100) return -1;
@@ -521,7 +519,7 @@ float distanciaPromedio(int muestras) {
 //  LED RGB
 // =====================================================================
 void escribirRGB(uint8_t r, uint8_t g, uint8_t b) {
-  if (RGB_ANODO_COMUN) {         
+  if (RGB_ANODO_COMUN) {          
     r = 255 - r;  g = 255 - g;  b = 255 - b;
   }
   ledcWrite(PIN_R, r);
@@ -532,14 +530,17 @@ void escribirRGB(uint8_t r, uint8_t g, uint8_t b) {
 // El color debe cambiar solo según la última distancia leída.
 void actualizarLED() {
   if (ultimaDistancia <= 0) {
-    escribirRGB(255, 255, 255);   // aún no hay lectura válida -> blanco
+    escribirRGB(255, 255, 255);   
     return;
   }
 
-  // Usando las variables declaradas anteriormente que color mostrar:
-  //   - Si ultimaDistancia es menor a DIST_CERCA_CM       -> rojo
-  //   - Si ultimaDistancia es menor a DIST_MEDIA_CM        -> amarillo
-  //   - Si ultimaDistancia es mayor o igual a DIST_MEDIA_CM -> verde
+  if (____________________________) {
+    ________________________________________________;
+  } else if (____________________________) {
+    ________________________________________________;
+  } else {
+    ________________________________________________;
+  }
 }
 
 // =====================================================================
@@ -562,7 +563,7 @@ void conectarMQTT() {
   Serial.print("Conectando a Adafruit IO... ");
   int8_t ret;
   uint8_t intentos = 3;
-  while ((ret = mqtt.connect()) != 0) {     
+  while ((ret = mqtt.connect()) != 0) {         
     Serial.println(mqtt.connectErrorString(ret));
     Serial.println("Reintentando en 5 segundos...");
     mqtt.disconnect();
