@@ -402,19 +402,19 @@ void loop() {
 #define AIO_KEY         "TU_AIO_KEY"           //(no la subas a repositorio)
 
 // ---------------------- PINES ----------------------
-#define TRIG_PIN  18
-#define ECHO_PIN  19  
-#define PIN_R     25
-#define PIN_G     26
-#define PIN_B     27
+#define TRIG_PIN  ______
+#define ECHO_PIN  ______
+#define PIN_R     ______
+#define PIN_G     ______
+#define PIN_B     ______
 
 // ---------------------- AJUSTES ----------------------
 #define RGB_ANODO_COMUN  false      
 #define PWM_FREQ         5000
 #define PWM_RES          8         
 #define INTERVALO_PUBLICAR_MS 5000  // Adafruit gratis limita los datos por minuto: no bajar de 4-5 s
-#define DIST_CERCA_CM    __________      // menos de esto -> rojo
-#define DIST_MEDIA_CM    __________      // menos de esto -> amarillo, más -> verde
+#define DIST_CERCA_CM    __________     
+#define DIST_MEDIA_CM    __________    
 
 // ---------------------- CLIENTE MQTT Y FEED ----------------------
 WiFiClient client;
@@ -441,8 +441,8 @@ void setup() {
   Serial.begin(115200);
   delay(10);
 
-  pinMode(TRIG_PIN,___________);
-  pinMode(ECHO_PIN,___________);
+  pinMode(TRIG_PIN,____________);
+  pinMode(ECHO_PIN,____________);
 
   ledcAttach(PIN_R, PWM_FREQ, PWM_RES);
   ledcAttach(PIN_G, PWM_FREQ, PWM_RES);
@@ -493,7 +493,7 @@ float leerDistanciaCm() {
   delayMicroseconds(10);
   digitalWrite(TRIG_PIN, LOW);
 
-  long duracion = pulseIn(ECHO_PIN,_________, 30000);
+  long duracion = pulseIn(ECHO_PIN,__________, 30000);
   if (duracion == 0) return -1;   // no hubo eco
 
   float distancia = ______________________________;
