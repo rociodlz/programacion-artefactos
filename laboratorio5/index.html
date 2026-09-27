@@ -78,17 +78,166 @@
             </div>
         </section>
 
-        <section id="prueba">
-            <h2>Primera Prueba</h2>
-            <h3>Paso 1: [Nombre del paso]</h3>
-            <p>[Describe lo que debe hacer la persona que realiza el laboratorio.]</p>
-            <p>[Añade aquí una imagen propia en la carpeta imagenes, si es necesaria.]</p>
+<section id="prueba">
 
-            <pre><code>// Escribe o pega aquí el código de la práctica
+    <h2>Primera Prueba</h2>
 
-// TODO: completar
-            </code></pre>
-        </section>
+    <p>
+        Antes de desarrollar la actividad final, se realizarán dos pruebas
+        independientes. Primero se verificará que el ESP32 pueda conectarse
+        correctamente a Adafruit IO. Posteriormente, se comprobará el
+        funcionamiento del sensor ultrasónico HC-SR04 utilizando únicamente
+        el Monitor Serial.
+    </p>
+
+
+    <h3>Parte 1. Prueba de conexión con Adafruit IO</h3>
+
+    <p>
+        Descargue la siguiente plantilla de Arduino y ábrala utilizando
+        Arduino IDE:
+    </p>
+
+    <p>
+        <a href="archivos/plantillaAdafruitIO.ino"
+           download
+           class="boton-descarga">
+            Descargar plantilla de conexión a Adafruit IO
+        </a>
+    </p>
+
+    <p>
+        Antes de cargar el programa al ESP32, sustituya los siguientes
+        valores con sus propias credenciales:
+    </p>
+
+    <ul>
+        <li><strong>WLAN_SSID:</strong> nombre de la red Wi-Fi.</li>
+        <li><strong>WLAN_PASS:</strong> contraseña de la red Wi-Fi.</li>
+        <li><strong>AIO_USERNAME:</strong> usuario de Adafruit IO.</li>
+        <li><strong>AIO_KEY:</strong> Active Key de su cuenta de Adafruit IO.</li>
+    </ul>
+
+    <p>
+        En Adafruit IO, cree un Feed con el nombre
+        <strong>test</strong>. Este Feed será utilizado por el programa
+        para enviar valores de prueba.
+    </p>
+
+    <p>
+        Cargue el programa al ESP32 y abra el Monitor Serial a
+        <strong>115200 baudios</strong>.
+    </p>
+
+    <p>
+        Si la conexión se realiza correctamente, en el Monitor Serial
+        deberán aparecer mensajes indicando que el ESP32 se conectó a
+        la red Wi-Fi y posteriormente a Adafruit IO.
+    </p>
+
+    <p>
+        Ingrese al Feed <strong>test</strong> en Adafruit IO y compruebe
+        que se reciben valores consecutivos enviados por el ESP32.
+    </p>
+
+    <div class="advertencia">
+        <strong>Importante:</strong>
+        no comparta ni publique su AIO Key. Esta clave funciona como
+        una credencial de acceso a su cuenta de Adafruit IO.
+    </div>
+
+
+    <h3>Parte 2. Prueba del sensor ultrasónico HC-SR04</h3>
+
+    <p>
+        Una vez comprobada la conexión con Adafruit IO, verifique de manera
+        independiente el funcionamiento del sensor ultrasónico HC-SR04.
+        En esta prueba la distancia medida se mostrará únicamente en el
+        Monitor Serial y no será enviada a Adafruit IO.
+    </p>
+
+    <h4>Conexiones</h4>
+
+    <table class="tabla-pines">
+
+        <tr>
+            <th>HC-SR04</th>
+            <th>ESP32</th>
+        </tr>
+
+        <tr>
+            <td>VCC</td>
+            <td>5V</td>
+        </tr>
+
+        <tr>
+            <td>GND</td>
+            <td>GND</td>
+        </tr>
+
+        <tr>
+            <td>TRIG</td>
+            <td>GPIO18</td>
+        </tr>
+
+        <tr>
+            <td>ECHO</td>
+            <td>GPIO19</td>
+        </tr>
+
+    </table>
+
+    <p>
+        Cargue el siguiente programa al ESP32 y abra el Monitor Serial
+        a <strong>115200 baudios</strong>.
+    </p>
+
+    <pre><code>#define TRIG_PIN 18
+#define ECHO_PIN 19
+
+void setup() {
+
+  Serial.begin(115200);
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+}
+
+void loop() {
+
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+
+  digitalWrite(TRIG_PIN, LOW);
+
+  long duracion = pulseIn(ECHO_PIN, HIGH, 30000);
+
+  if (duracion == 0) {
+
+    Serial.println("No se detectó eco");
+
+  } else {
+
+    float distancia = duracion * 0.0343 / 2;
+
+    Serial.print("Distancia: ");
+    Serial.print(distancia, 1);
+    Serial.println(" cm");
+  }
+
+  delay(500);
+}</code></pre>
+
+    <p>
+        Acerque y aleje un objeto frente al sensor y observe los valores
+        mostrados en el Monitor Serial. La distancia deberá cambiar de
+        acuerdo con la posición del objeto.
+    </p>
+
+</section>
         <section id="actividad">
             <h2>Actividad práctica: Ultrasónico + LED RGB + Adafruit IO</h2>
 <p>
