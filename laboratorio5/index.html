@@ -486,6 +486,23 @@ void setup() {
 // =====================================================================
 void loop() {
   conectarMQTT();   // mantiene la conexión con Adafruit (reconecta si se cae)
+    
+  Adafruit_MQTT_Subscribe *sub;
+
+  while ((sub = mqtt.readSubscription(200))) {
+
+    if (sub == &amp;feedBoton) {
+
+      const char *msg = (char *)feedBoton.lastread;
+
+      ledEncendido = (strcmp(msg, "ON") == 0);
+
+      Serial.print("boton-led: ");
+      Serial.println(msg);
+
+      actualizarLED();
+    }
+  }
 
   // Leer el ultrasónico y publicar cada cierto tiempo
   if (millis() - ultimoPublicar >= INTERVALO_PUBLICAR_MS) {
