@@ -265,6 +265,41 @@
         Una vez comprobada la conexión con Adafruit IO, verifique de manera
         el funcionamiento del sensor ultrasónico HC-SR04.
     </p>
+<h4>Conexiones</h4>
+
+<p>
+    Realice las siguientes conexiones entre el sensor ultrasónico HC-SR04
+    y el ESP32 antes de cargar el programa.
+</p>
+
+<table class="tabla-pines">
+
+    <tr>
+        <th>HC-SR04</th>
+        <th>ESP32</th>
+    </tr>
+
+    <tr>
+        <td>VCC</td>
+        <td>5V</td>
+    </tr>
+
+    <tr>
+        <td>GND</td>
+        <td>GND</td>
+    </tr>
+
+    <tr>
+        <td>TRIG</td>
+        <td>GPIO18</td>
+    </tr>
+
+    <tr>
+        <td>ECHO</td>
+        <td>GPIO19</td>
+    </tr>
+
+</table>
     
 <pre><code>#define TRIG_PIN ______
 #define ECHO_PIN ______
