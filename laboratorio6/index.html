@@ -613,19 +613,10 @@ React
         <code>mosquitto_pub</code>, incluida dentro del mismo contenedor de
         Mosquitto.
     </p>
-
-    <div class="nota">
-        <strong>¿Por qué realizar esta prueba?</strong>
-        Permite verificar primero la comunicación entre Mosquitto y React.
-        Si el dashboard responde correctamente, posteriormente será más sencillo
-        identificar cualquier problema relacionado con el ESP32 o los sensores.
-    </div>
-
-
     <h3>1. Publicar una temperatura</h3>
 
     <p>
-        Abra una nueva terminal de PowerShell y ubíquese dentro de la carpeta
+        Abra una nueva terminal y ubíquese dentro de la carpeta
         principal del proyecto.
     </p>
 
@@ -727,26 +718,6 @@ React
             </tr>
         </tbody>
     </table>
-
-
-    <h3>¿Qué es un mensaje retained?</h3>
-
-    <p>
-        En MQTT, un mensaje <strong>retained</strong> permite que el broker
-        conserve el último valor publicado en un topic.
-    </p>
-
-    <p>
-        Gracias a esta característica, si React se conecta después de que el
-        mensaje fue publicado o si se recarga la página, Mosquitto puede enviar
-        inmediatamente el último valor almacenado.
-    </p>
-
-    <p>
-        Para comprobarlo, actualice la página del navegador. Los valores enviados
-        anteriormente deben continuar apareciendo en el dashboard.
-    </p>
-
     <div class="comprobacion">
         <strong>Comprobación:</strong>
         después de enviar los tres mensajes, el dashboard debe mostrar
@@ -754,27 +725,6 @@ React
         <strong>10 % de iluminación</strong> y la condición
         <strong>Lluvioso</strong>.
     </div>
-
-
-    <h3>Flujo de esta prueba</h3>
-
-    <div class="diagrama-arquitectura">
-        <pre>
-PowerShell
-    │
-    │ mosquitto_pub
-    ▼
-Mosquitto
-    │
-    │ WebSocket
-    ▼
-React
-    │
-    ▼
-Dashboard actualizado
-        </pre>
-    </div>
-
     <figure class="captura">
         <img src="imagenes/prueba-mqtt.png"
              alt="Dashboard actualizado mediante mensajes MQTT publicados manualmente">
@@ -784,7 +734,6 @@ Dashboard actualizado
             El dashboard recibe los valores publicados manualmente mediante Mosquitto.
         </figcaption>
     </figure>
-
 </section>
 
 <section id="esp32">
