@@ -1697,9 +1697,177 @@ LDR ADC: 3017 | Luz: 73 %
 
 </section>
 
-        <section id="prueba-final">
-            <h2>Prueba completa</h2>
-        </section>
+<section id="prueba-final">
+
+    <h2>Prueba completa del sistema</h2>
+
+    <p>
+        En esta etapa se comprobará el funcionamiento completo del sistema,
+        utilizando las mediciones reales obtenidas por el ESP32.
+    </p>
+
+    <p>
+        Antes de iniciar la prueba, verifique que:
+    </p>
+
+    <ul>
+        <li>Mosquitto se encuentre ejecutándose en Docker.</li>
+        <li>El dashboard React esté abierto en el navegador.</li>
+        <li>El ESP32 esté conectado a la misma red Wi-Fi que la computadora.</li>
+        <li>El programa haya sido cargado correctamente al ESP32.</li>
+    </ul>
+
+
+    <h3>1. Comprobar las lecturas en el Monitor Serial</h3>
+
+    <p>
+        Abra el Monitor Serial de Arduino IDE a
+        <code>115200 baud</code>.
+    </p>
+
+    <p>
+        El ESP32 debe mostrar periódicamente valores de temperatura,
+        humedad e iluminación similares a:
+    </p>
+
+    <pre><code>Temperatura: 25.60 °C
+Humedad: 61.00 %
+LDR ADC: 3017 | Luz: 73 %
+------------------------------</code></pre>
+
+    <div class="comprobacion">
+        <strong>Comprobación:</strong>
+        los valores deben actualizarse aproximadamente cada dos segundos.
+    </div>
+
+
+    <h3>2. Observar los datos en el dashboard</h3>
+
+    <p>
+        Regrese al navegador donde se encuentra abierto el dashboard.
+        Los valores mostrados deben corresponder con las mediciones observadas
+        en el Monitor Serial.
+    </p>
+
+    <p>
+        El flujo de información que se está ejecutando es:
+    </p>
+
+    <div class="diagrama-arquitectura">
+        <pre>
+DHT11 + LDR
+     │
+     ▼
+   ESP32
+     │
+     │ MQTT :1883
+     ▼
+ Mosquitto
+     │
+     │ WebSocket :9001
+     ▼
+   React
+     │
+     ▼
+ Dashboard
+        </pre>
+    </div>
+
+
+    <h3>3. Probar el sensor de iluminación</h3>
+
+    <p>
+        Cubra parcialmente la LDR con la mano y observe cómo cambia la lectura
+        de iluminación en el dashboard.
+    </p>
+
+    <p>
+        Posteriormente, exponga nuevamente la LDR a una mayor cantidad de luz.
+    </p>
+
+    <p>
+        De acuerdo con el valor recibido, el dashboard mostrará una de las
+        siguientes condiciones:
+    </p>
+
+    <table class="tabla-herramientas">
+        <thead>
+            <tr>
+                <th>Nivel de iluminación</th>
+                <th>Condición</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Menor que 20 %</td>
+                <td>Lluvioso</td>
+            </tr>
+
+            <tr>
+                <td>De 20 % a 64 %</td>
+                <td>Parcialmente nublado</td>
+            </tr>
+
+            <tr>
+                <td>65 % o mayor</td>
+                <td>Soleado</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>4. Comprobar la gráfica de temperatura</h3>
+
+    <p>
+        Observe la gráfica mostrada en el dashboard mientras el ESP32 continúa
+        enviando mediciones.
+    </p>
+
+    <p>
+        La gráfica debe actualizarse automáticamente y conservar las
+        <strong>últimas cinco temperaturas recibidas</strong>.
+    </p>
+
+
+    <h3>5. Comprobar los mensajes retained</h3>
+
+    <p>
+        Actualice la página del navegador utilizando <strong>F5</strong>.
+    </p>
+
+    <p>
+        Los últimos valores de temperatura, humedad e iluminación deben volver
+        a mostrarse automáticamente.
+    </p>
+
+    <p>
+        Esto ocurre porque el ESP32 publica los datos como mensajes
+        <strong>retained</strong>, permitiendo que Mosquitto conserve la última
+        medición de cada topic.
+    </p>
+
+
+    <div class="comprobacion">
+        <strong>Prueba final:</strong>
+        el sistema funciona correctamente si las mediciones obtenidas por el
+        ESP32 aparecen en el dashboard, la gráfica se actualiza y la condición
+        cambia al modificar el nivel de iluminación recibido por la LDR.
+    </div>
+
+
+    <figure class="captura">
+        <img src="imagenes/prueba-final.png"
+             alt="Dashboard mostrando datos reales enviados por el ESP32">
+
+        <figcaption>
+            Funcionamiento completo del sistema:
+            el ESP32 publica las mediciones mediante MQTT y el dashboard las
+            visualiza en tiempo real.
+        </figcaption>
+    </figure>
+
+</section>
 
         <section id="entregables">
             <h2>Entregables</h2>
