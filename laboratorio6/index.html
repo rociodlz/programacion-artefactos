@@ -493,9 +493,167 @@ README.md</code></pre>
 
 </section>
 
-        <section id="react">
-            <h2>Preparar React</h2>
-        </section>
+<section id="react">
+
+    <h2>Preparar React</h2>
+
+    <p>
+        El dashboard del laboratorio fue desarrollado con <strong>React</strong>.
+        Antes de poder ejecutarlo, es necesario instalar las dependencias del
+        proyecto y preparar el archivo de configuración que utilizará la aplicación.
+    </p>
+
+    <p>
+        React será la interfaz encargada de mostrar los datos recibidos mediante
+        MQTT, como temperatura, humedad e iluminación.
+    </p>
+
+
+    <h3>1. Verificar que se encuentra en la carpeta del proyecto</h3>
+
+    <p>
+        Antes de ejecutar los siguientes comandos, compruebe que PowerShell se
+        encuentra dentro de la carpeta del repositorio:
+    </p>
+
+    <pre><code>cd "$HOME\Desktop\TallerProgramacionArtefactos2026"</code></pre>
+
+    <p>
+        Puede comprobar la ubicación actual observando la ruta que aparece antes
+        del símbolo <code>&gt;</code> en PowerShell.
+    </p>
+
+
+    <h3>2. Instalar las dependencias</h3>
+
+    <p>
+        El archivo <code>package.json</code> contiene la lista de librerías y
+        dependencias necesarias para ejecutar la aplicación.
+    </p>
+
+    <p>
+        Para instalarlas, ejecute:
+    </p>
+
+    <pre><code>npm install</code></pre>
+
+    <p>
+        npm leerá el archivo <code>package.json</code> y descargará las
+        dependencias necesarias dentro de una carpeta llamada
+        <code>node_modules</code>.
+    </p>
+
+    <div class="comprobacion">
+        <strong>Comprobación:</strong>
+        al finalizar, el comando debe indicar que las dependencias fueron
+        instaladas correctamente y no deben aparecer errores que impidan continuar.
+    </div>
+
+
+    <h3>3. Crear el archivo de variables de entorno</h3>
+
+    <p>
+        El proyecto incluye un archivo llamado <code>.env.example</code> que contiene
+        la configuración base que necesita React para conectarse al broker MQTT.
+    </p>
+
+    <p>
+        Para crear el archivo de configuración que utilizará la aplicación,
+        ejecute en PowerShell:
+    </p>
+
+    <pre><code>Copy-Item .env.example .env</code></pre>
+
+    <p>
+        Este comando crea una copia llamada <code>.env</code>.
+    </p>
+
+
+    <h3>4. ¿Qué contiene el archivo .env?</h3>
+
+    <p>
+        El archivo <code>.env</code> contiene variables de configuración utilizadas
+        por React. Para este laboratorio se incluyen las siguientes:
+    </p>
+
+    <pre><code>VITE_MQTT_URL=ws://localhost:9001
+VITE_MQTT_TEMPERATURE_TOPIC=clima/esp32/temperatura
+VITE_MQTT_HUMIDITY_TOPIC=clima/esp32/humedad
+VITE_MQTT_SUNLIGHT_TOPIC=clima/esp32/luz</code></pre>
+
+    <p>
+        La primera variable indica la dirección que utilizará React para conectarse
+        a Mosquitto mediante WebSocket.
+    </p>
+
+    <p>
+        Las otras tres variables indican los topics MQTT que utilizará el dashboard
+        para recibir cada tipo de información.
+    </p>
+
+    <table class="tabla-herramientas">
+        <thead>
+            <tr>
+                <th>Variable</th>
+                <th>Función</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><code>VITE_MQTT_URL</code></td>
+                <td>
+                    Dirección utilizada por React para conectarse al broker MQTT.
+                </td>
+            </tr>
+
+            <tr>
+                <td><code>VITE_MQTT_TEMPERATURE_TOPIC</code></td>
+                <td>
+                    Topic utilizado para recibir la temperatura.
+                </td>
+            </tr>
+
+            <tr>
+                <td><code>VITE_MQTT_HUMIDITY_TOPIC</code></td>
+                <td>
+                    Topic utilizado para recibir la humedad.
+                </td>
+            </tr>
+
+            <tr>
+                <td><code>VITE_MQTT_SUNLIGHT_TOPIC</code></td>
+                <td>
+                    Topic utilizado para recibir el nivel de iluminación.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>5. Comprobar que el archivo fue creado</h3>
+
+    <p>
+        Para mostrar también los archivos ocultos de la carpeta, ejecute:
+    </p>
+
+    <pre><code>dir -Force</code></pre>
+
+    <p>
+        Deben aparecer ambos archivos:
+    </p>
+
+    <pre><code>.env
+.env.example</code></pre>
+
+    <div class="nota">
+        <strong>Importante:</strong>
+        por ahora no modifique los valores del archivo <code>.env</code>.
+        La dirección <code>ws://localhost:9001</code> funcionará mientras React
+        y Mosquitto se ejecuten en la misma computadora.
+    </div>
+
+</section>
 
         <section id="mosquitto">
             <h2>Mosquitto y Docker</h2>
