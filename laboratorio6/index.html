@@ -757,17 +757,12 @@ React
     <table class="tabla-herramientas">
         <thead>
             <tr>
-                <th>Componente</th>
+                <th>Sensor</th>
                 <th>Función</th>
             </tr>
         </thead>
 
         <tbody>
-            <tr>
-                <td><strong>ESP32</strong></td>
-                <td>Lectura de sensores y publicación de datos mediante MQTT.</td>
-            </tr>
-
             <tr>
                 <td><strong>DHT11</strong></td>
                 <td>Medición de temperatura y humedad.</td>
@@ -776,16 +771,6 @@ React
             <tr>
                 <td><strong>LDR</strong></td>
                 <td>Medición relativa del nivel de iluminación.</td>
-            </tr>
-
-            <tr>
-                <td><strong>Resistencia de 10 kΩ</strong></td>
-                <td>Utilizada junto con la LDR para formar un divisor de voltaje.</td>
-            </tr>
-
-            <tr>
-                <td><strong>Protoboard y jumpers</strong></td>
-                <td>Conexión de los componentes.</td>
             </tr>
         </tbody>
     </table>
@@ -828,29 +813,6 @@ React
         La lectura analógica se realizará utilizando el
         <strong>GPIO 34</strong>.
     </p>
-
-    <div class="diagrama-arquitectura">
-        <pre>
-3.3 V
-  │
- LDR
-  │
-  ├──────── GPIO 34
-  │
-10 kΩ
-  │
- GND
-        </pre>
-    </div>
-
-    <div class="nota">
-        <strong>Nota:</strong>
-        el valor de iluminación utilizado en este laboratorio se mostrará
-        como un porcentaje relativo entre 0 y 100 %. No corresponde a una
-        medición calibrada en lux.
-    </div>
-
-
     <h3>1. Instalar las librerías necesarias</h3>
 
     <p>
@@ -862,13 +824,6 @@ React
         <li><strong>Adafruit Unified Sensor</strong></li>
         <li><strong>PubSubClient</strong></li>
     </ul>
-
-    <p>
-        La librería <code>WiFi.h</code> forma parte del soporte para ESP32
-        y no necesita instalarse por separado.
-    </p>
-
-
     <h3>2. Obtener la dirección IP de la computadora</h3>
 
     <p>
@@ -894,21 +849,12 @@ React
     </p>
 
     <pre><code>IPv4 Address . . . . . . . . . . : 192.168.0.5</code></pre>
-
-    <div class="advertencia">
-        <strong>Importante:</strong>
-        utilice la IPv4 correspondiente al adaptador Wi-Fi.
-        No utilice direcciones pertenecientes a Docker, WSL, VMware
-        u otros adaptadores virtuales.
-    </div>
-
     <figure class="captura">
         <img src="imagenes/ip-wifi.png"
              alt="Identificación de la dirección IPv4 del adaptador Wi-Fi mediante ipconfig">
 
         <figcaption>
             Identificación de la dirección IPv4 correspondiente al adaptador Wi-Fi.
-            Esta dirección será utilizada posteriormente como servidor MQTT en el ESP32.
         </figcaption>
     </figure>
 
@@ -919,20 +865,6 @@ React
         El ESP32 y la computadora deben estar conectados a la
         <strong>misma red Wi-Fi</strong>.
     </p>
-
-    <div class="diagrama-arquitectura">
-        <pre>
-ESP32
-  │
-  │ misma red Wi-Fi
-  ▼
-Computadora
-  │
-  └── Mosquitto :1883
-        </pre>
-    </div>
-
-
     <h3>4. Programa del ESP32</h3>
 
     <p>
@@ -1211,12 +1143,6 @@ const char* MQTT_SERVER = "IP_DE_LA_COMPUTADORA";</code></pre>
         Conecte el ESP32 a la computadora, seleccione la placa y el puerto
         correspondientes en Arduino IDE y cargue el programa.
     </p>
-
-    <p>
-        Posteriormente abra el <strong>Monitor Serial</strong> a
-        <code>115200 baud</code>.
-    </p>
-
     <p>
         Si la conexión es correcta, deben aparecer mensajes similares a:
     </p>
@@ -1231,13 +1157,6 @@ Temperatura: 25.60 °C
 Humedad: 61.00 %
 LDR ADC: 3017 | Luz: 73 %
 ------------------------------</code></pre>
-
-    <div class="comprobacion">
-        <strong>Comprobación:</strong>
-        el ESP32 debe conectarse correctamente a la red Wi-Fi y a Mosquitto,
-        y el Monitor Serial debe mostrar las lecturas obtenidas de los sensores.
-    </div>
-
 </section>
 
 <section id="prueba-final">
