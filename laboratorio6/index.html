@@ -1193,9 +1193,509 @@ Dashboard actualizado
 
 </section>
 
-        <section id="esp32">
-            <h2>ESP32 y sensores</h2>
-        </section>
+<section id="esp32">
+
+    <h2>ESP32 y sensores</h2>
+
+    <p>
+        Una vez comprobado el funcionamiento de Mosquitto y del dashboard,
+        se incorporará el <strong>ESP32</strong> para obtener mediciones reales
+        de temperatura, humedad e iluminación y publicarlas mediante MQTT.
+    </p>
+
+    <p>
+        En este laboratorio se utilizarán un sensor <strong>DHT11</strong>
+        y una <strong>fotoresistencia LDR</strong>.
+    </p>
+
+
+    <h3>Componentes utilizados</h3>
+
+    <table class="tabla-herramientas">
+        <thead>
+            <tr>
+                <th>Componente</th>
+                <th>Función</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><strong>ESP32</strong></td>
+                <td>Lectura de sensores y publicación de datos mediante MQTT.</td>
+            </tr>
+
+            <tr>
+                <td><strong>DHT11</strong></td>
+                <td>Medición de temperatura y humedad.</td>
+            </tr>
+
+            <tr>
+                <td><strong>LDR</strong></td>
+                <td>Medición relativa del nivel de iluminación.</td>
+            </tr>
+
+            <tr>
+                <td><strong>Resistencia de 10 kΩ</strong></td>
+                <td>Utilizada junto con la LDR para formar un divisor de voltaje.</td>
+            </tr>
+
+            <tr>
+                <td><strong>Protoboard y jumpers</strong></td>
+                <td>Conexión de los componentes.</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>Conexión del DHT11</h3>
+
+    <table class="tabla-pines">
+        <thead>
+            <tr>
+                <th>DHT11</th>
+                <th>ESP32</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>VCC</td>
+                <td>3.3 V</td>
+            </tr>
+
+            <tr>
+                <td>GND</td>
+                <td>GND</td>
+            </tr>
+
+            <tr>
+                <td>DATA</td>
+                <td>GPIO 4</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>Conexión de la LDR</h3>
+
+    <p>
+        La LDR se conectará junto con una resistencia de
+        <strong>10 kΩ</strong> formando un divisor de voltaje.
+        La lectura analógica se realizará utilizando el
+        <strong>GPIO 34</strong>.
+    </p>
+
+    <div class="diagrama-arquitectura">
+        <pre>
+3.3 V
+  │
+ LDR
+  │
+  ├──────── GPIO 34
+  │
+10 kΩ
+  │
+ GND
+        </pre>
+    </div>
+
+    <div class="nota">
+        <strong>Nota:</strong>
+        el valor de iluminación utilizado en este laboratorio se mostrará
+        como un porcentaje relativo entre 0 y 100 %. No corresponde a una
+        medición calibrada en lux.
+    </div>
+
+
+    <h3>1. Instalar las librerías necesarias</h3>
+
+    <p>
+        Abra el Administrador de Librerías de Arduino IDE e instale:
+    </p>
+
+    <ul>
+        <li><strong>DHT sensor library</strong></li>
+        <li><strong>Adafruit Unified Sensor</strong></li>
+        <li><strong>PubSubClient</strong></li>
+    </ul>
+
+    <p>
+        La librería <code>WiFi.h</code> forma parte del soporte para ESP32
+        y no necesita instalarse por separado.
+    </p>
+
+
+    <h3>2. Obtener la dirección IP de la computadora</h3>
+
+    <p>
+        El ESP32 deberá conectarse al broker Mosquitto que se está ejecutando
+        en la computadora. Para ello es necesario conocer la dirección
+        <strong>IPv4</strong> de la computadora dentro de la red Wi-Fi.
+    </p>
+
+    <p>
+        Abra PowerShell y ejecute:
+    </p>
+
+    <pre><code>ipconfig</code></pre>
+
+    <p>
+        Busque la sección correspondiente a
+        <strong>Wireless LAN adapter Wi-Fi</strong> y localice la dirección
+        IPv4.
+    </p>
+
+    <p>
+        Por ejemplo:
+    </p>
+
+    <pre><code>IPv4 Address . . . . . . . . . . : 192.168.0.5</code></pre>
+
+    <div class="advertencia">
+        <strong>Importante:</strong>
+        utilice la IPv4 correspondiente al adaptador Wi-Fi.
+        No utilice direcciones pertenecientes a Docker, WSL, VMware
+        u otros adaptadores virtuales.
+    </div>
+
+    <figure class="captura">
+        <img src="imagenes/ip-wifi.png"
+             alt="Identificación de la dirección IPv4 del adaptador Wi-Fi mediante ipconfig">
+
+        <figcaption>
+            Identificación de la dirección IPv4 correspondiente al adaptador Wi-Fi.
+            Esta dirección será utilizada posteriormente como servidor MQTT en el ESP32.
+        </figcaption>
+    </figure>
+
+
+    <h3>3. Verificar la red</h3>
+
+    <p>
+        El ESP32 y la computadora deben estar conectados a la
+        <strong>misma red Wi-Fi</strong>.
+    </p>
+
+    <div class="diagrama-arquitectura">
+        <pre>
+ESP32
+  │
+  │ misma red Wi-Fi
+  ▼
+Computadora
+  │
+  └── Mosquitto :1883
+        </pre>
+    </div>
+
+
+    <h3>4. Programa del ESP32</h3>
+
+    <p>
+        Cree un nuevo sketch en Arduino IDE y utilice el siguiente código.
+        Modifique las credenciales Wi-Fi y la dirección IP del servidor MQTT
+        de acuerdo con la computadora utilizada.
+    </p>
+
+    <pre><code>#include &lt;WiFi.h&gt;
+#include &lt;PubSubClient.h&gt;
+#include &lt;DHT.h&gt;
+
+// ======================================================
+// CONFIGURACIÓN WIFI
+// ======================================================
+
+const char* WIFI_SSID = "NOMBRE_DE_LA_RED";
+const char* WIFI_PASSWORD = "CONTRASENA_DE_LA_RED";
+
+
+// ======================================================
+// CONFIGURACIÓN MQTT
+// ======================================================
+
+// IP de la computadora donde está ejecutándose Mosquitto.
+const char* MQTT_SERVER = "IP_DE_LA_COMPUTADORA";
+const int MQTT_PORT = 1883;
+
+// Topics esperados por el dashboard React.
+const char* TOPIC_TEMPERATURA = "clima/esp32/temperatura";
+const char* TOPIC_HUMEDAD = "clima/esp32/humedad";
+const char* TOPIC_LUZ = "clima/esp32/luz";
+
+
+// ======================================================
+// CONFIGURACIÓN DE SENSORES
+// ======================================================
+
+// DHT11
+#define DHT_PIN 4
+#define DHT_TYPE DHT11
+
+DHT dht(DHT_PIN, DHT_TYPE);
+
+// LDR
+#define LDR_PIN 34
+
+
+// ======================================================
+// OBJETOS WIFI Y MQTT
+// ======================================================
+
+WiFiClient wifiClient;
+PubSubClient mqttClient(wifiClient);
+
+
+// ======================================================
+// TEMPORIZACIÓN
+// ======================================================
+
+// Enviar una lectura cada 2 segundos.
+const unsigned long INTERVALO_ENVIO = 2000;
+
+unsigned long ultimoEnvio = 0;
+
+
+// ======================================================
+// CONECTAR A WIFI
+// ======================================================
+
+void conectarWiFi() {
+
+  Serial.print("Conectando a WiFi");
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("WiFi conectado");
+
+  Serial.print("IP del ESP32: ");
+  Serial.println(WiFi.localIP());
+}
+
+
+// ======================================================
+// CONECTAR A MQTT
+// ======================================================
+
+void conectarMQTT() {
+
+  while (!mqttClient.connected()) {
+
+    Serial.print("Conectando a Mosquitto...");
+
+    // Crear un Client ID diferente para este ESP32.
+    String clientId = "ESP32-";
+    clientId += String((uint32_t)(ESP.getEfuseMac() &amp; 0xFFFFFFFF), HEX);
+
+    if (mqttClient.connect(clientId.c_str())) {
+
+      Serial.println(" conectado");
+
+    } else {
+
+      Serial.print(" error, rc=");
+      Serial.print(mqttClient.state());
+      Serial.println(". Reintentando en 2 segundos...");
+
+      delay(2000);
+    }
+  }
+}
+
+
+// ======================================================
+// LEER Y PUBLICAR SENSORES
+// ======================================================
+
+void publicarSensores() {
+
+  // ----------------------------------------------------
+  // DHT11
+  // ----------------------------------------------------
+
+  float temperatura = dht.readTemperature();
+  float humedad = dht.readHumidity();
+
+  // Verificar si el DHT11 devolvió una lectura válida.
+  if (isnan(temperatura) || isnan(humedad)) {
+
+    Serial.println("Error al leer el DHT11");
+
+  } else {
+
+    char temperaturaTexto[10];
+    char humedadTexto[10];
+
+    dtostrf(temperatura, 1, 1, temperaturaTexto);
+    dtostrf(humedad, 1, 1, humedadTexto);
+
+    // true = mensaje retained
+    mqttClient.publish(
+      TOPIC_TEMPERATURA,
+      temperaturaTexto,
+      true
+    );
+
+    mqttClient.publish(
+      TOPIC_HUMEDAD,
+      humedadTexto,
+      true
+    );
+
+    Serial.print("Temperatura: ");
+    Serial.print(temperatura);
+    Serial.println(" °C");
+
+    Serial.print("Humedad: ");
+    Serial.print(humedad);
+    Serial.println(" %");
+  }
+
+
+  // ----------------------------------------------------
+  // LDR
+  // ----------------------------------------------------
+
+  int lecturaLDR = analogRead(LDR_PIN);
+
+  // ESP32 ADC: aproximadamente 0 - 4095.
+  int porcentajeLuz = map(
+    lecturaLDR,
+    0,
+    4095,
+    0,
+    100
+  );
+
+  porcentajeLuz = constrain(porcentajeLuz, 0, 100);
+
+  char luzTexto[10];
+
+  itoa(porcentajeLuz, luzTexto, 10);
+
+  mqttClient.publish(
+    TOPIC_LUZ,
+    luzTexto,
+    true
+  );
+
+  Serial.print("LDR ADC: ");
+  Serial.print(lecturaLDR);
+
+  Serial.print(" | Luz: ");
+  Serial.print(porcentajeLuz);
+  Serial.println(" %");
+
+  Serial.println("------------------------------");
+}
+
+
+// ======================================================
+// SETUP
+// ======================================================
+
+void setup() {
+
+  Serial.begin(115200);
+
+  dht.begin();
+
+  pinMode(LDR_PIN, INPUT);
+
+  conectarWiFi();
+
+  mqttClient.setServer(
+    MQTT_SERVER,
+    MQTT_PORT
+  );
+}
+
+
+// ======================================================
+// LOOP
+// ======================================================
+
+void loop() {
+
+  // Si se pierde WiFi, volver a conectarse.
+  if (WiFi.status() != WL_CONNECTED) {
+    conectarWiFi();
+  }
+
+  // Si se pierde MQTT, volver a conectarse.
+  if (!mqttClient.connected()) {
+    conectarMQTT();
+  }
+
+  mqttClient.loop();
+
+
+  // Publicar sensores cada 2 segundos.
+  if (millis() - ultimoEnvio &gt;= INTERVALO_ENVIO) {
+
+    ultimoEnvio = millis();
+
+    publicarSensores();
+  }
+}</code></pre>
+
+
+    <h3>5. Configuración antes de cargar el programa</h3>
+
+    <p>
+        Antes de cargar el sketch al ESP32, modifique las siguientes líneas:
+    </p>
+
+    <pre><code>const char* WIFI_SSID = "NOMBRE_DE_LA_RED";
+const char* WIFI_PASSWORD = "CONTRASENA_DE_LA_RED";
+const char* MQTT_SERVER = "IP_DE_LA_COMPUTADORA";</code></pre>
+
+    <p>
+        En <code>MQTT_SERVER</code> coloque la dirección IPv4 obtenida anteriormente
+        mediante <code>ipconfig</code>.
+    </p>
+
+
+    <h3>6. Cargar y comprobar el programa</h3>
+
+    <p>
+        Conecte el ESP32 a la computadora, seleccione la placa y el puerto
+        correspondientes en Arduino IDE y cargue el programa.
+    </p>
+
+    <p>
+        Posteriormente abra el <strong>Monitor Serial</strong> a
+        <code>115200 baud</code>.
+    </p>
+
+    <p>
+        Si la conexión es correcta, deben aparecer mensajes similares a:
+    </p>
+
+    <pre><code>Conectando a WiFi....
+WiFi conectado
+IP del ESP32: 192.168.0.17
+
+Conectando a Mosquitto... conectado
+
+Temperatura: 25.60 °C
+Humedad: 61.00 %
+LDR ADC: 3017 | Luz: 73 %
+------------------------------</code></pre>
+
+    <div class="comprobacion">
+        <strong>Comprobación:</strong>
+        el ESP32 debe conectarse correctamente a la red Wi-Fi y a Mosquitto,
+        y el Monitor Serial debe mostrar las lecturas obtenidas de los sensores.
+    </div>
+
+</section>
 
         <section id="prueba-final">
             <h2>Prueba completa</h2>
