@@ -107,20 +107,6 @@ Mosquitto
 Dashboard
         </pre>
     </div>
-
-    <h3>ESP32</h3>
-
-    <p>
-        El <strong>ESP32</strong> será el dispositivo encargado de obtener las
-        mediciones de los sensores. En este laboratorio se trabajará con datos de
-        temperatura, humedad e iluminación.
-    </p>
-
-    <p>
-        Después de obtener las mediciones, el ESP32 las publicará mediante MQTT
-        utilizando diferentes topics.
-    </p>
-
     <h3>Mosquitto</h3>
 
     <p>
@@ -131,8 +117,7 @@ Dashboard
 
     <p>
         En este proyecto, Mosquitto se ejecutará dentro de un contenedor de
-        <strong>Docker</strong>. Más adelante se explicará cómo levantar y comprobar
-        este servicio.
+        Docker.
     </p>
 
     <h3>React</h3>
@@ -142,12 +127,6 @@ Dashboard
         laboratorio. La aplicación se conectará a Mosquitto, recibirá las mediciones
         publicadas por el ESP32 y actualizará la interfaz en tiempo real.
     </p>
-
-    <p>
-        De esta manera, el navegador no recibe directamente la información del
-        ESP32. Los datos pasan primero por el broker MQTT.
-    </p>
-
     <h3>Flujo de una medición</h3>
 
     <p>
@@ -177,14 +156,6 @@ React
 Dashboard: 25.4 °C
         </pre>
     </div>
-
-    <div class="nota">
-        <strong>Idea clave:</strong>
-        MQTT no depende de Adafruit IO. Adafruit IO es una plataforma que facilita
-        el uso de MQTT y la visualización de datos, pero también es posible utilizar
-        un broker diferente y desarrollar nuestra propia interfaz.
-    </div>
-
 </section>
 
 <section id="requisitos">
