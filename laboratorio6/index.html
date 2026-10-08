@@ -402,7 +402,7 @@ VITE_MQTT_SUNLIGHT_TOPIC=clima/esp32/luz</code></pre>
          alt="Instalación de dependencias y creación del archivo de variables de entorno">
 
     <figcaption>
-        Instalación de dependencias con.
+        Instalación de dependencias.
     </figcaption>
 </figure>
 
@@ -418,20 +418,6 @@ VITE_MQTT_SUNLIGHT_TOPIC=clima/esp32/luz</code></pre>
         mensajes publicados por los dispositivos y enviarlos a los clientes
         que se encuentren suscritos a los topics correspondientes.
     </p>
-
-    <p>
-        Para facilitar su instalación y configuración, Mosquitto se ejecutará
-        dentro de un contenedor de <strong>Docker</strong>.
-    </p>
-
-    <div class="nota">
-        <strong>Idea clave:</strong>
-        Docker permite ejecutar Mosquitto utilizando una configuración ya
-        preparada dentro del proyecto, evitando realizar una instalación y
-        configuración manual del broker en cada computadora.
-    </div>
-
-
     <h3>¿Cómo se utilizará Mosquitto?</h3>
 
     <p>
@@ -486,18 +472,6 @@ React
         En Windows, abra <strong>Docker Desktop</strong> y espere hasta que
         Docker indique que se encuentra ejecutándose.
     </p>
-
-    <p>
-        También puede comprobarlo desde PowerShell utilizando:
-    </p>
-
-    <pre><code>docker ps</code></pre>
-
-    <p>
-        Si Docker responde correctamente, puede continuar con el siguiente paso.
-    </p>
-
-
     <h3>2. Levantar Mosquitto</h3>
 
     <p>
@@ -515,21 +489,6 @@ React
         Este comando utiliza el archivo <code>docker-compose.yml</code> para
         crear y ejecutar el contenedor de Mosquitto.
     </p>
-
-    <p>
-        La opción <code>-d</code> permite que el contenedor continúe
-        ejecutándose en segundo plano mientras se siguen utilizando otras
-        terminales.
-    </p>
-
-    <div class="nota">
-        <strong>Primera ejecución:</strong>
-        Docker puede tardar unos segundos adicionales porque deberá descargar
-        la imagen de Mosquitto si todavía no se encuentra disponible en la
-        computadora.
-    </div>
-
-
     <h3>3. Comprobar el contenedor</h3>
 
     <p>
@@ -555,42 +514,6 @@ React
     <pre><code>1883
 9001</code></pre>
 
-    <div class="comprobacion">
-        <strong>Comprobación:</strong>
-        el contenedor <code>clima-mosquitto</code> debe aparecer con estado
-        <code>Up</code> y los puertos 1883 y 9001 deben estar disponibles.
-    </div>
-
-
-    <h3>4. Revisar los mensajes de Mosquitto</h3>
-
-    <p>
-        Docker permite consultar los mensajes generados por el broker durante
-        su ejecución. Para hacerlo, ejecute:
-    </p>
-
-    <pre><code>docker compose logs mosquitto</code></pre>
-
-    <p>
-        Entre los mensajes deben aparecer líneas similares a:
-    </p>
-
-    <pre><code>Opening ipv4 listen socket on port 1883
-Opening ipv4 listen socket on port 9001
-mosquitto version ... running</code></pre>
-
-    <p>
-        Estas líneas indican que Mosquitto está escuchando correctamente las
-        conexiones MQTT y WebSocket necesarias para el laboratorio.
-    </p>
-
-    <div class="comprobacion">
-        <strong>Antes de continuar:</strong>
-        confirme que Mosquitto se encuentra ejecutándose correctamente y que
-        no aparecen errores en los logs.
-    </div>
-
-
     <h3>¿Cómo detener Mosquitto?</h3>
 
     <p>
@@ -614,7 +537,6 @@ mosquitto version ... running</code></pre>
         <code>1883</code> y <code>9001</code> deben estar disponibles.
     </figcaption>
 </figure>
-
 </section>
 
 <section id="dashboard">
