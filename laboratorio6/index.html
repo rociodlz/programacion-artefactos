@@ -1074,47 +1074,13 @@ LDR ADC: 3017 | Luz: 73 %
 
     <h2>Prueba completa del sistema</h2>
 
-    <p>
-        En esta etapa se comprobará el funcionamiento completo del sistema,
-        utilizando las mediciones reales obtenidas por el ESP32.
-    </p>
-
-    <p>
-        Antes de iniciar la prueba, verifique que:
-    </p>
-
-    <ul>
-        <li>Mosquitto se encuentre ejecutándose en Docker.</li>
-        <li>El dashboard React esté abierto en el navegador.</li>
-        <li>El ESP32 esté conectado a la misma red Wi-Fi que la computadora.</li>
-        <li>El programa haya sido cargado correctamente al ESP32.</li>
-    </ul>
-
-
-    <h3>1. Comprobar las lecturas en el Monitor Serial</h3>
-
-    <p>
-        Abra el Monitor Serial de Arduino IDE a
-        <code>115200 baud</code>.
-    </p>
-
-    <p>
-        El ESP32 debe mostrar periódicamente valores de temperatura,
-        humedad e iluminación similares a:
-    </p>
-
-    <pre><code>Temperatura: 25.60 °C
-Humedad: 61.00 %
-LDR ADC: 3017 | Luz: 73 %
-------------------------------</code></pre>
-
     <div class="comprobacion">
         <strong>Comprobación:</strong>
         los valores deben actualizarse aproximadamente cada dos segundos.
     </div>
 
 
-    <h3>2. Observar los datos en el dashboard</h3>
+    <h3>1. Observar los datos en el dashboard</h3>
 
     <p>
         Regrese al navegador donde se encuentra abierto el dashboard.
@@ -1122,32 +1088,7 @@ LDR ADC: 3017 | Luz: 73 %
         en el Monitor Serial.
     </p>
 
-    <p>
-        El flujo de información que se está ejecutando es:
-    </p>
-
-    <div class="diagrama-arquitectura">
-        <pre>
-DHT11 + LDR
-     │
-     ▼
-   ESP32
-     │
-     │ MQTT :1883
-     ▼
- Mosquitto
-     │
-     │ WebSocket :9001
-     ▼
-   React
-     │
-     ▼
- Dashboard
-        </pre>
-    </div>
-
-
-    <h3>3. Probar el sensor de iluminación</h3>
+    <h3>2. Probar el sensor de iluminación</h3>
 
     <p>
         Cubra parcialmente la LDR con la mano y observe cómo cambia la lectura
@@ -1190,7 +1131,7 @@ DHT11 + LDR
     </table>
 
 
-    <h3>4. Comprobar la gráfica de temperatura</h3>
+    <h3>3. Comprobar la gráfica de temperatura</h3>
 
     <p>
         Observe la gráfica mostrada en el dashboard mientras el ESP32 continúa
@@ -1201,32 +1142,14 @@ DHT11 + LDR
         La gráfica debe actualizarse automáticamente y conservar las
         <strong>últimas cinco temperaturas recibidas</strong>.
     </p>
-
-
-    <h3>5. Comprobar los mensajes retained</h3>
-
     <p>
-        Actualice la página del navegador utilizando <strong>F5</strong>.
+        Actualice la página del navegador utilizando.
     </p>
 
     <p>
         Los últimos valores de temperatura, humedad e iluminación deben volver
         a mostrarse automáticamente.
     </p>
-
-    <p>
-        Esto ocurre porque el ESP32 publica los datos como mensajes
-        <strong>retained</strong>, permitiendo que Mosquitto conserve la última
-        medición de cada topic.
-    </p>
-
-
-    <div class="comprobacion">
-        <strong>Prueba final:</strong>
-        el sistema funciona correctamente si las mediciones obtenidas por el
-        ESP32 aparecen en el dashboard, la gráfica se actualiza y la condición
-        cambia al modificar el nivel de iluminación recibido por la LDR.
-    </div>
 </section>
 
 <section id="entregables">
