@@ -1,1 +1,642 @@
+/* ======================================================
+   LABORATORIO 6
+   MQTT, Mosquitto y React
+   ====================================================== */
 
+
+/* ------------------------------------------------------
+   VARIABLES DE COLOR
+   ------------------------------------------------------ */
+
+:root {
+    --azul-oscuro: #466f86;
+    --azul: #5d93b5;
+    --azul-claro: #eaf3f7;
+
+    --menta: #94d8cf;
+    --menta-claro: #edf8f6;
+
+    --naranja: #efa15a;
+    --naranja-claro: #fff4e8;
+
+    --amarillo: #e2c963;
+    --amarillo-claro: #fff9df;
+
+    --beige: #d8cdb8;
+
+    --fondo: #f6f8f9;
+    --blanco: #ffffff;
+
+    --texto: #30383d;
+    --texto-secundario: #617079;
+
+    --borde: #dfe5e8;
+    --gris-claro: #f1f4f5;
+
+    --codigo: #26343c;
+    --codigo-texto: #f2f6f7;
+}
+
+
+/* ------------------------------------------------------
+   CONFIGURACIÓN GENERAL
+   ------------------------------------------------------ */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--fondo);
+    color: var(--texto);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* ------------------------------------------------------
+   MENÚ LATERAL
+   ------------------------------------------------------ */
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 255px;
+    height: 100vh;
+
+    padding: 32px 20px;
+
+    background-color: var(--azul-oscuro);
+
+    overflow-y: auto;
+}
+
+.menu-lateral h2 {
+    margin: 0 0 28px;
+
+    padding-bottom: 16px;
+
+    color: var(--blanco);
+
+    font-size: 1.35rem;
+    font-weight: 650;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.menu-lateral a {
+    display: block;
+
+    margin: 3px 0;
+    padding: 10px 12px;
+
+    color: rgba(255, 255, 255, 0.88);
+
+    text-decoration: none;
+
+    font-size: 0.94rem;
+
+    border-radius: 6px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        padding-left 0.2s ease;
+}
+
+.menu-lateral a:hover {
+    background-color: rgba(255, 255, 255, 0.11);
+    color: var(--blanco);
+
+    padding-left: 16px;
+}
+
+
+/* ------------------------------------------------------
+   CONTENIDO PRINCIPAL
+   ------------------------------------------------------ */
+
+.contenedor {
+    margin-left: 255px;
+
+    width: calc(100% - 255px);
+
+    max-width: 1180px;
+
+    padding: 48px 60px 80px;
+}
+
+
+/* ------------------------------------------------------
+   TÍTULO PRINCIPAL
+   ------------------------------------------------------ */
+
+.contenedor > h1 {
+    margin: 0 0 38px;
+
+    padding-bottom: 20px;
+
+    color: var(--azul-oscuro);
+
+    font-size: 2.15rem;
+    line-height: 1.25;
+    font-weight: 700;
+
+    border-bottom: 3px solid var(--naranja);
+}
+
+
+/* ------------------------------------------------------
+   SECCIONES
+   ------------------------------------------------------ */
+
+section {
+    margin-bottom: 32px;
+
+    padding: 34px 38px;
+
+    background-color: var(--blanco);
+
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+
+    box-shadow: 0 3px 12px rgba(40, 60, 70, 0.04);
+
+    scroll-margin-top: 24px;
+}
+
+
+/* ------------------------------------------------------
+   TÍTULOS
+   ------------------------------------------------------ */
+
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    color: var(--azul-oscuro);
+
+    font-size: 1.65rem;
+    line-height: 1.3;
+}
+
+section h2::after {
+    content: "";
+
+    display: block;
+
+    width: 42px;
+    height: 3px;
+
+    margin-top: 10px;
+
+    background-color: var(--naranja);
+
+    border-radius: 2px;
+}
+
+h3 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+
+    color: #3f6e87;
+
+    font-size: 1.18rem;
+    font-weight: 650;
+}
+
+
+/* ------------------------------------------------------
+   TEXTO
+   ------------------------------------------------------ */
+
+p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+strong {
+    color: #263f4d;
+}
+
+a {
+    color: var(--azul-oscuro);
+}
+
+
+/* ------------------------------------------------------
+   LISTAS
+   ------------------------------------------------------ */
+
+ul,
+ol {
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    padding-left: 28px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+li::marker {
+    color: var(--azul);
+}
+
+
+/* ------------------------------------------------------
+   CÓDIGO EN LÍNEA
+   ------------------------------------------------------ */
+
+code {
+    padding: 2px 6px;
+
+    background-color: #eef2f4;
+
+    color: #34566a;
+
+    font-family:
+        "Cascadia Code",
+        "Consolas",
+        monospace;
+
+    font-size: 0.91em;
+
+    border-radius: 4px;
+}
+
+
+/* ------------------------------------------------------
+   BLOQUES DE CÓDIGO / TERMINAL
+   ------------------------------------------------------ */
+
+pre {
+    margin: 18px 0 22px;
+
+    padding: 18px 20px;
+
+    background-color: var(--codigo);
+    color: var(--codigo-texto);
+
+    border-radius: 7px;
+
+    overflow-x: auto;
+
+    line-height: 1.55;
+
+    font-family:
+        "Cascadia Code",
+        "Consolas",
+        monospace;
+
+    font-size: 0.9rem;
+}
+
+pre code {
+    padding: 0;
+
+    background: transparent;
+    color: inherit;
+
+    border-radius: 0;
+
+    font-size: inherit;
+}
+
+
+/* ------------------------------------------------------
+   NOTAS
+   ------------------------------------------------------ */
+
+.nota,
+.comprobacion,
+.advertencia {
+    margin: 22px 0;
+
+    padding: 16px 18px;
+
+    border-radius: 6px;
+
+    line-height: 1.6;
+}
+
+
+/* Nota general */
+
+.nota {
+    background-color: var(--azul-claro);
+
+    border-left: 4px solid var(--azul);
+}
+
+
+/* Comprobación correcta */
+
+.comprobacion {
+    background-color: var(--menta-claro);
+
+    border-left: 4px solid var(--menta);
+}
+
+
+/* Advertencias */
+
+.advertencia {
+    background-color: var(--naranja-claro);
+
+    border-left: 4px solid var(--naranja);
+}
+
+.nota strong,
+.comprobacion strong,
+.advertencia strong {
+    color: var(--texto);
+}
+
+
+/* ------------------------------------------------------
+   TABLAS
+   ------------------------------------------------------ */
+
+.tabla-herramientas,
+.tabla-pines {
+    width: 100%;
+
+    margin: 20px 0 26px;
+
+    border-collapse: collapse;
+
+    background-color: var(--blanco);
+
+    border: 1px solid var(--borde);
+
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.tabla-herramientas th,
+.tabla-pines th {
+    padding: 13px 16px;
+
+    background-color: var(--azul-oscuro);
+    color: var(--blanco);
+
+    text-align: left;
+
+    font-weight: 600;
+}
+
+.tabla-herramientas td,
+.tabla-pines td {
+    padding: 13px 16px;
+
+    border-bottom: 1px solid var(--borde);
+
+    vertical-align: top;
+}
+
+.tabla-herramientas tbody tr:last-child td,
+.tabla-pines tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla-herramientas tbody tr:nth-child(even),
+.tabla-pines tbody tr:nth-child(even) {
+    background-color: #f9fbfb;
+}
+
+
+/* ------------------------------------------------------
+   DIAGRAMAS
+   ------------------------------------------------------ */
+
+.diagrama-arquitectura,
+.flujo-datos {
+    margin: 22px 0;
+
+    padding: 5px;
+
+    background-color: #f4f8fa;
+
+    border: 1px solid #dce8ed;
+    border-radius: 8px;
+}
+
+.diagrama-arquitectura pre,
+.flujo-datos pre {
+    margin: 0;
+
+    background-color: transparent;
+
+    color: #36586a;
+
+    text-align: center;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------------
+   CAPTURAS E IMÁGENES
+   ------------------------------------------------------ */
+
+.captura {
+    margin: 28px auto 10px;
+
+    padding: 12px;
+
+    background-color: var(--blanco);
+
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+
+    text-align: center;
+}
+
+.captura img {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 0 auto;
+
+    border-radius: 5px;
+}
+
+.captura figcaption {
+    margin-top: 11px;
+    padding: 0 8px 4px;
+
+    color: var(--texto-secundario);
+
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------------
+   IMÁGENES GENERALES
+   ------------------------------------------------------ */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* ------------------------------------------------------
+   SELECCIÓN DE TEXTO
+   ------------------------------------------------------ */
+
+::selection {
+    background-color: var(--menta);
+    color: #20333d;
+}
+
+
+/* ------------------------------------------------------
+   SCROLLBAR DEL MENÚ
+   ------------------------------------------------------ */
+
+.menu-lateral::-webkit-scrollbar {
+    width: 6px;
+}
+
+.menu-lateral::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.menu-lateral::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.25);
+
+    border-radius: 10px;
+}
+
+
+/* ------------------------------------------------------
+   RESPONSIVE - TABLETS
+   ------------------------------------------------------ */
+
+@media (max-width: 950px) {
+
+    .menu-lateral {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+
+        padding: 20px 24px;
+    }
+
+    .menu-lateral h2 {
+        margin-bottom: 14px;
+    }
+
+    .menu-lateral a {
+        display: inline-block;
+
+        margin: 3px;
+
+        padding: 7px 10px;
+
+        background-color: rgba(255, 255, 255, 0.07);
+    }
+
+    .menu-lateral a:hover {
+        padding-left: 10px;
+    }
+
+    .contenedor {
+        margin-left: 0;
+
+        width: 100%;
+        max-width: none;
+
+        padding: 36px 30px 60px;
+    }
+
+}
+
+
+/* ------------------------------------------------------
+   RESPONSIVE - CELULARES
+   ------------------------------------------------------ */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 15px;
+    }
+
+    .menu-lateral {
+        padding: 18px;
+    }
+
+    .menu-lateral a {
+        display: block;
+
+        margin: 3px 0;
+    }
+
+    .contenedor {
+        padding: 26px 16px 50px;
+    }
+
+    .contenedor > h1 {
+        font-size: 1.65rem;
+    }
+
+    section {
+        padding: 24px 20px;
+
+        border-radius: 8px;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        font-size: 1.08rem;
+    }
+
+    pre {
+        padding: 15px;
+
+        font-size: 0.82rem;
+    }
+
+    .tabla-herramientas,
+    .tabla-pines {
+        display: block;
+
+        overflow-x: auto;
+
+        white-space: normal;
+    }
+
+    .captura {
+        padding: 7px;
+    }
+
+}
