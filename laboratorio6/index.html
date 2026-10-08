@@ -195,9 +195,189 @@ Dashboard: 25.4 °C
 
 </section>
 
-        <section id="requisitos">
-            <h2>Preparación del entorno</h2>
-        </section>
+<section id="requisitos">
+
+    <h2>Preparación del entorno</h2>
+
+    <p>
+        Antes de descargar el proyecto, es necesario comprobar que la computadora
+        cuenta con las herramientas que se utilizarán durante el laboratorio.
+        Cada una cumple una función diferente dentro de la arquitectura.
+    </p>
+
+    <h3>Herramientas necesarias</h3>
+
+    <table class="tabla-herramientas">
+        <thead>
+            <tr>
+                <th>Herramienta</th>
+                <th>¿Para qué se utilizará?</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><strong>Git</strong></td>
+                <td>
+                    Permitirá clonar el repositorio del laboratorio desde GitHub.
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Node.js y npm</strong></td>
+                <td>
+                    Se utilizarán para instalar las dependencias y ejecutar
+                    la aplicación desarrollada en React.
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Docker</strong></td>
+                <td>
+                    Permitirá ejecutar Mosquitto dentro de un contenedor sin tener
+                    que instalar y configurar manualmente el broker.
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Docker Compose</strong></td>
+                <td>
+                    Se utilizará para levantar Mosquitto utilizando la configuración
+                    incluida en el proyecto.
+                </td>
+            </tr>
+
+            <tr>
+                <td><strong>Arduino IDE</strong></td>
+                <td>
+                    Se utilizará posteriormente para programar el ESP32.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>1. Comprobar Git</h3>
+
+    <p>
+        Abra una terminal. En Windows puede utilizar
+        <strong>PowerShell</strong>. Ejecute:
+    </p>
+
+    <pre><code>git --version</code></pre>
+
+    <p>
+        Si Git está instalado correctamente, aparecerá una respuesta similar a:
+    </p>
+
+    <pre><code>git version 2.47.0.windows.2</code></pre>
+
+    <div class="comprobacion">
+        <strong>Comprobación:</strong>
+        el comando debe mostrar una versión de Git y no un mensaje indicando
+        que el comando no se reconoce.
+    </div>
+
+
+    <h3>2. Comprobar Node.js y npm</h3>
+
+    <p>
+        React necesita <strong>Node.js</strong> para poder ejecutarse.
+        npm se instala junto con Node.js y se utiliza para gestionar las
+        dependencias del proyecto.
+    </p>
+
+    <p>Ejecute:</p>
+
+    <pre><code>node --version</code></pre>
+
+    <p>Después:</p>
+
+    <pre><code>npm --version</code></pre>
+
+    <p>
+        Ambos comandos deben mostrar un número de versión.
+    </p>
+
+    <div class="nota">
+        <strong>Nota:</strong>
+        se recomienda utilizar una versión LTS de Node.js.
+    </div>
+
+
+    <h3>3. Comprobar Docker</h3>
+
+    <p>
+        En este laboratorio Mosquitto se ejecutará dentro de
+        <strong>Docker</strong>. Esto permitirá levantar el broker utilizando
+        la misma configuración en diferentes computadoras.
+    </p>
+
+    <p>Primero compruebe Docker:</p>
+
+    <pre><code>docker --version</code></pre>
+
+    <p>Después compruebe Docker Compose:</p>
+
+    <pre><code>docker compose version</code></pre>
+
+    <p>
+        El segundo comando debe indicar que se está utilizando
+        <strong>Docker Compose v2</strong>.
+    </p>
+
+    <div class="comprobacion">
+        <strong>Comprobación:</strong>
+        ambos comandos deben mostrar una versión instalada.
+    </div>
+
+
+    <h3>4. Comprobar que Docker está ejecutándose</h3>
+
+    <p>
+        Tener Docker instalado no significa necesariamente que el servicio se
+        encuentre activo. Para comprobarlo, ejecute:
+    </p>
+
+    <pre><code>docker ps</code></pre>
+
+    <p>
+        Si Docker está funcionando correctamente, aparecerá una tabla con los
+        contenedores activos. La tabla puede estar vacía y aun así indicar que
+        Docker está funcionando.
+    </p>
+
+    <pre><code>CONTAINER ID   IMAGE   COMMAND   CREATED   STATUS   PORTS   NAMES</code></pre>
+
+    <div class="advertencia">
+        <strong>En Windows:</strong>
+        Docker Desktop debe estar abierto y completamente iniciado antes de
+        ejecutar los comandos de Docker.
+    </div>
+
+
+    <h3>5. Arduino IDE</h3>
+
+    <p>
+        También será necesario contar con <strong>Arduino IDE</strong>,
+        ya que posteriormente se cargará al ESP32 el programa encargado de
+        leer los sensores y publicar los datos mediante MQTT.
+    </p>
+
+    <p>
+        En esta etapa únicamente se debe comprobar que Arduino IDE puede abrirse
+        correctamente. La configuración y programación del ESP32 se realizará
+        más adelante.
+    </p>
+
+
+    <div class="nota">
+        <strong>Antes de continuar:</strong>
+        asegúrese de que Git, Node.js, npm, Docker, Docker Compose y Arduino IDE
+        estén disponibles en la computadora.
+    </div>
+
+</section>
 
         <section id="repositorio">
             <h2>Clonar el repositorio</h2>
