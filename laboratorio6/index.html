@@ -545,35 +545,12 @@ React
 
     <p>
         Una vez que Mosquitto se encuentra activo, el siguiente paso es ejecutar
-        la aplicación web desarrollada en <strong>React</strong>.
+        la aplicación web.
     </p>
-
-    <p>
-        El dashboard será el encargado de visualizar los datos de temperatura,
-        humedad e iluminación que posteriormente serán publicados por el ESP32.
-    </p>
-
-    <div class="nota">
-        <strong>Recuerde:</strong>
-        Mosquitto debe permanecer activo mientras se utiliza el dashboard,
-        ya que React se conectará al broker para recibir los mensajes MQTT.
-    </div>
-
-
     <h3>1. Abrir una nueva terminal</h3>
-
-    <p>
-        Abra una nueva ventana de <strong>PowerShell</strong>.
-        No es necesario detener Mosquitto.
-    </p>
-
     <p>
         Ingrese nuevamente a la carpeta principal del proyecto:
     </p>
-
-    <pre><code>cd "$HOME\Desktop\TallerProgramacionArtefactos2026"</code></pre>
-
-
     <h3>2. Iniciar la aplicación React</h3>
 
     <p>
@@ -589,26 +566,11 @@ React
 
     <pre><code>Local: http://localhost:5173/</code></pre>
 
-    <p>
-        Mientras se utilice el dashboard,
-        <strong>esta terminal debe permanecer abierta</strong>.
-    </p>
-
-
     <h3>3. Abrir el dashboard</h3>
-
-    <p>
-        Abra un navegador web e ingrese a:
-    </p>
-
-    <pre><code>http://localhost:5173/</code></pre>
-
     <p>
         Debe mostrarse el dashboard del laboratorio con espacios para visualizar
         la temperatura, humedad, nivel de iluminación y condición actual.
     </p>
-
-
     <h3>4. Comprobar la conexión MQTT</h3>
 
     <p>
@@ -617,54 +579,21 @@ React
     </p>
 
     <pre><code>ws://localhost:9001</code></pre>
-
-    <p>
-        En esta dirección, <code>localhost</code> hace referencia a la misma
-        computadora donde se están ejecutando React y Mosquitto.
-    </p>
-
-    <p>
-        Si la conexión se establece correctamente, el dashboard mostrará el
-        sistema como conectado o en línea.
-    </p>
-
     <div class="comprobacion">
         <strong>Comprobación:</strong>
-        el dashboard debe abrir correctamente en
-        <code>localhost:5173</code> y mostrar que la conexión MQTT se encuentra
+        el dashboard debe mostrar que la conexión MQTT se encuentra
         activa.
     </div>
-
-
-    <h3>¿Qué está ocurriendo en este momento?</h3>
-
     <p>
         Aunque todavía no se ha conectado el ESP32, ya existe comunicación entre
         la aplicación web y el broker:
-    </p>
-
-    <div class="diagrama-arquitectura">
-        <pre>
-React
-  │
-  │ WebSocket :9001
-  ▼
-Mosquitto
-        </pre>
-    </div>
-
-    <p>
-        En el siguiente paso se publicarán mensajes MQTT manualmente para comprobar
-        que el dashboard puede recibir y visualizar información antes de conectar
-        el ESP32.
     </p>
     <figure class="captura">
     <img src="imagenes/dashboard-react.png"
          alt="Dashboard React ejecutándose correctamente en el navegador">
 
     <figcaption>
-        Dashboard del laboratorio ejecutándose en
-        <code>localhost:5173</code> y conectado al broker MQTT.
+        Dashboard del laboratorio.
     </figcaption>
 </figure>
 
