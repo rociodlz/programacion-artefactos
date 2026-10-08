@@ -993,12 +993,205 @@ Mosquitto
         que el dashboard puede recibir y visualizar información antes de conectar
         el ESP32.
     </p>
+    <figure class="captura">
+    <img src="imagenes/dashboard-react.png"
+         alt="Dashboard React ejecutándose correctamente en el navegador">
+
+    <figcaption>
+        Dashboard del laboratorio ejecutándose en
+        <code>localhost:5173</code> y conectado al broker MQTT.
+    </figcaption>
+</figure>
 
 </section>
+<section id="prueba-mqtt">
 
-        <section id="prueba-mqtt">
-            <h2>Prueba de MQTT</h2>
-        </section>
+    <h2>Prueba de MQTT sin ESP32</h2>
+
+    <p>
+        Antes de conectar el ESP32, se realizará una prueba manual para comprobar
+        que Mosquitto puede recibir mensajes MQTT y que el dashboard React puede
+        mostrarlos correctamente.
+    </p>
+
+    <p>
+        Para esta prueba se utilizará la herramienta
+        <code>mosquitto_pub</code>, incluida dentro del mismo contenedor de
+        Mosquitto.
+    </p>
+
+    <div class="nota">
+        <strong>¿Por qué realizar esta prueba?</strong>
+        Permite verificar primero la comunicación entre Mosquitto y React.
+        Si el dashboard responde correctamente, posteriormente será más sencillo
+        identificar cualquier problema relacionado con el ESP32 o los sensores.
+    </div>
+
+
+    <h3>1. Publicar una temperatura</h3>
+
+    <p>
+        Abra una nueva terminal de PowerShell y ubíquese dentro de la carpeta
+        principal del proyecto.
+    </p>
+
+    <p>
+        Ejecute:
+    </p>
+
+    <pre><code>docker compose exec mosquitto mosquitto_pub -h localhost -t clima/esp32/temperatura -m 31 -r</code></pre>
+
+    <p>
+        En este comando:
+    </p>
+
+    <ul>
+        <li>
+            <code>-t clima/esp32/temperatura</code> indica el topic donde se
+            publicará el mensaje.
+        </li>
+        <li>
+            <code>-m 31</code> indica el valor que será enviado.
+        </li>
+        <li>
+            <code>-r</code> indica que el mensaje será almacenado como
+            <strong>retained</strong>.
+        </li>
+    </ul>
+
+    <p>
+        Observe el dashboard. La temperatura debe cambiar a:
+    </p>
+
+    <pre><code>31 °C</code></pre>
+
+
+    <h3>2. Publicar un valor de humedad</h3>
+
+    <p>
+        Ejecute:
+    </p>
+
+    <pre><code>docker compose exec mosquitto mosquitto_pub -h localhost -t clima/esp32/humedad -m 83 -r</code></pre>
+
+    <p>
+        El dashboard debe actualizar la humedad a:
+    </p>
+
+    <pre><code>83 %</code></pre>
+
+
+    <h3>3. Publicar un valor de iluminación</h3>
+
+    <p>
+        Finalmente, ejecute:
+    </p>
+
+    <pre><code>docker compose exec mosquitto mosquitto_pub -h localhost -t clima/esp32/luz -m 10 -r</code></pre>
+
+    <p>
+        El dashboard debe mostrar un nivel de luz de:
+    </p>
+
+    <pre><code>10 %</code></pre>
+
+    <p>
+        Además, la condición mostrada en el dashboard debe cambiar a
+        <strong>Lluvioso</strong>.
+    </p>
+
+
+    <h3>Clasificación utilizada por el dashboard</h3>
+
+    <p>
+        La condición mostrada en la interfaz se determina a partir del nivel
+        de iluminación recibido:
+    </p>
+
+    <table class="tabla-herramientas">
+        <thead>
+            <tr>
+                <th>Nivel de luz</th>
+                <th>Condición mostrada</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Menor que 20</td>
+                <td>Lluvioso</td>
+            </tr>
+
+            <tr>
+                <td>De 20 a 64</td>
+                <td>Parcialmente nublado</td>
+            </tr>
+
+            <tr>
+                <td>65 o mayor</td>
+                <td>Soleado</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <h3>¿Qué es un mensaje retained?</h3>
+
+    <p>
+        En MQTT, un mensaje <strong>retained</strong> permite que el broker
+        conserve el último valor publicado en un topic.
+    </p>
+
+    <p>
+        Gracias a esta característica, si React se conecta después de que el
+        mensaje fue publicado o si se recarga la página, Mosquitto puede enviar
+        inmediatamente el último valor almacenado.
+    </p>
+
+    <p>
+        Para comprobarlo, actualice la página del navegador. Los valores enviados
+        anteriormente deben continuar apareciendo en el dashboard.
+    </p>
+
+    <div class="comprobacion">
+        <strong>Comprobación:</strong>
+        después de enviar los tres mensajes, el dashboard debe mostrar
+        <strong>31 °C</strong>, <strong>83 % de humedad</strong>,
+        <strong>10 % de iluminación</strong> y la condición
+        <strong>Lluvioso</strong>.
+    </div>
+
+
+    <h3>Flujo de esta prueba</h3>
+
+    <div class="diagrama-arquitectura">
+        <pre>
+PowerShell
+    │
+    │ mosquitto_pub
+    ▼
+Mosquitto
+    │
+    │ WebSocket
+    ▼
+React
+    │
+    ▼
+Dashboard actualizado
+        </pre>
+    </div>
+
+    <figure class="captura">
+        <img src="imagenes/prueba-mqtt.png"
+             alt="Dashboard actualizado mediante mensajes MQTT publicados manualmente">
+
+        <figcaption>
+            Prueba de comunicación MQTT sin ESP32.
+            El dashboard recibe los valores publicados manualmente mediante Mosquitto.
+        </figcaption>
+    </figure>
+
+</section>
 
         <section id="esp32">
             <h2>ESP32 y sensores</h2>
