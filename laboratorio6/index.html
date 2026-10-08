@@ -80,9 +80,120 @@
 
         <!-- Las siguientes secciones se desarrollarán paso a paso -->
 
-        <section id="arquitectura">
-            <h2>Arquitectura del laboratorio</h2>
-        </section>
+<section id="arquitectura">
+
+    <h2>Arquitectura del laboratorio</h2>
+
+    <p>
+        Antes de comenzar con la configuración del proyecto, es importante
+        comprender cómo se comunicarán los diferentes componentes que se utilizarán
+        durante el laboratorio.
+    </p>
+
+    <p>
+        A diferencia de Adafruit IO, donde varias funciones se encuentran integradas
+        dentro de una misma plataforma, en este laboratorio cada herramienta tendrá
+        una función específica.
+    </p>
+
+    <div class="diagrama-arquitectura">
+        <pre>
+Sensores
+   │
+   ▼
+ ESP32
+   │
+   │ MQTT
+   ▼
+Mosquitto
+   │
+   │ WebSocket
+   ▼
+ React
+   │
+   ▼
+Dashboard
+        </pre>
+    </div>
+
+    <h3>ESP32</h3>
+
+    <p>
+        El <strong>ESP32</strong> será el dispositivo encargado de obtener las
+        mediciones de los sensores. En este laboratorio se trabajará con datos de
+        temperatura, humedad e iluminación.
+    </p>
+
+    <p>
+        Después de obtener las mediciones, el ESP32 las publicará mediante MQTT
+        utilizando diferentes topics.
+    </p>
+
+    <h3>Mosquitto</h3>
+
+    <p>
+        <strong>Eclipse Mosquitto</strong> será el broker MQTT del sistema.
+        Su función será recibir los mensajes publicados por el ESP32 y distribuirlos
+        a los clientes que estén suscritos a los topics correspondientes.
+    </p>
+
+    <p>
+        En este proyecto, Mosquitto se ejecutará dentro de un contenedor de
+        <strong>Docker</strong>. Más adelante se explicará cómo levantar y comprobar
+        este servicio.
+    </p>
+
+    <h3>React</h3>
+
+    <p>
+        <strong>React</strong> se utilizará para ejecutar el dashboard web del
+        laboratorio. La aplicación se conectará a Mosquitto, recibirá las mediciones
+        publicadas por el ESP32 y actualizará la interfaz en tiempo real.
+    </p>
+
+    <p>
+        De esta manera, el navegador no recibe directamente la información del
+        ESP32. Los datos pasan primero por el broker MQTT.
+    </p>
+
+    <h3>Flujo de una medición</h3>
+
+    <p>
+        Por ejemplo, si el sensor registra una temperatura de
+        <strong>25.4 °C</strong>, el proceso será el siguiente:
+    </p>
+
+    <div class="flujo-datos">
+        <pre>
+DHT11
+  │
+  ▼
+25.4 °C
+  │
+  ▼
+ESP32
+  │
+  │ publica en:
+  │ clima/esp32/temperatura
+  ▼
+Mosquitto
+  │
+  ▼
+React
+  │
+  ▼
+Dashboard: 25.4 °C
+        </pre>
+    </div>
+
+    <div class="nota">
+        <strong>Idea clave:</strong>
+        MQTT no depende de Adafruit IO. Adafruit IO es una plataforma que facilita
+        el uso de MQTT y la visualización de datos, pero también es posible utilizar
+        un broker diferente y desarrollar nuestra propia interfaz.
+    </div>
+
+</section>
 
         <section id="requisitos">
             <h2>Preparación del entorno</h2>
