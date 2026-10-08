@@ -1,1 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Laboratorio 6 - MQTT, Mosquitto y React</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Menú lateral -->
+    <nav class="menu-lateral">
+        <h2>Laboratorio 6</h2>
+
+        <a href="#introduccion">Introducción</a>
+        <a href="#arquitectura">Arquitectura del laboratorio</a>
+        <a href="#requisitos">Preparación del entorno</a>
+        <a href="#repositorio">Clonar el repositorio</a>
+        <a href="#react">Preparar React</a>
+        <a href="#mosquitto">Mosquitto y Docker</a>
+        <a href="#dashboard">Levantar el dashboard</a>
+        <a href="#prueba-mqtt">Prueba de MQTT</a>
+        <a href="#esp32">ESP32 y sensores</a>
+        <a href="#prueba-final">Prueba completa</a>
+        <a href="#entregables">Entregables</a>
+    </nav>
+
+
+    <!-- Contenido principal -->
+    <main class="contenedor">
+
+        <h1>Laboratorio 6 - Visualización de datos IoT con MQTT, Mosquitto y React</h1>
+
+
+        <!-- INTRODUCCIÓN -->
+        <section id="introduccion">
+
+            <h2>Introducción</h2>
+
+            <p>
+                En los laboratorios anteriores se utilizó
+                <strong>Adafruit IO</strong> para enviar y visualizar información
+                proveniente del ESP32. Esta plataforma facilita el desarrollo de
+                aplicaciones IoT porque integra herramientas para recibir datos,
+                organizar la información y crear dashboards.
+            </p>
+
+            <p>
+                Sin embargo, MQTT no depende de una única plataforma. Existen otras
+                herramientas que permiten construir soluciones más personalizadas y
+                tener un mayor control sobre la forma en que los datos son recibidos
+                y visualizados.
+            </p>
+
+            <p>
+                En este laboratorio se utilizará <strong>Eclipse Mosquitto</strong>
+                como broker MQTT y una aplicación desarrollada en
+                <strong>React</strong> para visualizar los datos enviados por un
+                ESP32.
+            </p>
+
+            <p>
+                El ESP32 obtendrá información de
+                <strong>temperatura, humedad e iluminación</strong>, la publicará
+                mediante MQTT y el dashboard mostrará las mediciones en tiempo real.
+            </p>
+
+            <div class="nota">
+                <strong>Objetivo del laboratorio:</strong>
+                conocer una alternativa a Adafruit IO para recibir y visualizar
+                datos provenientes de dispositivos IoT utilizando MQTT.
+            </div>
+
+        </section>
+
+
+        <!-- Las siguientes secciones se desarrollarán paso a paso -->
+
+        <section id="arquitectura">
+            <h2>Arquitectura del laboratorio</h2>
+        </section>
+
+        <section id="requisitos">
+            <h2>Preparación del entorno</h2>
+        </section>
+
+        <section id="repositorio">
+            <h2>Clonar el repositorio</h2>
+        </section>
+
+        <section id="react">
+            <h2>Preparar React</h2>
+        </section>
+
+        <section id="mosquitto">
+            <h2>Mosquitto y Docker</h2>
+        </section>
+
+        <section id="dashboard">
+            <h2>Levantar el dashboard</h2>
+        </section>
+
+        <section id="prueba-mqtt">
+            <h2>Prueba de MQTT</h2>
+        </section>
+
+        <section id="esp32">
+            <h2>ESP32 y sensores</h2>
+        </section>
+
+        <section id="prueba-final">
+            <h2>Prueba completa</h2>
+        </section>
+
+        <section id="entregables">
+            <h2>Entregables</h2>
+        </section>
+
+    </main>
+
+</body>
+
+</html>
