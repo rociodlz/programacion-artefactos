@@ -1,1 +1,1641 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Taller - Comunicación LoRa con ESP32</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <nav class="menu-lateral">
+
+        <h2>Taller LoRa</h2>
+
+        <a href="#introduccion">Introducción</a>
+        <a href="#teoria-lora">¿Qué es LoRa?</a>
+        <a href="#arquitectura">Arquitectura</a>
+        <a href="#materiales">Materiales</a>
+        <a href="#pines">Conexiones y pines</a>
+        <a href="#librerias">Librerías</a>
+        <a href="#identificadores">IDs de dispositivos</a>
+        <a href="#touch">Sensor Touch</a>
+        <a href="#mensaje-cifrado">Mensaje cifrado</a>
+        <a href="#transmisor">Código transmisor</a>
+        <a href="#receptor">Código receptor</a>
+        <a href="#prueba-final">Prueba final</a>
+        <a href="#entregables">Entregables</a>
+
+    </nav>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="contenedor">
+
+        <h1>
+            Taller - Comunicación LoRa con ESP32
+        </h1>
+
+
+        <!-- ==================================================
+             INTRODUCCIÓN
+             ================================================== -->
+
+        <section id="introduccion">
+
+            <h2>Introducción</h2>
+
+            <p>
+                En este taller se implementará una comunicación inalámbrica entre
+                dispositivos <strong>ESP32</strong> utilizando módulos
+                <strong>LoRa</strong>.
+            </p>
+
+            <p>
+                Los estudiantes trabajarán en parejas. Un dispositivo tendrá la
+                función de transmitir información y el otro recibirá el mensaje y
+                lo mostrará mediante una pantalla <strong>OLED</strong>.
+            </p>
+
+            <p>
+                El envío del mensaje será activado utilizando uno de los sensores
+                capacitivos <strong>Touch</strong> incorporados en el ESP32.
+            </p>
+
+            <p>
+                Además, cada mensaje incluirá un identificador de origen y destino,
+                permitiendo que varios dispositivos trabajen utilizando la misma
+                frecuencia de comunicación.
+            </p>
+
+            <div class="nota">
+
+                <strong>Objetivo del taller:</strong>
+
+                implementar una comunicación inalámbrica punto a punto utilizando
+                ESP32 y LoRa, incorporando identificación de dispositivos,
+                interacción mediante Touch, visualización OLED y transmisión de
+                mensajes cifrados.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             TEORÍA LORA
+             ================================================== -->
+
+        <section id="teoria-lora">
+
+            <h2>¿Qué es LoRa?</h2>
+
+            <p>
+                <strong>LoRa</strong> proviene de <em>Long Range</em> y es una
+                tecnología de comunicación inalámbrica diseñada para transmitir
+                pequeñas cantidades de información mediante radiofrecuencia a
+                largas distancias y con un consumo relativamente bajo de energía.
+            </p>
+
+            <p>
+                LoRa utiliza una técnica de modulación conocida como
+                <strong>Chirp Spread Spectrum</strong>. Esta permite que una señal
+                pueda ser detectada incluso cuando llega con una potencia
+                relativamente baja al receptor.
+            </p>
+
+            <div class="nota">
+
+                <strong>Idea clave:</strong>
+
+                LoRa permite que dos dispositivos intercambien información por radio
+                sin depender necesariamente de Wi-Fi, Internet o un servidor.
+
+            </div>
+
+
+            <h3>LoRa y LoRaWAN</h3>
+
+            <p>
+                Aunque sus nombres son similares, LoRa y LoRaWAN no representan
+                exactamente lo mismo.
+            </p>
+
+            <table class="tabla-herramientas">
+
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td><strong>LoRa</strong></td>
+                        <td>
+                            Tecnología de modulación utilizada para transmitir
+                            información mediante radiofrecuencia.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>LoRaWAN</strong></td>
+                        <td>
+                            Protocolo de red construido sobre LoRa que puede utilizar
+                            gateways y una infraestructura de red.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="advertencia">
+
+                <strong>En este taller:</strong>
+
+                se utilizará comunicación LoRa directamente entre dispositivos.
+                No se implementará una red LoRaWAN.
+
+            </div>
+
+
+            <h3>Módulo LoRa utilizado</h3>
+
+            <p>
+                Para la práctica se utilizarán módulos
+                <strong>RFM96W</strong>. Estos módulos funcionan como
+                <strong>transceptores</strong>, es decir, tienen capacidad para
+                transmitir y recibir información.
+            </p>
+
+            <p>
+                El módulo se comunica con el ESP32 mediante el protocolo
+                <strong>SPI</strong>.
+            </p>
+
+            <p>
+                En esta práctica los módulos serán configurados para trabajar a:
+            </p>
+
+<pre><code>433 MHz</code></pre>
+
+            <p>
+                En el programa esto se configura mediante:
+            </p>
+
+<pre><code>LoRa.begin(433E6);</code></pre>
+
+
+            <h3>Comunicación punto a punto</h3>
+
+            <p>
+                La comunicación utilizada será de tipo
+                <strong>punto a punto</strong>. Esto significa que un dispositivo
+                puede enviar directamente información que será detectada por otros
+                módulos configurados con los mismos parámetros de radio.
+            </p>
+
+            <div class="diagrama-arquitectura">
+<pre>
+ESP32
+Transmisor
+    │
+    │ SPI
+    ▼
+LoRa
+    │
+    │
+    │  Radiofrecuencia
+    │  )))))))))))))))))
+    │
+    ▼
+LoRa
+    │
+    │ SPI
+    ▼
+ESP32
+Receptor
+</pre>
+            </div>
+
+
+            <h3>¿Qué es un paquete?</h3>
+
+            <p>
+                La información enviada por LoRa se organiza en
+                <strong>paquetes</strong>. Un paquete puede contener diferentes
+                datos como identificadores, mensajes o valores de sensores.
+            </p>
+
+            <p>
+                En este taller se utilizará el siguiente formato:
+            </p>
+
+<pre><code>ORIGEN|DESTINO|MENSAJE</code></pre>
+
+            <p>
+                Por ejemplo:
+            </p>
+
+<pre><code>1|2|HVMHLI ZXGREL</code></pre>
+
+            <p>
+                El paquete anterior puede interpretarse como:
+            </p>
+
+<pre><code>Origen:  1
+Destino: 2
+Mensaje: HVMHLI ZXGREL</code></pre>
+
+        </section>
+
+
+        <!-- ==================================================
+             ARQUITECTURA
+             ================================================== -->
+
+        <section id="arquitectura">
+
+            <h2>Arquitectura del taller</h2>
+
+            <p>
+                Los seis dispositivos se organizarán en tres parejas.
+            </p>
+
+            <table class="tabla-herramientas">
+
+                <thead>
+                    <tr>
+                        <th>Pareja</th>
+                        <th>Transmisor</th>
+                        <th>Receptor</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Pareja 1</td>
+                        <td>ID 1</td>
+                        <td>ID 2</td>
+                    </tr>
+
+                    <tr>
+                        <td>Pareja 2</td>
+                        <td>ID 3</td>
+                        <td>ID 4</td>
+                    </tr>
+
+                    <tr>
+                        <td>Pareja 3</td>
+                        <td>ID 5</td>
+                        <td>ID 6</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <p>
+                El flujo general del sistema será:
+            </p>
+
+            <div class="diagrama-arquitectura">
+<pre>
+TOUCH
+  │
+  ▼
+ESP32 transmisor
+  │
+  │ SPI
+  ▼
+LoRa
+  │
+  │  mensaje cifrado
+  │  )))))))))))))))))
+  │
+  ▼
+LoRa
+  │
+  ▼
+ESP32 receptor
+  │
+  ▼
+OLED
+  │
+  ▼
+Mensaje cifrado
+</pre>
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             MATERIALES
+             ================================================== -->
+
+        <section id="materiales">
+
+            <h2>Materiales</h2>
+
+            <table class="tabla-herramientas">
+
+                <thead>
+                    <tr>
+                        <th>Componente</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>ESP32</td>
+                        <td>
+                            Procesamiento, lectura Touch y control de la comunicación.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>RFM96W</td>
+                        <td>
+                            Transmisión y recepción mediante LoRa.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>OLED SH1106</td>
+                        <td>
+                            Visualización del mensaje recibido.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Protoboard</td>
+                        <td>
+                            Montaje del circuito.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Jumpers</td>
+                        <td>
+                            Conexión entre los componentes.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Antena</td>
+                        <td>
+                            Transmisión y recepción de radiofrecuencia.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- ==================================================
+             PINES
+             ================================================== -->
+
+        <section id="pines">
+
+            <h2>Conexiones y pines utilizados</h2>
+
+
+            <h3>Módulo LoRa RFM96W</h3>
+
+            <p>
+                El módulo LoRa se comunica con el ESP32 mediante
+                <strong>SPI</strong>.
+            </p>
+
+            <table class="tabla-pines">
+
+                <thead>
+                    <tr>
+                        <th>RFM96W</th>
+                        <th>ESP32</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>3.3V</td>
+                        <td>3V3</td>
+                        <td>Alimentación</td>
+                    </tr>
+
+                    <tr>
+                        <td>GND</td>
+                        <td>GND</td>
+                        <td>Tierra común</td>
+                    </tr>
+
+                    <tr>
+                        <td>MISO</td>
+                        <td>GPIO 19</td>
+                        <td>Datos LoRa → ESP32</td>
+                    </tr>
+
+                    <tr>
+                        <td>MOSI</td>
+                        <td>GPIO 23</td>
+                        <td>Datos ESP32 → LoRa</td>
+                    </tr>
+
+                    <tr>
+                        <td>SCK</td>
+                        <td>GPIO 18</td>
+                        <td>Reloj SPI</td>
+                    </tr>
+
+                    <tr>
+                        <td>NSS</td>
+                        <td>GPIO 5</td>
+                        <td>Selección del módulo</td>
+                    </tr>
+
+                    <tr>
+                        <td>ANT</td>
+                        <td>Antena</td>
+                        <td>Señal de radiofrecuencia</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <div class="advertencia">
+
+                <strong>Importante:</strong>
+
+                el módulo LoRa debe ser alimentado con
+                <strong>3.3 V</strong>.
+
+            </div>
+
+            <p>
+                Para esta práctica no será necesario utilizar
+                <code>RESET</code> ni <code>DIO0</code>.
+            </p>
+
+
+            <h3>Pantalla OLED SH1106</h3>
+
+            <table class="tabla-pines">
+
+                <thead>
+                    <tr>
+                        <th>OLED</th>
+                        <th>ESP32</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>VCC</td>
+                        <td>3.3 V</td>
+                        <td>Alimentación</td>
+                    </tr>
+
+                    <tr>
+                        <td>GND</td>
+                        <td>GND</td>
+                        <td>Tierra</td>
+                    </tr>
+
+                    <tr>
+                        <td>SDA</td>
+                        <td>GPIO 21</td>
+                        <td>Datos I2C</td>
+                    </tr>
+
+                    <tr>
+                        <td>SCL</td>
+                        <td>GPIO 22</td>
+                        <td>Reloj I2C</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <h3>Sensor Touch</h3>
+
+            <table class="tabla-pines">
+
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>ESP32</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Touch</td>
+                        <td>GPIO 27</td>
+                        <td>
+                            Detectar el toque que inicia el envío del mensaje.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <p>
+                Para leer el Touch se utilizará:
+            </p>
+
+<pre><code>touchRead(27);</code></pre>
+
+        </section>
+
+
+        <!-- ==================================================
+             LIBRERÍAS
+             ================================================== -->
+
+        <section id="librerias">
+
+            <h2>Librerías necesarias</h2>
+
+            <p>
+                Antes de cargar los programas, instale las siguientes librerías
+                desde el Administrador de Librerías de Arduino IDE.
+            </p>
+
+<pre><code>LoRa by Sandeep Mistry
+
+Adafruit GFX Library
+
+Adafruit SH110X</code></pre>
+
+            <p>
+                También se utilizarán las librerías:
+            </p>
+
+<pre><code>#include &lt;SPI.h&gt;
+#include &lt;Wire.h&gt;</code></pre>
+
+            <p>
+                Estas forman parte del entorno utilizado por el ESP32.
+            </p>
+
+        </section>
+
+
+        <!-- ==================================================
+             IDENTIFICADORES
+             ================================================== -->
+
+        <section id="identificadores">
+
+            <h2>Identificadores de dispositivos</h2>
+
+            <p>
+                Debido a que todos los dispositivos trabajarán utilizando la misma
+                frecuencia, cada ESP32 tendrá un identificador.
+            </p>
+
+            <p>
+                El transmisor tendrá:
+            </p>
+
+<pre><code>const int MI_ID = 1;
+const int DESTINO_ID = 2;</code></pre>
+
+            <p>
+                Mientras que el receptor correspondiente tendrá:
+            </p>
+
+<pre><code>const int MI_ID = 2;</code></pre>
+
+            <p>
+                El paquete enviado tendrá el siguiente formato:
+            </p>
+
+<pre><code>1|2|MENSAJE</code></pre>
+
+            <p>
+                Si otro receptor con ID 4 recibe este paquete, deberá revisar:
+            </p>
+
+<pre><code>Destino = 2
+Mi ID   = 4</code></pre>
+
+            <p>
+                Al no coincidir los valores, el mensaje será ignorado.
+            </p>
+
+            <div class="nota">
+
+                <strong>Idea clave:</strong>
+
+                el direccionamiento mediante IDs será implementado dentro de
+                nuestro propio mensaje.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             TOUCH
+             ================================================== -->
+
+        <section id="touch">
+
+            <h2>Sensor Touch</h2>
+
+            <p>
+                El ESP32 posee entradas capacitivas capaces de detectar cambios
+                cuando una persona toca una superficie conectada al pin.
+            </p>
+
+            <p>
+                Para esta actividad se utilizará el:
+            </p>
+
+<pre><code>GPIO 27</code></pre>
+
+            <p>
+                El valor se obtiene mediante:
+            </p>
+
+<pre><code>int valorTouch = touchRead(27);</code></pre>
+
+            <p>
+                Cuando el valor sea menor al umbral establecido, se considerará
+                que el usuario tocó el sensor.
+            </p>
+
+<pre><code>if (valorTouch &lt; UMBRAL_TOUCH) {
+
+    // Enviar mensaje
+
+}</code></pre>
+
+            <div class="advertencia">
+
+                <strong>Importante:</strong>
+
+                el valor obtenido puede variar entre dispositivos.
+                Cada estudiante deberá comprobar el comportamiento de su ESP32
+                y ajustar el umbral cuando sea necesario.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             MENSAJE CIFRADO
+             ================================================== -->
+
+        <section id="mensaje-cifrado">
+
+            <h2>Dinámica: mensaje cifrado</h2>
+
+            <p>
+                Como parte del taller, el transmisor enviará un mensaje
+                <strong>cifrado</strong> al receptor correspondiente.
+            </p>
+
+            <p>
+                Se utilizará el método <strong>Atbash</strong>.
+            </p>
+
+
+            <h3>¿Cómo funciona Atbash?</h3>
+
+            <p>
+                Atbash es un cifrado por sustitución en el cual el alfabeto se
+                reemplaza por el mismo alfabeto escrito en orden inverso.
+            </p>
+
+<pre><code>Normal: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Atbash: ZYXWVUTSRQPONMLKJIHGFEDCBA</code></pre>
+
+            <p>
+                Por ejemplo:
+            </p>
+
+<pre><code>A → Z
+B → Y
+C → X
+D → W
+
+H → S
+O → L
+L → O
+A → Z</code></pre>
+
+            <p>
+                Por lo tanto:
+            </p>
+
+<pre><code>HOLA → SLOZ</code></pre>
+
+
+            <h3>Dinámica</h3>
+
+            <p>
+                El transmisor tendrá un mensaje original, lo cifrará utilizando
+                Atbash y posteriormente lo enviará mediante LoRa.
+            </p>
+
+            <div class="diagrama-arquitectura">
+<pre>
+Mensaje original
+SENSOR ACTIVO
+       │
+       ▼
+     Atbash
+       │
+       ▼
+HVMHLI ZXGREL
+       │
+       ▼
+      LoRa
+       │
+       ▼
+     OLED
+</pre>
+            </div>
+
+            <p>
+                El receptor <strong>no descifrará automáticamente</strong> el mensaje.
+                La OLED mostrará únicamente el texto cifrado.
+            </p>
+
+            <p>
+                El estudiante receptor deberá utilizar la tabla de Atbash para
+                descubrir cuál era el mensaje original.
+            </p>
+
+            <div class="comprobacion">
+
+                <strong>Ejemplo:</strong>
+
+                si la OLED muestra <code>SLOZ</code>, el estudiante debe determinar
+                que el mensaje original era <code>HOLA</code>.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             TRANSMISOR
+             ================================================== -->
+
+        <section id="transmisor">
+
+            <h2>Código del transmisor</h2>
+
+            <p>
+                El transmisor detectará un toque en el GPIO 27, cifrará el mensaje
+                utilizando Atbash y enviará el paquete al receptor correspondiente.
+            </p>
+
+<pre><code>#include &lt;SPI.h&gt;
+#include &lt;LoRa.h&gt;
+
+
+// ======================================================
+// IDENTIFICACIÓN
+// ======================================================
+
+const int MI_ID = 1;
+const int DESTINO_ID = 2;
+
+
+// ======================================================
+// MENSAJE
+// ======================================================
+
+String mensajeOriginal = "SENSOR ACTIVO";
+
+
+// ======================================================
+// LORA
+// ======================================================
+
+#define LORA_SS   5
+
+#define LORA_SCK  18
+#define LORA_MISO 19
+#define LORA_MOSI 23
+
+
+// ======================================================
+// TOUCH
+// ======================================================
+
+#define TOUCH_PIN 27
+
+#define UMBRAL_TOUCH 30
+
+bool estabaTocando = false;
+
+
+// ======================================================
+// ATBASH
+// ======================================================
+
+char convertirAtbash(char letra) {
+
+  if (letra &gt;= 'A' &amp;&amp; letra &lt;= 'Z') {
+
+    return 'Z' - (letra - 'A');
+  }
+
+  if (letra &gt;= 'a' &amp;&amp; letra &lt;= 'z') {
+
+    return 'z' - (letra - 'a');
+  }
+
+  return letra;
+}
+
+
+// ======================================================
+// CIFRAR MENSAJE
+// ======================================================
+
+String cifrarAtbash(String mensaje) {
+
+  String mensajeCifrado = "";
+
+  for (int i = 0; i &lt; mensaje.length(); i++) {
+
+    mensajeCifrado += convertirAtbash(
+      mensaje.charAt(i)
+    );
+  }
+
+  return mensajeCifrado;
+}
+
+
+// ======================================================
+// ENVIAR MENSAJE
+// ======================================================
+
+void enviarMensaje() {
+
+  String mensajeCifrado =
+    cifrarAtbash(mensajeOriginal);
+
+
+  Serial.println();
+  Serial.println("TOUCH DETECTADO");
+
+  Serial.print("Mensaje original: ");
+  Serial.println(mensajeOriginal);
+
+  Serial.print("Mensaje cifrado: ");
+  Serial.println(mensajeCifrado);
+
+
+  LoRa.beginPacket();
+
+  LoRa.print(MI_ID);
+  LoRa.print("|");
+
+  LoRa.print(DESTINO_ID);
+  LoRa.print("|");
+
+  LoRa.print(mensajeCifrado);
+
+  LoRa.endPacket();
+
+
+  Serial.print("Paquete enviado: ");
+
+  Serial.print(MI_ID);
+  Serial.print("|");
+
+  Serial.print(DESTINO_ID);
+  Serial.print("|");
+
+  Serial.println(mensajeCifrado);
+
+  Serial.println("----------------------------");
+}
+
+
+// ======================================================
+// SETUP
+// ======================================================
+
+void setup() {
+
+  Serial.begin(115200);
+
+  delay(1000);
+
+
+  Serial.println("TRANSMISOR LORA");
+
+  Serial.print("Mi ID: ");
+  Serial.println(MI_ID);
+
+  Serial.print("Destino: ");
+  Serial.println(DESTINO_ID);
+
+
+  SPI.begin(
+    LORA_SCK,
+    LORA_MISO,
+    LORA_MOSI,
+    LORA_SS
+  );
+
+
+  LoRa.setPins(
+    LORA_SS,
+    -1,
+    -1
+  );
+
+
+  if (!LoRa.begin(433E6)) {
+
+    Serial.println("ERROR: No se pudo iniciar LoRa");
+
+    while (true);
+  }
+
+
+  Serial.println("LoRa iniciado correctamente");
+  Serial.println("Esperando toque...");
+}
+
+
+// ======================================================
+// LOOP
+// ======================================================
+
+void loop() {
+
+  int valorTouch =
+    touchRead(TOUCH_PIN);
+
+
+  if (
+    valorTouch &lt; UMBRAL_TOUCH &amp;&amp;
+    !estabaTocando
+  ) {
+
+    estabaTocando = true;
+
+    enviarMensaje();
+  }
+
+
+  if (
+    valorTouch &gt;= UMBRAL_TOUCH
+  ) {
+
+    estabaTocando = false;
+  }
+
+
+  delay(100);
+}</code></pre>
+
+            <div class="nota">
+
+                <strong>Configuración:</strong>
+
+                modifique <code>MI_ID</code>,
+                <code>DESTINO_ID</code>,
+                <code>mensajeOriginal</code> y el
+                <code>UMBRAL_TOUCH</code> según corresponda.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             RECEPTOR
+             ================================================== -->
+
+        <section id="receptor">
+
+            <h2>Código del receptor</h2>
+
+            <p>
+                El receptor verificará el ID de destino del paquete.
+                Si coincide con su propio ID, mostrará el mensaje cifrado en la
+                pantalla OLED.
+            </p>
+
+<pre><code>#include &lt;Wire.h&gt;
+#include &lt;SPI.h&gt;
+#include &lt;LoRa.h&gt;
+
+#include &lt;Adafruit_GFX.h&gt;
+#include &lt;Adafruit_SH110X.h&gt;
+
+
+// ======================================================
+// IDENTIFICACIÓN
+// ======================================================
+
+const int MI_ID = 2;
+
+
+// ======================================================
+// OLED
+// ======================================================
+
+#define I2C_ADDRESS 0x3C
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+#define OLED_RESET -1
+
+
+Adafruit_SH1106G display(
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+  &amp;Wire,
+  OLED_RESET
+);
+
+
+// ======================================================
+// LORA
+// ======================================================
+
+#define LORA_SS   5
+
+#define LORA_SCK  18
+#define LORA_MISO 19
+#define LORA_MOSI 23
+
+
+// ======================================================
+// SETUP
+// ======================================================
+
+void setup() {
+
+  Serial.begin(115200);
+
+  delay(1000);
+
+
+  Serial.println("RECEPTOR LORA");
+
+  Serial.print("Mi ID: ");
+  Serial.println(MI_ID);
+
+
+  // ----------------------------------------------------
+  // OLED
+  // ----------------------------------------------------
+
+  Wire.begin();
+
+  delay(250);
+
+
+  if (!display.begin(I2C_ADDRESS, true)) {
+
+    Serial.println("ERROR: OLED no encontrada");
+
+    while (true);
+  }
+
+
+  display.clearDisplay();
+
+  display.setTextColor(SH110X_WHITE);
+  display.setTextSize(1);
+
+
+  display.setCursor(0, 0);
+
+  display.println("RECEPTOR LORA");
+
+
+  display.setCursor(0, 18);
+
+  display.print("ID: ");
+  display.println(MI_ID);
+
+
+  display.setCursor(0, 36);
+
+  display.println("Esperando mensaje...");
+
+
+  display.display();
+
+
+  // ----------------------------------------------------
+  // LORA
+  // ----------------------------------------------------
+
+  SPI.begin(
+    LORA_SCK,
+    LORA_MISO,
+    LORA_MOSI,
+    LORA_SS
+  );
+
+
+  LoRa.setPins(
+    LORA_SS,
+    -1,
+    -1
+  );
+
+
+  if (!LoRa.begin(433E6)) {
+
+    Serial.println("ERROR: No se pudo iniciar LoRa");
+
+
+    display.clearDisplay();
+
+    display.setCursor(0, 0);
+
+    display.println("ERROR LORA");
+
+    display.display();
+
+
+    while (true);
+  }
+
+
+  Serial.println("LoRa iniciado correctamente");
+  Serial.println("Esperando mensajes...");
+}
+
+
+// ======================================================
+// LOOP
+// ======================================================
+
+void loop() {
+
+  int packetSize =
+    LoRa.parsePacket();
+
+
+  if (packetSize) {
+
+    String paquete = "";
+
+
+    while (LoRa.available()) {
+
+      paquete +=
+        (char)LoRa.read();
+    }
+
+
+    procesarMensaje(paquete);
+  }
+}
+
+
+// ======================================================
+// PROCESAR MENSAJE
+// ======================================================
+
+void procesarMensaje(String paquete) {
+
+  Serial.println();
+
+  Serial.print("Paquete recibido: ");
+  Serial.println(paquete);
+
+
+  // Formato:
+  // ORIGEN|DESTINO|MENSAJE
+
+
+  int separador1 =
+    paquete.indexOf('|');
+
+
+  int separador2 =
+    paquete.indexOf(
+      '|',
+      separador1 + 1
+    );
+
+
+  if (
+    separador1 == -1 ||
+    separador2 == -1
+  ) {
+
+    Serial.println(
+      "Formato incorrecto"
+    );
+
+    return;
+  }
+
+
+  int idOrigen =
+    paquete.substring(
+      0,
+      separador1
+    ).toInt();
+
+
+  int idDestino =
+    paquete.substring(
+      separador1 + 1,
+      separador2
+    ).toInt();
+
+
+  String mensaje =
+    paquete.substring(
+      separador2 + 1
+    );
+
+
+  Serial.print("Origen: ");
+  Serial.println(idOrigen);
+
+  Serial.print("Destino: ");
+  Serial.println(idDestino);
+
+  Serial.print("Mensaje cifrado: ");
+  Serial.println(mensaje);
+
+
+  // ----------------------------------------------------
+  // COMPROBAR DESTINO
+  // ----------------------------------------------------
+
+  if (
+    idDestino != MI_ID
+  ) {
+
+    Serial.println(
+      "Mensaje ignorado."
+    );
+
+    return;
+  }
+
+
+  int rssi =
+    LoRa.packetRssi();
+
+
+  Serial.println(
+    "Mensaje aceptado"
+  );
+
+  Serial.print("RSSI: ");
+  Serial.println(rssi);
+
+
+  // ----------------------------------------------------
+  // OLED
+  // ----------------------------------------------------
+
+  display.clearDisplay();
+
+  display.setTextColor(
+    SH110X_WHITE
+  );
+
+  display.setTextSize(1);
+
+
+  display.setCursor(0, 0);
+
+  display.print("Mensaje de ID: ");
+  display.println(idOrigen);
+
+
+  display.setCursor(0, 15);
+
+  display.println(
+    "Mensaje cifrado:"
+  );
+
+
+  display.setCursor(0, 28);
+
+  display.println(mensaje);
+
+
+  display.setCursor(0, 52);
+
+  display.print("RSSI: ");
+  display.print(rssi);
+
+
+  display.display();
+}</code></pre>
+
+            <div class="nota">
+
+                Para las otras parejas, modifique únicamente
+                <code>MI_ID</code> según corresponda.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             PRUEBA FINAL
+             ================================================== -->
+
+        <section id="prueba-final">
+
+            <h2>Prueba completa del sistema</h2>
+
+            <p>
+                Encienda el transmisor y el receptor correspondiente.
+            </p>
+
+            <p>
+                El transmisor deberá indicar:
+            </p>
+
+<pre><code>LoRa iniciado correctamente
+Esperando toque...</code></pre>
+
+            <p>
+                Al tocar el GPIO 27 deberá realizarse el envío.
+            </p>
+
+            <p>
+                En el Monitor Serial del transmisor se observará información
+                similar a:
+            </p>
+
+<pre><code>TOUCH DETECTADO
+Mensaje original: SENSOR ACTIVO
+Mensaje cifrado: HVMHLI ZXGREL
+Paquete enviado: 1|2|HVMHLI ZXGREL</code></pre>
+
+            <p>
+                El receptor correspondiente deberá mostrar:
+            </p>
+
+<pre><code>Paquete recibido: 1|2|HVMHLI ZXGREL
+Origen: 1
+Destino: 2
+Mensaje cifrado: HVMHLI ZXGREL
+Mensaje aceptado
+RSSI: -...</code></pre>
+
+            <p>
+                Además, la OLED mostrará el mensaje cifrado recibido.
+            </p>
+
+            <p>
+                Finalmente, el estudiante receptor deberá
+                <strong>descifrar manualmente el mensaje utilizando Atbash</strong>.
+            </p>
+
+            <div class="comprobacion">
+
+                <strong>Comprobación final:</strong>
+
+                el sistema funciona correctamente si el Touch provoca la transmisión,
+                el receptor correspondiente acepta el paquete, la OLED muestra el
+                mensaje y los otros receptores ignoran los mensajes que no corresponden
+                a su ID.
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             ENTREGABLES
+             ================================================== -->
+
+        <section id="entregables">
+
+            <h2>Entregables</h2>
+
+            <p>
+                Al finalizar el taller, cada estudiante deberá entregar un
+                <strong>único documento en formato PDF</strong> con las evidencias
+                correspondientes a su trabajo.
+            </p>
+
+            <p>
+                El documento deberá incluir:
+            </p>
+
+            <ol>
+
+                <li>
+                    <strong>Link del repositorio de GitHub</strong> donde se
+                    encuentre el código utilizado durante el taller.
+                </li>
+
+                <li>
+                    <strong>Imagen del Monitor Serial</strong> correspondiente
+                    al rol asignado.
+                    <br><br>
+                    Si el estudiante trabajó como transmisor, la imagen deberá
+                    mostrar el envío del mensaje.
+                    <br><br>
+                    Si trabajó como receptor, deberá mostrar la recepción y
+                    aceptación del paquete.
+                </li>
+
+            </ol>
+
+            <div class="comprobacion">
+
+                <strong>Entrega final:</strong>
+
+                subir un único archivo PDF que contenga todas las evidencias
+                solicitadas.
+
+            </div>
+
+
+            <!-- ==============================================
+                 FACTOR DE DOMINIO
+                 ============================================== -->
+
+            <h3>Evaluación de la actividad</h3>
+
+            <p>
+                La calificación final de esta actividad se obtiene mediante la
+                aplicación de un <strong>Factor de Dominio</strong> sobre la nota
+                obtenida en los entregables.
+            </p>
+
+            <div class="nota">
+
+                <strong>
+                    Nota Final = Nota de Entregables × Factor de Dominio
+                </strong>
+
+            </div>
+
+
+            <h3>Nota de Entregables</h3>
+
+            <p>
+                Evalúa la calidad técnica, estructura y cumplimiento de los
+                requisitos del producto entregado.
+            </p>
+
+            <p>
+                Esta nota se asignará en una escala de
+                <strong>0 a 10</strong>.
+            </p>
+
+
+            <h3>Factor de Dominio</h3>
+
+            <p>
+                El <strong>Factor de Dominio</strong> es un coeficiente entre
+                <strong>0.0 y 1.0</strong> determinado mediante una evaluación
+                complementaria, como una defensa oral o preguntas de sustentación.
+            </p>
+
+            <p>
+                Este factor refleja el nivel de apropiación y comprensión que el
+                estudiante tiene sobre los fundamentos teóricos y prácticos
+                desarrollados durante la actividad.
+            </p>
+
+            <p>
+                Un factor de <strong>1.0</strong> representa un dominio completo,
+                mientras que valores inferiores reducen la nota final de acuerdo
+                con los vacíos conceptuales evidenciados.
+            </p>
+
+
+            <h3>Ejemplo del cálculo de nota</h3>
+
+            <table class="tabla-herramientas">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Escenario</th>
+                        <th>Nota de Entregables</th>
+                        <th>Factor de Dominio</th>
+                        <th>Cálculo</th>
+                        <th>Nota Final</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <strong>Dominio Total</strong>
+                        </td>
+
+                        <td>9.0</td>
+
+                        <td>1.0</td>
+
+                        <td>
+                            9.0 × 1.0
+                        </td>
+
+                        <td>
+                            <strong>9.0</strong>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Dominio Parcial</strong>
+                        </td>
+
+                        <td>9.0</td>
+
+                        <td>0.8</td>
+
+                        <td>
+                            9.0 × 0.8
+                        </td>
+
+                        <td>
+                            <strong>7.2</strong>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <div class="advertencia">
+
+                <strong>Importante:</strong>
+
+                además de completar correctamente el taller, cada estudiante deberá
+                demostrar que comprende la solución implementada, la función de los
+                componentes utilizados y el proceso de comunicación realizado.
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</body>
+
+</html>
