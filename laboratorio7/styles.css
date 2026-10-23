@@ -1,1 +1,803 @@
+/* ======================================================
+   TALLER LORA
+   PALETA:
+   #22223B
+   #4A4E69
+   #9A8C98
+   #C9ADA7
+   #F2E9E4
+   ====================================================== */
 
+
+/* ------------------------------------------------------
+   VARIABLES
+   ------------------------------------------------------ */
+
+:root {
+
+    --indigo-oscuro: #22223B;
+    --indigo: #4A4E69;
+
+    --lila: #9A8C98;
+
+    --rosa: #C9ADA7;
+
+    --crema: #F2E9E4;
+
+    --blanco: #FFFFFF;
+
+    --fondo: #F7F4F2;
+
+    --texto: #343441;
+
+    --texto-secundario: #6E6870;
+
+    --borde: #E1D9D6;
+
+    --codigo: #29293D;
+
+    --codigo-texto: #F6F1EF;
+
+    --nota-fondo: #F3EEF0;
+
+    --advertencia-fondo: #FAF1ED;
+
+    --comprobacion-fondo: #F0F1F5;
+}
+
+
+/* ------------------------------------------------------
+   RESET
+   ------------------------------------------------------ */
+
+* {
+
+    box-sizing: border-box;
+}
+
+
+html {
+
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    background-color: var(--fondo);
+
+    color: var(--texto);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.7;
+}
+
+
+/* ------------------------------------------------------
+   MENÚ LATERAL
+   ------------------------------------------------------ */
+
+.menu-lateral {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 260px;
+    height: 100vh;
+
+    padding: 30px 20px;
+
+    background-color: var(--indigo-oscuro);
+
+    overflow-y: auto;
+}
+
+
+.menu-lateral h2 {
+
+    margin: 0 0 26px;
+
+    padding-bottom: 16px;
+
+    color: var(--crema);
+
+    font-size: 1.35rem;
+
+    font-weight: 650;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.16);
+}
+
+
+.menu-lateral a {
+
+    display: block;
+
+    margin: 3px 0;
+
+    padding: 9px 12px;
+
+    color: rgba(255, 255, 255, 0.84);
+
+    text-decoration: none;
+
+    font-size: 0.93rem;
+
+    border-radius: 6px;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        padding-left 0.2s ease;
+}
+
+
+.menu-lateral a:hover {
+
+    background-color:
+        rgba(201, 173, 167, 0.17);
+
+    color: var(--blanco);
+
+    padding-left: 16px;
+}
+
+
+/* ------------------------------------------------------
+   SCROLLBAR DEL MENÚ
+   ------------------------------------------------------ */
+
+.menu-lateral::-webkit-scrollbar {
+
+    width: 6px;
+}
+
+
+.menu-lateral::-webkit-scrollbar-track {
+
+    background: transparent;
+}
+
+
+.menu-lateral::-webkit-scrollbar-thumb {
+
+    background-color:
+        rgba(255, 255, 255, 0.22);
+
+    border-radius: 10px;
+}
+
+
+/* ------------------------------------------------------
+   CONTENEDOR
+   ------------------------------------------------------ */
+
+.contenedor {
+
+    margin-left: 260px;
+
+    width:
+        calc(100% - 260px);
+
+    max-width: 1200px;
+
+    padding:
+        48px 60px 80px;
+}
+
+
+/* ------------------------------------------------------
+   TÍTULO PRINCIPAL
+   ------------------------------------------------------ */
+
+.contenedor > h1 {
+
+    margin:
+        0 0 38px;
+
+    padding-bottom: 20px;
+
+    color: var(--indigo-oscuro);
+
+    font-size: 2.15rem;
+
+    line-height: 1.25;
+
+    font-weight: 700;
+
+    border-bottom:
+        3px solid var(--rosa);
+}
+
+
+/* ------------------------------------------------------
+   SECCIONES
+   ------------------------------------------------------ */
+
+section {
+
+    margin-bottom: 32px;
+
+    padding: 34px 38px;
+
+    background-color: var(--blanco);
+
+    border:
+        1px solid var(--borde);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 3px 12px
+        rgba(34, 34, 59, 0.045);
+
+    scroll-margin-top: 24px;
+}
+
+
+/* ------------------------------------------------------
+   TÍTULOS
+   ------------------------------------------------------ */
+
+h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 20px;
+
+    color: var(--indigo-oscuro);
+
+    font-size: 1.65rem;
+
+    line-height: 1.3;
+}
+
+
+section h2::after {
+
+    content: "";
+
+    display: block;
+
+    width: 42px;
+    height: 3px;
+
+    margin-top: 10px;
+
+    background-color: var(--rosa);
+
+    border-radius: 3px;
+}
+
+
+h3 {
+
+    margin-top: 32px;
+
+    margin-bottom: 12px;
+
+    color: var(--indigo);
+
+    font-size: 1.18rem;
+
+    font-weight: 650;
+}
+
+
+/* ------------------------------------------------------
+   TEXTO
+   ------------------------------------------------------ */
+
+p {
+
+    margin-top: 0;
+
+    margin-bottom: 16px;
+}
+
+
+strong {
+
+    color: var(--indigo-oscuro);
+}
+
+
+/* ------------------------------------------------------
+   LISTAS
+   ------------------------------------------------------ */
+
+ul,
+ol {
+
+    margin-top: 12px;
+
+    margin-bottom: 22px;
+
+    padding-left: 30px;
+}
+
+
+li {
+
+    margin-bottom: 10px;
+}
+
+
+li::marker {
+
+    color: var(--indigo);
+}
+
+
+/* ------------------------------------------------------
+   CÓDIGO EN LÍNEA
+   ------------------------------------------------------ */
+
+code {
+
+    padding:
+        2px 6px;
+
+    background-color:
+        #EEE9E8;
+
+    color:
+        var(--indigo);
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 0.91em;
+
+    border-radius: 4px;
+}
+
+
+/* ------------------------------------------------------
+   BLOQUES DE CÓDIGO
+   ------------------------------------------------------ */
+
+pre {
+
+    margin:
+        18px 0 22px;
+
+    padding:
+        18px 20px;
+
+    background-color:
+        var(--codigo);
+
+    color:
+        var(--codigo-texto);
+
+    border-radius: 7px;
+
+    overflow-x: auto;
+
+    line-height: 1.55;
+
+    font-family:
+        "Cascadia Code",
+        Consolas,
+        monospace;
+
+    font-size: 0.9rem;
+}
+
+
+pre code {
+
+    padding: 0;
+
+    background: transparent;
+
+    color: inherit;
+
+    border-radius: 0;
+
+    font-size: inherit;
+}
+
+
+/* ------------------------------------------------------
+   NOTAS
+   ------------------------------------------------------ */
+
+.nota,
+.advertencia,
+.comprobacion {
+
+    margin:
+        22px 0;
+
+    padding:
+        17px 19px;
+
+    border-radius: 6px;
+
+    line-height: 1.6;
+}
+
+
+/* Nota */
+
+.nota {
+
+    background-color:
+        var(--nota-fondo);
+
+    border-left:
+        4px solid var(--lila);
+}
+
+
+/* Advertencia */
+
+.advertencia {
+
+    background-color:
+        var(--advertencia-fondo);
+
+    border-left:
+        4px solid var(--rosa);
+}
+
+
+/* Comprobación */
+
+.comprobacion {
+
+    background-color:
+        var(--comprobacion-fondo);
+
+    border-left:
+        4px solid var(--indigo);
+}
+
+
+.nota strong,
+.advertencia strong,
+.comprobacion strong {
+
+    color:
+        var(--indigo-oscuro);
+}
+
+
+/* ------------------------------------------------------
+   TABLAS
+   ------------------------------------------------------ */
+
+.tabla-herramientas,
+.tabla-pines {
+
+    width: 100%;
+
+    margin:
+        20px 0 27px;
+
+    border-collapse: collapse;
+
+    background-color:
+        var(--blanco);
+
+    border:
+        1px solid var(--borde);
+
+    border-radius: 7px;
+
+    overflow: hidden;
+}
+
+
+.tabla-herramientas th,
+.tabla-pines th {
+
+    padding:
+        13px 16px;
+
+    background-color:
+        var(--indigo);
+
+    color:
+        var(--blanco);
+
+    text-align: left;
+
+    font-weight: 600;
+}
+
+
+.tabla-herramientas td,
+.tabla-pines td {
+
+    padding:
+        13px 16px;
+
+    border-bottom:
+        1px solid var(--borde);
+
+    vertical-align: top;
+}
+
+
+.tabla-herramientas tbody tr:last-child td,
+.tabla-pines tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+.tabla-herramientas tbody tr:nth-child(even),
+.tabla-pines tbody tr:nth-child(even) {
+
+    background-color:
+        #FAF8F7;
+}
+
+
+/* ------------------------------------------------------
+   DIAGRAMAS
+   ------------------------------------------------------ */
+
+.diagrama-arquitectura {
+
+    margin:
+        22px 0;
+
+    padding: 6px;
+
+    background-color:
+        #F6F2F2;
+
+    border:
+        1px solid var(--borde);
+
+    border-radius: 8px;
+}
+
+
+.diagrama-arquitectura pre {
+
+    margin: 0;
+
+    background-color:
+        transparent;
+
+    color:
+        var(--indigo);
+
+    text-align: center;
+
+    font-size: 0.95rem;
+
+    line-height: 1.5;
+}
+
+
+/* ------------------------------------------------------
+   IMÁGENES
+   ------------------------------------------------------ */
+
+.captura {
+
+    margin:
+        28px auto 10px;
+
+    padding: 12px;
+
+    background-color:
+        var(--blanco);
+
+    border:
+        1px solid var(--borde);
+
+    border-radius: 8px;
+
+    text-align: center;
+}
+
+
+.captura img {
+
+    display: block;
+
+    max-width: 100%;
+
+    height: auto;
+
+    margin:
+        0 auto;
+
+    border-radius: 5px;
+}
+
+
+.captura figcaption {
+
+    margin-top: 11px;
+
+    padding:
+        0 8px 4px;
+
+    color:
+        var(--texto-secundario);
+
+    font-size: 0.88rem;
+
+    line-height: 1.5;
+}
+
+
+img {
+
+    max-width: 100%;
+
+    height: auto;
+}
+
+
+/* ------------------------------------------------------
+   SELECCIÓN DE TEXTO
+   ------------------------------------------------------ */
+
+::selection {
+
+    background-color:
+        var(--rosa);
+
+    color:
+        var(--indigo-oscuro);
+}
+
+
+/* ------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------ */
+
+@media (max-width: 950px) {
+
+    .menu-lateral {
+
+        position: relative;
+
+        width: 100%;
+
+        height: auto;
+
+        padding:
+            20px 24px;
+    }
+
+
+    .menu-lateral h2 {
+
+        margin-bottom: 14px;
+    }
+
+
+    .menu-lateral a {
+
+        display: inline-block;
+
+        margin: 3px;
+
+        padding:
+            7px 10px;
+
+        background-color:
+            rgba(255, 255, 255, 0.06);
+    }
+
+
+    .menu-lateral a:hover {
+
+        padding-left: 10px;
+    }
+
+
+    .contenedor {
+
+        margin-left: 0;
+
+        width: 100%;
+
+        max-width: none;
+
+        padding:
+            36px 30px 60px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    body {
+
+        font-size: 15px;
+    }
+
+
+    .menu-lateral {
+
+        padding: 18px;
+    }
+
+
+    .menu-lateral a {
+
+        display: block;
+
+        margin:
+            3px 0;
+    }
+
+
+    .contenedor {
+
+        padding:
+            26px 16px 50px;
+    }
+
+
+    .contenedor > h1 {
+
+        font-size: 1.65rem;
+    }
+
+
+    section {
+
+        padding:
+            24px 20px;
+
+        border-radius: 8px;
+    }
+
+
+    h2 {
+
+        font-size: 1.4rem;
+    }
+
+
+    h3 {
+
+        font-size: 1.08rem;
+    }
+
+
+    pre {
+
+        padding: 15px;
+
+        font-size: 0.82rem;
+    }
+
+
+    .tabla-herramientas,
+    .tabla-pines {
+
+        display: block;
+
+        overflow-x: auto;
+    }
+}
