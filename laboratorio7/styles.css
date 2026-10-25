@@ -598,12 +598,6 @@ pre code {
    ------------------------------------------------------ */
 
 .captura {
-
-    margin:
-        28px auto 10px;
-
-    padding: 12px;
-
     background-color:
         var(--blanco);
 
@@ -628,6 +622,7 @@ pre code {
         0 auto;
 
     border-radius: 5px;
+    
 }
 
 
@@ -653,6 +648,8 @@ img {
 
     height: auto;
 }
+
+
 
 
 /* ------------------------------------------------------
