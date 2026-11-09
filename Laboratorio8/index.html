@@ -5,95 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Guía - Formas de alimentación del ESP32</title>
+    <title>Laboratorio 8 - Formas de alimentación del ESP32</title>
 
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <!-- ======================================================
+    <!-- ==================================================
          MENÚ LATERAL
-         ====================================================== -->
+         ================================================== -->
 
     <nav class="menu-lateral">
 
-        <div class="logo-guia">
-            <span class="mini-titulo">PROGRAMACIÓN DE ARTEFACTOS</span>
-            <h2>Alimentación del ESP32</h2>
-        </div>
+        <h2>Alimentación</h2>
 
-        <a href="#inicio">Inicio</a>
         <a href="#introduccion">Introducción</a>
         <a href="#conceptos">Conceptos básicos</a>
         <a href="#voltajes">Voltajes del ESP32</a>
-        <a href="#usb">1. Alimentación por USB</a>
-        <a href="#vin">2. Alimentación por VIN / 5V</a>
-        <a href="#3v3">3. Alimentación por 3V3</a>
-        <a href="#fuente">4. Fuente externa</a>
-        <a href="#baterias">5. Baterías</a>
-        <a href="#powerbank">6. Power bank</a>
-        <a href="#solar">7. Energía solar</a>
+        <a href="#metodos">Métodos de alimentación</a>
         <a href="#reguladores">Regulación de voltaje</a>
         <a href="#corriente">Corriente y consumo</a>
         <a href="#comparacion">Comparación</a>
         <a href="#seleccion">¿Cuál utilizar?</a>
-        <a href="#errores">Errores comunes</a>
-        <a href="#seguridad">Buenas prácticas</a>
-        <a href="#medicion">Comprobación con multímetro</a>
-        <a href="#aplicaciones">Casos de aplicación</a>
+        <a href="#errores">Errores y buenas prácticas</a>
         <a href="#entregable">Entregable</a>
 
     </nav>
 
 
-    <!-- ======================================================
+    <!-- ==================================================
          CONTENIDO PRINCIPAL
-         ====================================================== -->
+         ================================================== -->
 
     <main class="contenedor">
 
-
-        <!-- ==================================================
-             PORTADA
-             ================================================== -->
-
-        <section id="inicio" class="hero">
-
-            <div class="hero-etiqueta">
-                GUÍA INFORMATIVA
-            </div>
-
-            <h1>
-                Formas de alimentación del ESP32
-            </h1>
-
-            <p class="hero-subtitulo">
-                Fuentes de energía, voltajes, regulación, baterías,
-                consumo y buenas prácticas para alimentar correctamente
-                un sistema basado en ESP32.
-            </p>
-
-            <div class="hero-datos">
-
-                <div>
-                    <span class="dato-numero">3.3 V</span>
-                    <span class="dato-texto">Lógica del ESP32</span>
-                </div>
-
-                <div>
-                    <span class="dato-numero">5 V</span>
-                    <span class="dato-texto">Alimentación común de la placa</span>
-                </div>
-
-                <div>
-                    <span class="dato-numero">USB</span>
-                    <span class="dato-texto">Método más utilizado</span>
-                </div>
-
-            </div>
-
-        </section>
+        <h1>
+            Laboratorio 8 - Formas de alimentación del ESP32
+        </h1>
 
 
         <!-- ==================================================
@@ -102,55 +51,21 @@
 
         <section id="introduccion">
 
-            <span class="numero-seccion">01</span>
-
             <h2>Introducción</h2>
 
             <p>
-                Cuando se desarrolla un proyecto con un <strong>ESP32</strong>,
-                normalmente se presta mucha atención al programa, a los sensores
-                y a los actuadores. Sin embargo, existe otro elemento esencial
-                para que el sistema pueda funcionar correctamente:
-                <strong>la alimentación eléctrica</strong>.
+                Un <strong>ESP32</strong> necesita un voltaje adecuado y corriente
+                suficiente. Una <strong>alimentación</strong> incorrecta puede
+                provocar reinicios, errores de comunicación, lecturas inestables
+                e incluso daños permanentes en la placa.
             </p>
 
             <p>
-                Un ESP32 necesita recibir un voltaje adecuado y una cantidad
-                suficiente de corriente. Una alimentación incorrecta puede provocar
-                reinicios inesperados, errores de comunicación, lecturas inestables
-                en sensores e incluso daños permanentes en la placa.
+                En esta guía se presentan las principales formas de alimentar
+                una placa ESP32, sus diferencias y cuándo conviene utilizar cada una.
             </p>
+            <img src="imagenes/ESP32.png" alt="ESP32" class="captura">
 
-            <p>
-                No existe una única manera de alimentar un ESP32. Dependiendo del
-                proyecto se puede utilizar el puerto USB, una fuente de alimentación,
-                una batería, un power bank, un regulador de voltaje o incluso un
-                sistema alimentado mediante energía solar.
-            </p>
-
-            <div class="nota">
-
-                <strong>Objetivo de la guía:</strong>
-
-                conocer las principales formas de alimentar una placa ESP32,
-                comprender sus diferencias y reconocer cuándo es conveniente
-                utilizar cada una.
-
-            </div>
-
-
-            <!-- ESPACIO PARA IMAGEN -->
-
-            <div class="espacio-imagen">
-
-                <span>ESPACIO PARA IMAGEN</span>
-
-                <p>
-                    Ejemplo sugerido: fotografía de una placa ESP32 señalando
-                    USB, VIN/5V, 3V3 y GND.
-                </p>
-
-            </div>
 
         </section>
 
@@ -161,118 +76,54 @@
 
         <section id="conceptos">
 
-            <span class="numero-seccion">02</span>
+            <h2>Conceptos básicos</h2>
 
-            <h2>Conceptos básicos de alimentación</h2>
+            <table class="tabla-herramientas">
 
-            <p>
-                Antes de analizar las diferentes formas de alimentar un ESP32,
-                es necesario comprender algunos conceptos eléctricos básicos.
-            </p>
+                <thead>
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Descripción</th>
+                        <th>Unidad</th>
+                    </tr>
+                </thead>
 
+                <tbody>
 
-            <div class="grid-conceptos">
+                    <tr>
+                        <td><strong>Voltaje (V)</strong></td>
+                        <td>Diferencia de potencial eléctrico entre dos puntos.</td>
+                        <td>Voltios (V)</td>
+                    </tr>
 
-                <article class="tarjeta-concepto">
+                    <tr>
+                        <td><strong>Corriente (I)</strong></td>
+                        <td>Flujo de carga eléctrica.</td>
+                        <td>Amperios (A) o miliamperios (mA)</td>
+                    </tr>
 
-                    <div class="icono-concepto">V</div>
+                    <tr>
+                        <td><strong>Potencia (P)</strong></td>
+                        <td>Energía eléctrica utilizada por unidad de tiempo.</td>
+                        <td>Watts (W)</td>
+                    </tr>
 
-                    <h3>Voltaje</h3>
+                </tbody>
 
-                    <p>
-                        El voltaje representa la diferencia de potencial eléctrico
-                        entre dos puntos y se mide en <strong>voltios (V)</strong>.
-                    </p>
-
-                    <p>
-                        Los componentes electrónicos están diseñados para trabajar
-                        dentro de determinados rangos de voltaje.
-                    </p>
-
-                </article>
-
-
-                <article class="tarjeta-concepto">
-
-                    <div class="icono-concepto">A</div>
-
-                    <h3>Corriente</h3>
-
-                    <p>
-                        La corriente representa el flujo de carga eléctrica y se
-                        mide en <strong>amperios (A)</strong> o miliamperios (mA).
-                    </p>
-
-                    <p>
-                        La fuente debe ser capaz de proporcionar la corriente que
-                        necesita el circuito.
-                    </p>
-
-                </article>
-
-
-                <article class="tarjeta-concepto">
-
-                    <div class="icono-concepto">W</div>
-
-                    <h3>Potencia</h3>
-
-                    <p>
-                        La potencia representa la cantidad de energía eléctrica
-                        utilizada por unidad de tiempo y se mide en
-                        <strong>watts (W)</strong>.
-                    </p>
-
-                    <p>
-                        Está relacionada con el voltaje y la corriente.
-                    </p>
-
-                </article>
-
-            </div>
-
-
-            <h3>Relación entre voltaje, corriente y potencia</h3>
+            </table>
 
             <p>
-                Una relación básica que resulta útil al analizar sistemas de
-                alimentación es:
+                Estas magnitudes se relacionan mediante:
             </p>
 
-            <div class="formula">
-                P = V × I
-            </div>
-
-            <p>
-                donde:
-            </p>
-
-            <div class="definiciones">
-
-                <div>
-                    <strong>P</strong>
-                    <span>Potencia en watts</span>
-                </div>
-
-                <div>
-                    <strong>V</strong>
-                    <span>Voltaje en voltios</span>
-                </div>
-
-                <div>
-                    <strong>I</strong>
-                    <span>Corriente en amperios</span>
-                </div>
-
-            </div>
-
+            <pre><code>P = V × I</code></pre>
 
             <div class="nota">
 
-                Una fuente no obliga al ESP32 a consumir toda la corriente que
-                puede entregar. El circuito consume la corriente que necesita,
-                siempre que la fuente sea capaz de proporcionarla y el voltaje
-                sea el adecuado.
+                <strong>Idea clave:</strong>
+
+                el circuito consume solo la corriente que necesita, siempre que
+                la fuente pueda proporcionarla y el voltaje sea el adecuado.
 
             </div>
 
@@ -285,18 +136,9 @@
 
         <section id="voltajes">
 
-            <span class="numero-seccion">03</span>
-
             <h2>Voltajes importantes en una placa ESP32</h2>
 
-            <p>
-                Una placa de desarrollo ESP32 normalmente incluye diferentes
-                puntos por los que puede recibir o proporcionar alimentación.
-                Los nombres exactos pueden variar según el modelo de placa.
-            </p>
-
-
-            <table>
+            <table class="tabla-pines">
 
                 <thead>
                     <tr>
@@ -309,72 +151,45 @@
                 <tbody>
 
                     <tr>
-                        <td><strong>USB</strong></td>
+                        <td>USB</td>
                         <td>5 V nominales</td>
-                        <td>
-                            Alimenta la placa mediante el puerto USB.
-                        </td>
+                        <td>Alimenta la placa mediante el puerto USB.</td>
                     </tr>
 
                     <tr>
-                        <td><strong>VIN / 5V</strong></td>
+                        <td>VIN / 5V</td>
                         <td>5 V</td>
-                        <td>
-                            Permite alimentar la placa desde una fuente externa
-                            regulada, dependiendo del diseño de la tarjeta.
-                        </td>
+                        <td>Entrada para una fuente externa regulada, según el diseño de la tarjeta.</td>
                     </tr>
 
                     <tr>
-                        <td><strong>3V3</strong></td>
+                        <td>3V3</td>
                         <td>3.3 V</td>
-                        <td>
-                            Línea de alimentación de 3.3 V utilizada por el ESP32
-                            y diversos periféricos.
-                        </td>
+                        <td>Línea que alimenta al ESP32 y a diversos periféricos.</td>
                     </tr>
 
                     <tr>
-                        <td><strong>GND</strong></td>
+                        <td>GND</td>
                         <td>0 V</td>
-                        <td>
-                            Referencia común del circuito eléctrico.
-                        </td>
+                        <td>Referencia común del circuito.</td>
                     </tr>
 
                 </tbody>
 
             </table>
 
+            <p>
+                Muchas placas incluyen un regulador que convierte los 5 V de USB
+                o del pin correspondiente en el voltaje que requiere el ESP32.
+            </p>
 
             <div class="advertencia">
 
                 <strong>Importante:</strong>
 
-                no todas las placas ESP32 tienen exactamente el mismo circuito
-                de alimentación. Siempre debe revisarse la documentación del
-                modelo específico antes de conectar una fuente externa.
-
-            </div>
-
-
-            <h3>Regulador incorporado en la placa</h3>
-
-            <p>
-                Muchas placas de desarrollo poseen un regulador de voltaje que
-                permite recibir aproximadamente 5 V desde USB o desde el pin
-                correspondiente y convertirlos al voltaje requerido por el ESP32.
-            </p>
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">5 V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">Regulador</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">3.3 V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
+                el circuito de alimentación y los nombres de los pines varían
+                entre placas. Revise la documentación de su modelo antes de
+                conectar una fuente externa.
 
             </div>
 
@@ -382,532 +197,129 @@
 
 
         <!-- ==================================================
-             USB
+             MÉTODOS DE ALIMENTACIÓN
              ================================================== -->
 
-        <section id="usb">
+        <section id="metodos">
 
-            <span class="numero-seccion">04</span>
+            <h2>Métodos de alimentación</h2>
 
-            <h2>1. Alimentación mediante USB</h2>
+            <img src="imagenes/1_caminos_alimentacion.png" alt="Caminos de alimentación del ESP32" class="captura">
 
-            <p>
-                La alimentación por USB es probablemente la forma más utilizada
-                cuando se trabaja con una placa de desarrollo ESP32.
-            </p>
+
+            <h3>1. USB</h3>
 
             <p>
-                El mismo cable utilizado para programar la placa puede proporcionar
-                energía desde una computadora, un cargador USB o una fuente USB.
-            </p>
-
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">Computadora</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">USB</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
-
-
-            <h3>Ventajas</h3>
-
-            <div class="grid-dos">
-
-                <div class="mini-card">
-                    <strong>Sencillo</strong>
-                    <p>
-                        No requiere diseñar un circuito de alimentación adicional.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Programación y energía</strong>
-                    <p>
-                        El mismo cable puede utilizarse para cargar el programa
-                        y alimentar el sistema.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Ideal para pruebas</strong>
-                    <p>
-                        Es especialmente útil durante prototipado y laboratorio.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Disponible</strong>
-                    <p>
-                        Puede utilizarse con computadoras, cargadores y power banks.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <h3>Limitaciones</h3>
-
-            <p>
-                La alimentación por USB es excelente para desarrollo, pero no siempre
-                es la mejor opción para un proyecto que debe funcionar de manera
-                autónoma o permanecer instalado lejos de una computadora.
+                Es la forma más utilizada: el mismo cable sirve para programar
+                la placa y alimentarla desde una computadora, un cargador o una
+                fuente USB. Es ideal para prototipado y laboratorio, pero no
+                siempre conviene en proyectos autónomos o instalados lejos de
+                una computadora.
             </p>
 
 
-            <div class="espacio-imagen">
-
-                <span>ESPACIO PARA IMAGEN</span>
-
-                <p>
-                    Ejemplo sugerido: ESP32 conectado por USB a una computadora.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             VIN
-             ================================================== -->
-
-        <section id="vin">
-
-            <span class="numero-seccion">05</span>
-
-            <h2>2. Alimentación mediante VIN o 5V</h2>
+            <h3>2. VIN o 5V</h3>    
 
             <p>
-                Muchas placas ESP32 incluyen un pin identificado como
-                <strong>VIN</strong> o <strong>5V</strong>.
+                El pin <strong>VIN</strong> o <strong>5V</strong> puede recibir
+                5 V regulados de una fuente externa. Conviene cuando esa fuente
+                también alimenta otros componentes o cuando el sistema queda
+                instalado de forma permanente.
             </p>
 
             <p>
-                Este pin puede permitir alimentar la placa utilizando una fuente
-                externa de 5 V regulados, sin necesidad de utilizar directamente
-                el conector USB.
+                El positivo de la fuente se conecta a VIN / 5V y el negativo a GND.
             </p>
-
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">Fuente 5 V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">VIN / 5V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">Regulador</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
-
-
-            <h3>Conexión básica</h3>
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Fuente</th>
-                        <th>ESP32</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>Positivo +5 V</td>
-                        <td>VIN / 5V</td>
-                    </tr>
-
-                    <tr>
-                        <td>Negativo</td>
-                        <td>GND</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
 
             <div class="advertencia">
 
                 <strong>Antes de realizar esta conexión:</strong>
 
-                revise cómo funciona el pin VIN o 5V de la placa específica
-                que está utilizando. El diseño puede variar entre fabricantes
-                y modelos.
+                revise cómo funciona este pin en su placa; varía entre
+                fabricantes y modelos.
 
             </div>
 
 
-            <h3>¿Cuándo es útil?</h3>
+            <h3>3. 3V3 directo</h3>
 
             <p>
-                Puede ser conveniente cuando el proyecto dispone de una fuente
-                regulada de 5 V que también alimentará otros componentes,
-                o cuando el sistema estará instalado permanentemente y no
-                se desea depender de un cable conectado a una computadora.
-            </p>
-
-        </section>
-
-
-        <!-- ==================================================
-             3V3
-             ================================================== -->
-
-        <section id="3v3">
-
-            <span class="numero-seccion">06</span>
-
-            <h2>3. Alimentación directa mediante 3V3</h2>
-
-            <p>
-                Otra posibilidad consiste en suministrar directamente
-                <strong>3.3 V regulados</strong> a la línea de 3V3.
-            </p>
-
-            <p>
-                Este método requiere mayor cuidado, ya que normalmente se está
-                evitando parte del circuito de regulación que posee la placa.
-            </p>
-
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">Fuente regulada</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">3.3 V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
-
-
-            <div class="peligro">
-
-                <strong>¡Precaución!</strong>
-
-                Nunca debe conectarse una fuente de 5 V directamente al pin
-                <strong>3V3</strong>. Un voltaje excesivo puede dañar la placa
-                y los componentes conectados a esta línea.
-
-            </div>
-
-
-            <h3>¿Por qué requiere más cuidado?</h3>
-
-            <p>
-                Cuando se alimenta directamente con 3.3 V, la fuente externa
-                debe proporcionar un voltaje correctamente regulado y estable.
-                Variaciones importantes pueden provocar funcionamiento
-                incorrecto o daños.
-            </p>
-
-            <p>
-                También debe poder proporcionar suficiente corriente para el ESP32
-                y los periféricos conectados.
-            </p>
-
-
-            <div class="nota">
-
-                Este método es más apropiado cuando se comprende el circuito de
-                alimentación y se utiliza una fuente de 3.3 V correctamente diseñada.
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             FUENTE EXTERNA
-             ================================================== -->
-
-        <section id="fuente">
-
-            <span class="numero-seccion">07</span>
-
-            <h2>4. Fuente externa regulada</h2>
-
-            <p>
-                Una fuente externa permite alimentar el ESP32 de forma independiente
-                a una computadora.
-            </p>
-
-            <p>
-                Algunos ejemplos son:
-            </p>
-
-            <div class="grid-dos">
-
-                <div class="mini-card">
-                    <strong>Fuente de laboratorio</strong>
-                    <p>
-                        Permite seleccionar y controlar el voltaje de salida.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Adaptador DC</strong>
-                    <p>
-                        Puede utilizarse junto con un circuito de regulación adecuado.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Convertidor Buck</strong>
-                    <p>
-                        Reduce un voltaje de entrada a un voltaje menor.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Convertidor Boost</strong>
-                    <p>
-                        Eleva un voltaje de entrada a uno mayor.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <h3>Ejemplo</h3>
-
-            <p>
-                Si un proyecto dispone de una fuente de 12 V, no es correcto
-                conectar directamente esos 12 V al pin 3V3.
-            </p>
-
-            <p>
-                Se puede utilizar un convertidor para reducir el voltaje antes
-                de alimentar la placa.
-            </p>
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">12 V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">Buck</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">5 V</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             BATERÍAS
-             ================================================== -->
-
-        <section id="baterias">
-
-            <span class="numero-seccion">08</span>
-
-            <h2>5. Alimentación mediante baterías</h2>
-
-            <p>
-                Las baterías permiten construir proyectos portátiles o sistemas
-                que deben funcionar sin estar conectados permanentemente a la
-                red eléctrica.
-            </p>
-
-            <p>
-                Sin embargo, el hecho de que una batería indique un determinado
-                voltaje no significa automáticamente que pueda conectarse
-                directamente al ESP32.
-            </p>
-
-
-            <h3>Baterías Li-ion y LiPo</h3>
-
-            <p>
-                Las baterías de ion de litio y polímero de litio son muy comunes
-                en proyectos electrónicos portátiles debido a su densidad de
-                energía y tamaño.
-            </p>
-
-            <p>
-                Una celda suele identificarse como una batería de aproximadamente
-                3.7 V nominales, pero su voltaje cambia durante el proceso de carga
-                y descarga.
+                Consiste en suministrar <strong>3.3 V regulados</strong> a la
+                línea de 3V3, evitando parte de la regulación de la placa. La
+                fuente debe ser estable y entregar corriente suficiente para el
+                ESP32 y sus periféricos.
             </p>
 
             <div class="advertencia">
 
-                Por esta razón, una batería de litio no debe tratarse simplemente
-                como una fuente fija de 3.3 V.
+                <strong>¡Precaución!</strong>
+
+                nunca conecte una fuente de 5 V directamente al pin
+                <strong>3V3</strong>: puede dañar la placa y los componentes
+                conectados a esta línea.
 
             </div>
 
-
-            <h3>Uso de regulación</h3>
-
-            <p>
-                Una estrategia común consiste en utilizar la batería junto con
-                un circuito de regulación.
-            </p>
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">Batería</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">Regulador</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">Voltaje estable</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
+            <img src="imagenes/2_conexion_5V_correcta_incorrecta.png" alt="Conexión correcta e incorrecta de una fuente de 5 V" class="captura">
 
 
-            <h3>Sistema de carga</h3>
+            <h3>4. Fuente externa regulada</h3>
 
             <p>
-                Si una batería recargable forma parte permanente del proyecto,
-                también debe considerarse cómo se realizará su carga de manera
-                segura.
+                Permite alimentar el ESP32 sin depender de una computadora, por
+                ejemplo con una fuente de laboratorio o un adaptador DC con
+                regulación adecuada. Si el voltaje disponible no es el correcto,
+                se usa un convertidor: por ejemplo, 12 V nunca deben ir
+                directamente al pin 3V3.
             </p>
+
+            <pre><code>12 V → Buck → 5 V → ESP32</code></pre>
+
+
+            <h3>5. Baterías</h3>
 
             <p>
-                Algunas placas de desarrollo incorporan un circuito para batería,
-                mientras que otras requieren un módulo externo.
+                Permiten proyectos portátiles o sin conexión permanente a la red.
+                Las más comunes son las <strong>Li-ion y LiPo</strong>, de unos
+                3.7 V nominales, pero su voltaje cambia durante la carga y la
+                descarga, así que no deben tratarse como una fuente fija de 3.3 V.
+                Lo habitual es usarlas junto con un regulador.
             </p>
 
+            <pre><code>Batería → Regulador → Voltaje estable → ESP32</code></pre>
 
-            <div class="peligro">
+            <div class="advertencia">
 
                 <strong>Seguridad con baterías de litio:</strong>
 
-                no deben cargarse utilizando conexiones improvisadas.
-                Se debe utilizar un sistema de carga diseñado para el tipo de batería
-                correspondiente.
+                cárguelas solo con un sistema diseñado para ese tipo de batería,
+                nunca con conexiones improvisadas. Algunas placas lo incorporan;
+                otras requieren un módulo externo.
 
             </div>
 
 
-            <div class="espacio-imagen">
-
-                <span>ESPACIO PARA IMAGEN</span>
-
-                <p>
-                    Ejemplo sugerido: batería LiPo, módulo cargador y ESP32.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             POWER BANK
-             ================================================== -->
-
-        <section id="powerbank">
-
-            <span class="numero-seccion">09</span>
-
-            <h2>6. Alimentación mediante power bank</h2>
+            <h3>6. Power bank</h3>
 
             <p>
-                Un power bank puede funcionar como una fuente USB portátil.
-                Normalmente entrega aproximadamente 5 V mediante uno de sus
-                puertos USB.
+                Funciona como una fuente USB portátil de unos 5 V, práctica para
+                demostraciones y prototipos móviles. Algunos modelos se apagan
+                solos al detectar un consumo muy bajo, algo a tener en cuenta si
+                el ESP32 pasa mucho tiempo en bajo consumo.
             </p>
 
-            <div class="flujo">
-
-                <div class="bloque-flujo">Power bank</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">USB</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
+            <pre><code>Power bank → USB → ESP32</code></pre>
 
 
-            <h3>Ventajas</h3>
+            <h3>7. Energía solar</h3>
 
             <p>
-                Es una opción práctica para demostraciones, prototipos móviles
-                y proyectos que necesitan funcionar durante varias horas sin
-                permanecer conectados a una computadora.
+                Útil en estaciones ambientales, sistemas agrícolas, telemetría y
+                lugares sin toma de corriente. Un panel normalmente no se conecta
+                directo al ESP32 porque su energía varía con la iluminación.
             </p>
 
-
-            <h3>Una posible dificultad</h3>
-
-            <p>
-                Algunos power banks están diseñados para apagarse automáticamente
-                cuando detectan un consumo muy bajo.
-            </p>
-
-            <p>
-                Esto puede ser relevante en proyectos donde el ESP32 permanece
-                largos periodos en modos de bajo consumo.
-            </p>
-
-        </section>
-
-
-        <!-- ==================================================
-             SOLAR
-             ================================================== -->
-
-        <section id="solar">
-
-            <span class="numero-seccion">10</span>
-
-            <h2>7. Alimentación mediante energía solar</h2>
-
-            <p>
-                En aplicaciones remotas es posible utilizar un panel solar como
-                parte del sistema de alimentación.
-            </p>
-
-            <p>
-                Sin embargo, normalmente un panel no se conecta directamente
-                al ESP32. La energía producida varía según la iluminación,
-                por lo que se requieren etapas adicionales.
-            </p>
-
-
-            <div class="flujo vertical-en-movil">
-
-                <div class="bloque-flujo">Panel solar</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">Controlador</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">Batería</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo destacado">Regulador</div>
-                <div class="flecha">→</div>
-                <div class="bloque-flujo">ESP32</div>
-
-            </div>
-
-
-            <p>
-                La batería almacena energía para que el sistema pueda continuar
-                funcionando cuando no existe suficiente iluminación.
-            </p>
-
-
-            <h3>Aplicaciones posibles</h3>
-
-            <p>
-                Este tipo de sistema puede utilizarse en estaciones ambientales,
-                sistemas agrícolas, monitoreo remoto, telemetría y dispositivos
-                instalados en lugares donde no existe una toma de corriente cercana.
-            </p>
+            <img src="imagenes/4_cadena_solar.png" alt="Cadena de alimentación solar del ESP32" class="captura">
 
         </section>
 
@@ -918,75 +330,57 @@
 
         <section id="reguladores">
 
-            <span class="numero-seccion">11</span>
-
             <h2>Regulación de voltaje</h2>
 
             <p>
-                Un regulador de voltaje permite obtener una salida más adecuada
-                y estable a partir de una fuente cuya tensión es diferente.
+                Un regulador obtiene una salida adecuada y estable a partir de
+                una fuente con otra tensión.
             </p>
 
+            <table class="tabla-herramientas">
 
-            <h3>Regulador lineal</h3>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Funcionamiento</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td><strong>Lineal</strong></td>
+                        <td>Reduce el voltaje y disipa el sobrante como calor.</td>
+                        <td>5 V → 3.3 V</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Buck</strong></td>
+                        <td>Reduce el voltaje mediante conmutación.</td>
+                        <td>12 V → 5 V</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Boost</strong></td>
+                        <td>Eleva el voltaje por encima del de entrada.</td>
+                        <td>3.7 V → 5 V</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Buck-Boost</strong></td>
+                        <td>Aumenta o disminuye el voltaje según la entrada.</td>
+                        <td>Batería → voltaje fijo</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
 
             <p>
-                Un regulador lineal reduce el voltaje y disipa parte de la energía
-                sobrante en forma de calor.
+                La elección depende del voltaje disponible y requerido, la
+                corriente del sistema y la eficiencia deseada.
             </p>
-
-
-            <h3>Convertidor Buck</h3>
-
-            <p>
-                Un convertidor <strong>Buck</strong> reduce el voltaje utilizando
-                un circuito de conmutación.
-            </p>
-
-            <div class="ejemplo-simple">
-
-                <span>12 V</span>
-                <span>→</span>
-                <span>Buck</span>
-                <span>→</span>
-                <strong>5 V</strong>
-
-            </div>
-
-
-            <h3>Convertidor Boost</h3>
-
-            <p>
-                Un convertidor <strong>Boost</strong> permite obtener un voltaje
-                mayor que el de entrada.
-            </p>
-
-            <div class="ejemplo-simple">
-
-                <span>3.7 V</span>
-                <span>→</span>
-                <span>Boost</span>
-                <span>→</span>
-                <strong>5 V</strong>
-
-            </div>
-
-
-            <h3>Convertidor Buck-Boost</h3>
-
-            <p>
-                Un convertidor Buck-Boost puede aumentar o disminuir el voltaje
-                según las condiciones de entrada y la configuración del circuito.
-            </p>
-
-
-            <div class="nota">
-
-                El tipo de regulador adecuado depende del voltaje disponible,
-                el voltaje requerido, la corriente del sistema, la eficiencia
-                deseada y las características del proyecto.
-
-            </div>
 
         </section>
 
@@ -997,139 +391,40 @@
 
         <section id="corriente">
 
-            <span class="numero-seccion">12</span>
-
-            <h2>Corriente y consumo del sistema</h2>
+            <h2>Corriente, consumo y estabilidad</h2>
 
             <p>
-                No basta con seleccionar el voltaje correcto. La fuente también
-                debe ser capaz de proporcionar suficiente corriente.
+                La fuente debe alimentar el conjunto completo, no solo el
+                microcontrolador. El consumo varía según el procesamiento, los
+                picos de Wi-Fi y Bluetooth, y los periféricos conectados.
             </p>
 
-            <p>
-                El consumo de un ESP32 no es necesariamente constante.
-                Puede cambiar dependiendo de lo que está realizando.
-            </p>
-
-
-            <div class="grid-dos">
-
-                <div class="mini-card">
-                    <strong>Procesamiento</strong>
-                    <p>
-                        La actividad del microcontrolador afecta el consumo.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Wi-Fi</strong>
-                    <p>
-                        La transmisión inalámbrica puede generar picos de consumo.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Bluetooth</strong>
-                    <p>
-                        También incrementa el consumo cuando se encuentra activo.
-                    </p>
-                </div>
-
-                <div class="mini-card">
-                    <strong>Periféricos</strong>
-                    <p>
-                        Sensores, pantallas y módulos adicionales consumen energía.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <h3>Ejemplo</h3>
-
-            <p>
-                Suponga que una placa ESP32 está acompañada por una pantalla,
-                sensores y un módulo de comunicación.
-            </p>
-
-            <p>
-                La fuente debe alimentar el conjunto completo y no únicamente
-                el microcontrolador.
-            </p>
-
-
-            <div class="flujo">
-
-                <div class="bloque-flujo">Fuente</div>
-                <div class="flecha">→</div>
-
-                <div class="bloque-flujo destacado">
-                    ESP32 + sensores + pantalla + módulos
-                </div>
-
-            </div>
-
-
-            <div class="advertencia">
-
-                Una fuente insuficiente puede hacer que el voltaje disminuya
-                momentáneamente cuando aumenta el consumo.
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             BROWNOUT
-             ================================================== -->
-
-        <section>
-
-            <span class="numero-seccion">13</span>
-
-            <h2>¿Qué ocurre cuando la alimentación es inestable?</h2>
-
-            <p>
-                Uno de los síntomas más comunes de una alimentación deficiente
-                es que el ESP32 se reinicie de manera inesperada.
-            </p>
-
-            <p>
-                También pueden aparecer:
-            </p>
-
-            <div class="lista-visual">
-
-                <div>Reinicios aleatorios</div>
-                <div>Fallos al conectarse a Wi-Fi</div>
-                <div>Lecturas incorrectas</div>
-                <div>OLED que se apaga</div>
-                <div>Errores de comunicación</div>
-                <div>Comportamiento inconsistente</div>
-
-            </div>
+            <pre><code>Fuente → ESP32 + sensores + pantalla + módulos</code></pre>
 
 
             <h3>Brownout</h3>
 
-            <p>
-                Se denomina comúnmente <strong>brownout</strong> a una situación
-                en la que el voltaje de alimentación disminuye por debajo del nivel
-                necesario para mantener correctamente el funcionamiento.
-            </p>
+            <img src="imagenes/3_brownout.png" alt="Caída de voltaje que provoca un brownout en el ESP32" class="captura">
 
             <p>
-                Cuando ocurre, el microcontrolador puede reiniciarse para evitar
-                continuar ejecutándose bajo condiciones eléctricas inadecuadas.
+                Además de los reinicios, otros síntomas de una alimentación
+                deficiente son:
             </p>
 
+            <ul>
+                <li>Fallos al conectarse a Wi-Fi</li>
+                <li>Lecturas incorrectas</li>
+                <li>OLED que se apaga</li>
+                <li>Errores de comunicación</li>
+                <li>Comportamiento inconsistente</li>
+            </ul>
 
             <div class="nota">
 
-                Si un programa funciona correctamente con USB pero falla al utilizar
-                una batería o una fuente diferente, una de las primeras cosas que
-                debe revisarse es la alimentación.
+                <strong>Idea clave:</strong>
+
+                si un programa funciona con USB pero falla con una batería u
+                otra fuente, revise primero la alimentación.
 
             </div>
 
@@ -1142,74 +437,66 @@
 
         <section id="comparacion">
 
-            <span class="numero-seccion">14</span>
+            <h2>Comparación de métodos</h2>
 
-            <h2>Comparación de métodos de alimentación</h2>
+            <table class="tabla-herramientas">
 
-            <div class="tabla-responsive">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Facilidad</th>
+                        <th>Portabilidad</th>
+                        <th>Aplicación común</th>
+                    </tr>
+                </thead>
 
-                <table>
+                <tbody>
 
-                    <thead>
+                    <tr>
+                        <td><strong>USB</strong></td>
+                        <td>Alta</td>
+                        <td>Media</td>
+                        <td>Programación y pruebas</td>
+                    </tr>
 
-                        <tr>
-                            <th>Método</th>
-                            <th>Facilidad</th>
-                            <th>Portabilidad</th>
-                            <th>Aplicación común</th>
-                        </tr>
+                    <tr>
+                        <td><strong>VIN / 5V</strong></td>
+                        <td>Alta</td>
+                        <td>Depende de la fuente</td>
+                        <td>Instalaciones y prototipos</td>
+                    </tr>
 
-                    </thead>
+                    <tr>
+                        <td><strong>3V3 regulado</strong></td>
+                        <td>Media</td>
+                        <td>Alta</td>
+                        <td>Sistemas diseñados específicamente</td>
+                    </tr>
 
-                    <tbody>
+                    <tr>
+                        <td><strong>Batería</strong></td>
+                        <td>Media</td>
+                        <td>Muy alta</td>
+                        <td>Proyectos móviles</td>
+                    </tr>
 
-                        <tr>
-                            <td><strong>USB</strong></td>
-                            <td>Alta</td>
-                            <td>Media</td>
-                            <td>Programación y pruebas</td>
-                        </tr>
+                    <tr>
+                        <td><strong>Power bank</strong></td>
+                        <td>Muy alta</td>
+                        <td>Alta</td>
+                        <td>Demostraciones y prototipos</td>
+                    </tr>
 
-                        <tr>
-                            <td><strong>VIN / 5V</strong></td>
-                            <td>Alta</td>
-                            <td>Depende de la fuente</td>
-                            <td>Instalaciones y prototipos</td>
-                        </tr>
+                    <tr>
+                        <td><strong>Solar</strong></td>
+                        <td>Baja</td>
+                        <td>Muy alta</td>
+                        <td>Sistemas remotos</td>
+                    </tr>
 
-                        <tr>
-                            <td><strong>3V3 regulado</strong></td>
-                            <td>Media</td>
-                            <td>Alta</td>
-                            <td>Sistemas diseñados específicamente</td>
-                        </tr>
+                </tbody>
 
-                        <tr>
-                            <td><strong>Batería</strong></td>
-                            <td>Media</td>
-                            <td>Muy alta</td>
-                            <td>Proyectos móviles</td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>Power bank</strong></td>
-                            <td>Muy alta</td>
-                            <td>Alta</td>
-                            <td>Demostraciones y prototipos</td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>Solar</strong></td>
-                            <td>Baja</td>
-                            <td>Muy alta</td>
-                            <td>Sistemas remotos</td>
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            </table>
 
         </section>
 
@@ -1220,96 +507,25 @@
 
         <section id="seleccion">
 
-            <span class="numero-seccion">15</span>
-
             <h2>¿Cómo seleccionar la forma de alimentación?</h2>
 
             <p>
-                No existe un método de alimentación que sea el mejor para todos
-                los proyectos.
+                Ningún método es el mejor para todos los proyectos. Tenga en
+                cuenta si será portátil, cuánto tiempo debe funcionar, qué
+                periféricos lleva, si hay energía eléctrica disponible y si
+                usará modos de bajo consumo.
             </p>
 
-            <p>
-                Antes de seleccionar una fuente deben analizarse diferentes
-                características.
-            </p>
+            <img src="imagenes/5_arbol_decision.png" alt="Árbol de decisión para elegir la forma de alimentación" class="captura">
 
+            <div class="nota">
 
-            <div class="preguntas-seleccion">
+                <strong>Idea principal:</strong>
 
-                <article>
-
-                    <span>01</span>
-
-                    <div>
-                        <strong>¿El proyecto será portátil?</strong>
-                        <p>
-                            Si necesita desplazarse libremente, una batería
-                            puede ser más conveniente que una fuente conectada.
-                        </p>
-                    </div>
-
-                </article>
-
-
-                <article>
-
-                    <span>02</span>
-
-                    <div>
-                        <strong>¿Cuánto tiempo debe funcionar?</strong>
-                        <p>
-                            La autonomía requerida afecta la selección y capacidad
-                            de la batería.
-                        </p>
-                    </div>
-
-                </article>
-
-
-                <article>
-
-                    <span>03</span>
-
-                    <div>
-                        <strong>¿Qué periféricos están conectados?</strong>
-                        <p>
-                            Pantallas, sensores, motores y módulos inalámbricos
-                            incrementan el consumo.
-                        </p>
-                    </div>
-
-                </article>
-
-
-                <article>
-
-                    <span>04</span>
-
-                    <div>
-                        <strong>¿Existe energía eléctrica disponible?</strong>
-                        <p>
-                            Un sistema instalado en exteriores puede necesitar
-                            batería o energía solar.
-                        </p>
-                    </div>
-
-                </article>
-
-
-                <article>
-
-                    <span>05</span>
-
-                    <div>
-                        <strong>¿Se utilizarán modos de bajo consumo?</strong>
-                        <p>
-                            Un proyecto diseñado para batería puede aprovechar
-                            técnicas de ahorro de energía.
-                        </p>
-                    </div>
-
-                </article>
+                no se debe seleccionar una fuente únicamente porque "enciende"
+                el ESP32. Una alimentación adecuada debe proporcionar el voltaje
+                correcto, suficiente corriente, estabilidad y seguridad para
+                todos los componentes del sistema.
 
             </div>
 
@@ -1317,421 +533,69 @@
 
 
         <!-- ==================================================
-             ERRORES
+             ERRORES Y BUENAS PRÁCTICAS
              ================================================== -->
 
         <section id="errores">
 
-            <span class="numero-seccion">16</span>
-
-            <h2>Errores comunes al alimentar un ESP32</h2>
-
-
-            <div class="errores-grid">
-
-                <article>
-
-                    <div class="error-numero">01</div>
-
-                    <h3>Aplicar 5 V al pin 3V3</h3>
-
-                    <p>
-                        Puede provocar daños porque la línea de 3.3 V no está
-                        diseñada para recibir directamente 5 V.
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div class="error-numero">02</div>
-
-                    <h3>No conectar GND común</h3>
-
-                    <p>
-                        Cuando varios módulos utilizan fuentes relacionadas,
-                        puede ser necesario establecer una referencia común.
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div class="error-numero">03</div>
-
-                    <h3>Utilizar una fuente insuficiente</h3>
-
-                    <p>
-                        Puede generar caídas de voltaje y reinicios.
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div class="error-numero">04</div>
-
-                    <h3>Conectar una batería sin regulación</h3>
-
-                    <p>
-                        El voltaje de una batería puede no corresponder con el
-                        requerido por la placa.
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div class="error-numero">05</div>
-
-                    <h3>Confundir VIN con 3V3</h3>
-
-                    <p>
-                        Son líneas con funciones diferentes y no deben utilizarse
-                        indistintamente.
-                    </p>
-
-                </article>
-
-
-                <article>
-
-                    <div class="error-numero">06</div>
-
-                    <h3>Usar varias fuentes sin verificar el circuito</h3>
-
-                    <p>
-                        Conectar simultáneamente USB y una fuente externa puede
-                        tener comportamientos diferentes según la placa.
-                    </p>
-
-                </article>
-
-            </div>
-
-
-            <div class="peligro">
-
-                <strong>Regla importante:</strong>
-
-                antes de conectar una fuente desconocida, mida su voltaje y
-                verifique dónde debe conectarse.
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             SEGURIDAD
-             ================================================== -->
-
-        <section id="seguridad">
-
-            <span class="numero-seccion">17</span>
-
-            <h2>Buenas prácticas</h2>
-
-
-            <div class="checklist">
-
-                <div>
-                    <span>✓</span>
-                    Verificar el voltaje antes de conectar la fuente.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Identificar correctamente VIN, 5V, 3V3 y GND.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Utilizar fuentes reguladas.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Considerar el consumo de todos los componentes.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Utilizar reguladores cuando el voltaje no sea adecuado.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Revisar la polaridad antes de energizar el circuito.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Utilizar circuitos apropiados para cargar baterías.
-                </div>
-
-                <div>
-                    <span>✓</span>
-                    Consultar la documentación de la placa utilizada.
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             MULTÍMETRO
-             ================================================== -->
-
-        <section id="medicion">
-
-            <span class="numero-seccion">18</span>
-
-            <h2>Comprobación utilizando un multímetro</h2>
-
-            <p>
-                Antes de conectar una fuente al ESP32 puede utilizarse un multímetro
-                para comprobar el voltaje.
-            </p>
-
-
-            <h3>Medición de voltaje DC</h3>
-
-            <p>
-                Para medir una fuente de corriente continua:
-            </p>
-
-
-            <div class="pasos">
-
-                <article>
-                    <span>1</span>
-                    <p>
-                        Configure el multímetro para medir voltaje DC.
-                    </p>
-                </article>
-
-                <article>
-                    <span>2</span>
-                    <p>
-                        Coloque la punta negra en el terminal negativo.
-                    </p>
-                </article>
-
-                <article>
-                    <span>3</span>
-                    <p>
-                        Coloque la punta roja en el terminal positivo.
-                    </p>
-                </article>
-
-                <article>
-                    <span>4</span>
-                    <p>
-                        Observe el voltaje indicado.
-                    </p>
-                </article>
-
-                <article>
-                    <span>5</span>
-                    <p>
-                        Confirme que corresponde al voltaje requerido antes
-                        de conectar el ESP32.
-                    </p>
-                </article>
-
-            </div>
-
-
-            <div class="espacio-imagen">
-
-                <span>ESPACIO PARA IMAGEN</span>
-
-                <p>
-                    Ejemplo sugerido: multímetro midiendo una fuente de 5 V.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             CASOS
-             ================================================== -->
-
-        <section id="aplicaciones">
-
-            <span class="numero-seccion">19</span>
-
-            <h2>Ejemplos de aplicación</h2>
-
-
-            <div class="casos-grid">
-
-                <article>
-
-                    <span class="caso-etiqueta">CASO 01</span>
-
-                    <h3>Práctica de laboratorio</h3>
-
-                    <p>
-                        El ESP32 permanece junto a la computadora y se modifica
-                        constantemente el programa.
-                    </p>
-
-                    <strong class="recomendacion">
-                        Opción común: USB
-                    </strong>
-
-                </article>
-
-
-                <article>
-
-                    <span class="caso-etiqueta">CASO 02</span>
-
-                    <h3>Dispositivo portátil</h3>
-
-                    <p>
-                        El proyecto debe poder transportarse y funcionar sin una
-                        conexión eléctrica permanente.
-                    </p>
-
-                    <strong class="recomendacion">
-                        Opción posible: batería + regulación
-                    </strong>
-
-                </article>
-
-
-                <article>
-
-                    <span class="caso-etiqueta">CASO 03</span>
-
-                    <h3>Demostración temporal</h3>
-
-                    <p>
-                        Se necesita mover el prototipo durante una presentación
-                        sin instalar un circuito de batería interno.
-                    </p>
-
-                    <strong class="recomendacion">
-                        Opción posible: power bank
-                    </strong>
-
-                </article>
-
-
-                <article>
-
-                    <span class="caso-etiqueta">CASO 04</span>
-
-                    <h3>Estación remota</h3>
-
-                    <p>
-                        El sistema se instalará en exteriores y debe funcionar
-                        durante largos periodos.
-                    </p>
-
-                    <strong class="recomendacion">
-                        Opción posible: solar + batería
-                    </strong>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             RESUMEN
-             ================================================== -->
-
-        <section>
-
-            <span class="numero-seccion">20</span>
-
-            <h2>Resumen de la guía</h2>
-
-            <p>
-                El ESP32 puede alimentarse de diferentes maneras. La elección
-                depende de las características y necesidades del proyecto.
-            </p>
-
-
-            <div class="resumen-final">
-
-                <div>
-                    <span class="resumen-numero">01</span>
-                    <strong>USB</strong>
-                    <p>
-                        Ideal para programación, pruebas y laboratorio.
-                    </p>
-                </div>
-
-                <div>
-                    <span class="resumen-numero">02</span>
-                    <strong>VIN / 5V</strong>
-                    <p>
-                        Útil cuando existe una fuente externa regulada.
-                    </p>
-                </div>
-
-                <div>
-                    <span class="resumen-numero">03</span>
-                    <strong>3V3</strong>
-                    <p>
-                        Requiere una fuente de 3.3 V estable y correctamente
-                        regulada.
-                    </p>
-                </div>
-
-                <div>
-                    <span class="resumen-numero">04</span>
-                    <strong>Batería</strong>
-                    <p>
-                        Permite construir sistemas portátiles.
-                    </p>
-                </div>
-
-                <div>
-                    <span class="resumen-numero">05</span>
-                    <strong>Power bank</strong>
-                    <p>
-                        Alternativa sencilla para alimentación USB portátil.
-                    </p>
-                </div>
-
-                <div>
-                    <span class="resumen-numero">06</span>
-                    <strong>Solar</strong>
-                    <p>
-                        Puede emplearse en sistemas autónomos y remotos.
-                    </p>
-                </div>
-
-            </div>
-
-
-            <div class="mensaje-final">
-
-                <span>IDEA PRINCIPAL</span>
-
-                <p>
-                    No se debe seleccionar una fuente únicamente porque
-                    "enciende" el ESP32. Una alimentación adecuada debe proporcionar
-                    el voltaje correcto, suficiente corriente, estabilidad y
-                    seguridad para todos los componentes del sistema.
-                </p>
-
-            </div>
+            <h2>Errores comunes y buenas prácticas</h2>
+
+            <table class="tabla-herramientas">
+
+                <thead>
+                    <tr>
+                        <th>Error</th>
+                        <th>Consecuencia</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td><strong>Aplicar 5 V al pin 3V3</strong></td>
+                        <td>Esa línea no está diseñada para recibir 5 V y puede dañarse.</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>No conectar GND común</strong></td>
+                        <td>Los módulos con fuentes relacionadas pueden necesitar una referencia común.</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Utilizar una fuente insuficiente</strong></td>
+                        <td>Puede generar caídas de voltaje y reinicios.</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Conectar una batería sin regulación</strong></td>
+                        <td>Su voltaje puede no corresponder con el que requiere la placa.</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Confundir VIN con 3V3</strong></td>
+                        <td>Son líneas con funciones diferentes.</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Usar varias fuentes sin verificar el circuito</strong></td>
+                        <td>USB y fuente externa a la vez se comportan distinto según la placa.</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <h3>Buenas prácticas</h3>
+
+            <ul>
+                <li>Medir el voltaje de la fuente antes de conectarla.</li>
+                <li>Identificar VIN, 5V, 3V3 y GND, y revisar la polaridad.</li>
+                <li>Utilizar fuentes reguladas o reguladores cuando haga falta.</li>
+                <li>Considerar el consumo de todos los componentes.</li>
+                <li>Utilizar circuitos apropiados para cargar baterías.</li>
+                <li>Consultar la documentación de la placa utilizada.</li>
+            </ul>
 
         </section>
 
@@ -1740,9 +604,7 @@
              ENTREGABLE
              ================================================== -->
 
-        <section id="entregable" class="seccion-entregable">
-
-            <span class="numero-seccion">21</span>
+        <section id="entregable">
 
             <h2>Entregable</h2>
 
@@ -1752,41 +614,23 @@
                 alimentación del ESP32.
             </p>
 
-
-            <div class="entregable-destacado">
-
-                <div class="icono-pdf">
-                    PDF
-                </div>
-
-                <div>
-
-                    <h3>Reporte resumen de la guía</h3>
-
-                    <p>
-                        El documento deberá demostrar que el estudiante comprendió
-                        las principales opciones de alimentación, sus características,
-                        ventajas, precauciones y posibles aplicaciones.
-                    </p>
-
-                </div>
-
-            </div>
+            <p>
+                El documento deberá demostrar que el estudiante comprendió
+                las principales opciones de alimentación, sus características,
+                ventajas, precauciones y posibles aplicaciones.
+            </p>
 
 
             <h3>Contenido mínimo del reporte</h3>
 
-            <ol class="lista-entregable">
+            <ol>
 
                 <li>
                     Explicación breve de qué significa alimentar correctamente
-                    un ESP32.
+                    un ESP32 y la importancia de considerar el consumo de corriente.
+
                 </li>
 
-                <li>
-                    Descripción de las principales formas de alimentación
-                    presentadas en la guía.
-                </li>
 
                 <li>
                     Diferencia entre alimentar mediante USB, VIN/5V y 3V3.
@@ -1801,17 +645,13 @@
                 </li>
 
                 <li>
-                    Importancia de considerar el consumo de corriente.
-                </li>
-
-                <li>
                     Al menos tres buenas prácticas para evitar daños o
                     funcionamiento inestable.
                 </li>
 
                 <li>
                     Una conclusión personal sobre qué método de alimentación
-                    elegiría para un proyecto portátil y por qué.
+                    elegiría/eligio para su proyecto y por qué.
                 </li>
 
             </ol>
@@ -1825,31 +665,7 @@
 
             </div>
 
-
-            <div class="advertencia">
-
-                El reporte no debe limitarse a copiar literalmente la guía.
-                Se espera un resumen redactado por el estudiante que demuestre
-                comprensión de los conceptos estudiados.
-
-            </div>
-
         </section>
-
-
-        <!-- ==================================================
-             FOOTER
-             ================================================== -->
-
-        <footer>
-
-            <span>Programación de Artefactos</span>
-
-            <p>
-                Guía informativa — Formas de alimentación del ESP32
-            </p>
-
-        </footer>
 
 
     </main>
